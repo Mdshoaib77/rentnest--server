@@ -1,4 +1,124 @@
+// // // // // // // // import express from "express";
+
+
+// // // // // // // // const app = express();
+
+
+// // // // // // // // app.use(express.json());
+
+
+// // // // // // // // app.get("/", (req, res) => {
+// // // // // // // //   res.send("RentNest Backend Running 🚀");
+// // // // // // // // });
+
+
+// // // // // // // // export default app;
+
+
+// // // // // // // import express from "express";
+// // // // // // // import prisma from "./lib/prisma";
+
+// // // // // // // const app = express();
+
+// // // // // // // app.use(express.json());
+
+// // // // // // // app.get("/", (req, res) => {
+// // // // // // //   res.send("RentNest Backend Running 🚀");
+// // // // // // // });
+
+// // // // // // // app.get("/api/health", async (req, res) => {
+// // // // // // //   try {
+// // // // // // //     const userCount = await prisma.user.count();
+
+// // // // // // //     res.status(200).json({
+// // // // // // //       success: true,
+// // // // // // //       message: "RentNest API and database are healthy",
+// // // // // // //       data: {
+// // // // // // //         database: "connected",
+// // // // // // //         totalUsers: userCount,
+// // // // // // //       },
+// // // // // // //     });
+// // // // // // //   } catch (error) {
+// // // // // // //     res.status(500).json({
+// // // // // // //       success: false,
+// // // // // // //       message: "Database connection failed",
+// // // // // // //       errorDetails:
+// // // // // // //         error instanceof Error ? error.message : "Unknown error occurred",
+// // // // // // //     });
+// // // // // // //   }
+// // // // // // // });
+
+// // // // // // // export default app;
+
+
+// // // // // // import express from "express";
+// // // // // // import prisma from "./lib/prisma";
+// // // // // // import authRouter from "./modules/auth/auth.route";
+
+
+// // // // // // const app = express();
+
+
+// // // // // // app.use(express.json());
+
+
+// // // // // // app.use(
+// // // // // //   "/api/auth",
+// // // // // //   authRouter
+// // // // // // );
+
+
+// // // // // // app.get("/", (req, res) => {
+// // // // // //   res.send(
+// // // // // //     "RentNest Backend Running 🚀"
+// // // // // //   );
+// // // // // // });
+
+
+// // // // // // app.get("/api/health", async (req, res) => {
+
+// // // // // //   try {
+
+// // // // // //     const userCount =
+// // // // // //       await prisma.user.count();
+
+
+// // // // // //     res.status(200).json({
+// // // // // //       success: true,
+// // // // // //       message:
+// // // // // //         "RentNest API and database are healthy",
+// // // // // //       data: {
+// // // // // //         database: "connected",
+// // // // // //         totalUsers: userCount,
+// // // // // //       },
+// // // // // //     });
+
+
+// // // // // //   } catch (error) {
+
+// // // // // //     res.status(500).json({
+// // // // // //       success: false,
+// // // // // //       message:
+// // // // // //         "Database connection failed",
+// // // // // //     });
+
+// // // // // //   }
+
+// // // // // // });
+
+
+// // // // // // export default app;
+
+
 // // // // // import express from "express";
+
+// // // // // import prisma from "./lib/prisma";
+
+// // // // // import authRouter from "./modules/auth/auth.route";
+
+// // // // // import {
+// // // // //   authMiddleware,
+// // // // // } from "./middlewares/auth.middleware";
 
 
 // // // // // const app = express();
@@ -7,60 +127,382 @@
 // // // // // app.use(express.json());
 
 
+
+// // // // // app.use(
+// // // // //   "/api/auth",
+// // // // //   authRouter
+// // // // // );
+
+
+
 // // // // // app.get("/", (req, res) => {
-// // // // //   res.send("RentNest Backend Running 🚀");
+
+// // // // //   res.send(
+// // // // //     "RentNest Backend Running 🚀"
+// // // // //   );
+
 // // // // // });
+
+
+
+// // // // // app.get(
+// // // // //   "/api/profile",
+// // // // //   authMiddleware,
+// // // // //   async (req, res) => {
+
+
+// // // // //     res.status(200).json({
+
+// // // // //       success: true,
+
+// // // // //       message:
+// // // // //         "Protected route accessed",
+
+// // // // //       user:
+// // // // //         req.user,
+
+// // // // //     });
+
+
+// // // // //   }
+// // // // // );
+
+
+
+// // // // // app.get(
+// // // // //   "/api/health",
+// // // // //   async (req, res) => {
+
+// // // // //     try {
+
+
+// // // // //       const userCount =
+// // // // //         await prisma.user.count();
+
+
+
+// // // // //       res.status(200).json({
+
+// // // // //         success: true,
+
+// // // // //         message:
+// // // // //           "RentNest API and database are healthy",
+
+// // // // //         data: {
+
+// // // // //           database:
+// // // // //             "connected",
+
+// // // // //           totalUsers:
+// // // // //             userCount,
+
+// // // // //         },
+
+// // // // //       });
+
+
+
+// // // // //     } catch (error) {
+
+
+// // // // //       res.status(500).json({
+
+// // // // //         success: false,
+
+// // // // //         message:
+// // // // //           "Database connection failed",
+
+// // // // //       });
+
+
+// // // // //     }
+
+// // // // //   }
+
+// // // // // );
+
 
 
 // // // // // export default app;
 
 
 // // // // import express from "express";
+
 // // // // import prisma from "./lib/prisma";
+
+// // // // import authRouter from "./modules/auth/auth.route";
+
+// // // // import {
+// // // //   authMiddleware,
+// // // // } from "./middlewares/auth.middleware";
+
+
+// // // // import {
+// // // //   authorizeRole,
+// // // // } from "./middlewares/role.middleware";
+
+
 
 // // // // const app = express();
 
+
+
 // // // // app.use(express.json());
 
+
+
+
+// // // // // =======================
+// // // // // AUTH ROUTES
+// // // // // =======================
+
+// // // // app.use(
+// // // //   "/api/auth",
+// // // //   authRouter
+// // // // );
+
+
+
+
+// // // // // =======================
+// // // // // HOME ROUTE
+// // // // // =======================
+
 // // // // app.get("/", (req, res) => {
-// // // //   res.send("RentNest Backend Running 🚀");
+
+// // // //   res.send(
+// // // //     "RentNest Backend Running 🚀"
+// // // //   );
+
 // // // // });
 
-// // // // app.get("/api/health", async (req, res) => {
-// // // //   try {
-// // // //     const userCount = await prisma.user.count();
+
+
+
+// // // // // =======================
+// // // // // DATABASE HEALTH CHECK
+// // // // // =======================
+
+// // // // app.get(
+// // // //   "/api/health",
+// // // //   async (req, res) => {
+
+
+// // // //     try {
+
+
+// // // //       const userCount =
+// // // //         await prisma.user.count();
+
+
+
+// // // //       res.status(200).json({
+
+// // // //         success: true,
+
+// // // //         message:
+// // // //           "RentNest API and database are healthy",
+
+
+// // // //         data: {
+
+// // // //           database:
+// // // //             "connected",
+
+// // // //           totalUsers:
+// // // //             userCount,
+
+// // // //         },
+
+// // // //       });
+
+
+
+// // // //     } catch (error) {
+
+
+// // // //       res.status(500).json({
+
+// // // //         success: false,
+
+// // // //         message:
+// // // //           "Database connection failed",
+
+// // // //       });
+
+
+// // // //     }
+
+
+// // // //   }
+
+// // // // );
+
+
+
+
+// // // // // =======================
+// // // // // PROTECTED PROFILE ROUTE
+// // // // // =======================
+
+// // // // app.get(
+
+// // // //   "/api/profile",
+
+// // // //   authMiddleware,
+
+
+// // // //   (req, res) => {
+
 
 // // // //     res.status(200).json({
+
 // // // //       success: true,
-// // // //       message: "RentNest API and database are healthy",
-// // // //       data: {
-// // // //         database: "connected",
-// // // //         totalUsers: userCount,
-// // // //       },
+
+// // // //       message:
+// // // //         "Protected route accessed",
+
+
+// // // //       user:
+// // // //         req.user,
+
+
 // // // //     });
-// // // //   } catch (error) {
-// // // //     res.status(500).json({
-// // // //       success: false,
-// // // //       message: "Database connection failed",
-// // // //       errorDetails:
-// // // //         error instanceof Error ? error.message : "Unknown error occurred",
-// // // //     });
+
+
 // // // //   }
-// // // // });
+
+// // // // );
+
+
+
+
+
+
+// // // // // =======================
+// // // // // LANDLORD ONLY ROUTE
+// // // // // =======================
+
+// // // // app.get(
+
+// // // //   "/api/landlord-test",
+
+// // // //   authMiddleware,
+
+
+// // // //   authorizeRole(
+// // // //     "LANDLORD"
+// // // //   ),
+
+
+// // // //   (req, res) => {
+
+
+// // // //     res.status(200).json({
+
+// // // //       success: true,
+
+
+// // // //       message:
+// // // //         "Welcome Landlord! Property management access granted",
+
+
+// // // //       user:
+// // // //         req.user,
+
+
+// // // //     });
+
+
+// // // //   }
+
+// // // // );
+
+
+
+
+
+
+// // // // // =======================
+// // // // // ADMIN ONLY ROUTE
+// // // // // =======================
+
+// // // // app.get(
+
+// // // //   "/api/admin-test",
+
+// // // //   authMiddleware,
+
+
+// // // //   authorizeRole(
+// // // //     "ADMIN"
+// // // //   ),
+
+
+// // // //   (req, res) => {
+
+
+// // // //     res.status(200).json({
+
+// // // //       success: true,
+
+
+// // // //       message:
+// // // //         "Welcome Admin!",
+
+
+// // // //       user:
+// // // //         req.user,
+
+
+// // // //     });
+
+
+// // // //   }
+
+// // // // );
+
+
+
+
 
 // // // // export default app;
 
 
 // // // import express from "express";
+
 // // // import prisma from "./lib/prisma";
+
+
 // // // import authRouter from "./modules/auth/auth.route";
+
+
+// // // import propertyRouter from "./modules/property/property.route";
+
+
+// // // import {
+// // //   authMiddleware,
+// // // } from "./middlewares/auth.middleware";
+
+
+// // // import {
+// // //   authorizeRole,
+// // // } from "./middlewares/role.middleware";
+
 
 
 // // // const app = express();
 
 
+
 // // // app.use(express.json());
 
+
+
+
+// // // // =======================
+// // // // AUTH ROUTES
+// // // // =======================
 
 // // // app.use(
 // // //   "/api/auth",
@@ -68,43 +510,233 @@
 // // // );
 
 
+
+
+// // // // =======================
+// // // // PROPERTY ROUTES
+// // // // =======================
+
+// // // app.use(
+// // //   "/api/properties",
+// // //   propertyRouter
+// // // );
+
+
+
+
+
+
+// // // // =======================
+// // // // HOME ROUTE
+// // // // =======================
+
 // // // app.get("/", (req, res) => {
+
 // // //   res.send(
 // // //     "RentNest Backend Running 🚀"
 // // //   );
+
 // // // });
 
 
-// // // app.get("/api/health", async (req, res) => {
-
-// // //   try {
-
-// // //     const userCount =
-// // //       await prisma.user.count();
 
 
-// // //     res.status(200).json({
-// // //       success: true,
-// // //       message:
-// // //         "RentNest API and database are healthy",
-// // //       data: {
-// // //         database: "connected",
-// // //         totalUsers: userCount,
-// // //       },
-// // //     });
 
 
-// // //   } catch (error) {
+// // // // =======================
+// // // // DATABASE HEALTH CHECK
+// // // // =======================
 
-// // //     res.status(500).json({
-// // //       success: false,
-// // //       message:
-// // //         "Database connection failed",
-// // //     });
+// // // app.get(
+// // //   "/api/health",
+// // //   async (req, res) => {
+
+
+// // //     try {
+
+
+// // //       const userCount =
+// // //         await prisma.user.count();
+
+
+
+// // //       res.status(200).json({
+
+// // //         success: true,
+
+
+// // //         message:
+// // //           "RentNest API and database are healthy",
+
+
+// // //         data: {
+
+// // //           database:
+// // //             "connected",
+
+
+// // //           totalUsers:
+// // //             userCount,
+
+// // //         },
+
+
+// // //       });
+
+
+
+// // //     } catch (error) {
+
+
+// // //       res.status(500).json({
+
+// // //         success: false,
+
+
+// // //         message:
+// // //           "Database connection failed",
+
+// // //       });
+
+
+// // //     }
+
 
 // // //   }
 
-// // // });
+// // // );
+
+
+
+
+
+
+// // // // =======================
+// // // // PROTECTED PROFILE ROUTE
+// // // // =======================
+
+// // // app.get(
+
+// // //   "/api/profile",
+
+// // //   authMiddleware,
+
+
+// // //   (req, res) => {
+
+
+// // //     res.status(200).json({
+
+// // //       success: true,
+
+
+// // //       message:
+// // //         "Protected route accessed",
+
+
+// // //       user:
+// // //         req.user,
+
+
+// // //     });
+
+
+// // //   }
+
+// // // );
+
+
+
+
+
+
+
+// // // // =======================
+// // // // LANDLORD ONLY TEST ROUTE
+// // // // =======================
+
+// // // app.get(
+
+// // //   "/api/landlord-test",
+
+// // //   authMiddleware,
+
+
+// // //   authorizeRole(
+// // //     "LANDLORD"
+// // //   ),
+
+
+// // //   (req, res) => {
+
+
+// // //     res.status(200).json({
+
+// // //       success: true,
+
+
+// // //       message:
+// // //         "Welcome Landlord! Property management access granted",
+
+
+// // //       user:
+// // //         req.user,
+
+
+// // //     });
+
+
+// // //   }
+
+// // // );
+
+
+
+
+
+
+
+// // // // =======================
+// // // // ADMIN ONLY TEST ROUTE
+// // // // =======================
+
+// // // app.get(
+
+// // //   "/api/admin-test",
+
+// // //   authMiddleware,
+
+
+// // //   authorizeRole(
+// // //     "ADMIN"
+// // //   ),
+
+
+// // //   (req, res) => {
+
+
+// // //     res.status(200).json({
+
+// // //       success: true,
+
+
+// // //       message:
+// // //         "Welcome Admin!",
+
+
+// // //       user:
+// // //         req.user,
+
+
+// // //     });
+
+
+// // //   }
+
+// // // );
+
+
+
 
 
 // // // export default app;
@@ -112,125 +744,447 @@
 
 // // import express from "express";
 
+
 // // import prisma from "./lib/prisma";
 
+
+
 // // import authRouter from "./modules/auth/auth.route";
+
+
+// // import propertyRouter from "./modules/property/property.route";
+
+
+// // import bookingRouter from "./modules/booking/booking.route";
+
+
 
 // // import {
 // //   authMiddleware,
 // // } from "./middlewares/auth.middleware";
 
 
+
+// // import {
+// //   authorizeRole,
+// // } from "./middlewares/role.middleware";
+
+
+
+
+
 // // const app = express();
+
+
+
 
 
 // // app.use(express.json());
 
 
 
+
+
+
+
+// // // =======================
+// // // AUTH ROUTES
+// // // =======================
+
 // // app.use(
+
 // //   "/api/auth",
+
 // //   authRouter
+
 // // );
 
 
 
-// // app.get("/", (req, res) => {
-
-// //   res.send(
-// //     "RentNest Backend Running 🚀"
-// //   );
-
-// // });
 
 
+
+
+// // // =======================
+// // // PROPERTY ROUTES
+// // // =======================
+
+// // app.use(
+
+// //   "/api/properties",
+
+// //   propertyRouter
+
+// // );
+
+
+
+
+
+
+
+// // // =======================
+// // // BOOKING ROUTES
+// // // =======================
+
+// // app.use(
+
+// //   "/api/bookings",
+
+// //   bookingRouter
+
+// // );
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // HOME ROUTE
+// // // =======================
 
 // // app.get(
-// //   "/api/profile",
-// //   authMiddleware,
-// //   async (req, res) => {
+
+// //   "/",
+
+// //   (req, res) => {
 
 
-// //     res.status(200).json({
+// //     res.send(
 
-// //       success: true,
+// //       "RentNest Backend Running 🚀"
 
-// //       message:
-// //         "Protected route accessed",
-
-// //       user:
-// //         req.user,
-
-// //     });
+// //     );
 
 
 // //   }
+
 // // );
 
 
 
+
+
+
+
+
+
+// // // =======================
+// // // DATABASE HEALTH CHECK
+// // // =======================
+
 // // app.get(
+
 // //   "/api/health",
+
 // //   async (req, res) => {
+
 
 // //     try {
 
 
 // //       const userCount =
+
 // //         await prisma.user.count();
+
+
+
+
+// //       const propertyCount =
+
+// //         await prisma.property.count();
+
+
+
+
+// //       const bookingCount =
+
+// //         await prisma.booking.count();
+
+
+
 
 
 
 // //       res.status(200).json({
 
+
 // //         success: true,
 
+
 // //         message:
+
 // //           "RentNest API and database are healthy",
+
+
+
 
 // //         data: {
 
+
 // //           database:
+
 // //             "connected",
 
+
+
 // //           totalUsers:
+
 // //             userCount,
 
+
+
+// //           totalProperties:
+
+// //             propertyCount,
+
+
+
+// //           totalBookings:
+
+// //             bookingCount,
+
+
 // //         },
+
 
 // //       });
 
 
 
-// //     } catch (error) {
+
+// //     } catch(error) {
+
 
 
 // //       res.status(500).json({
 
-// //         success: false,
+
+// //         success:false,
+
 
 // //         message:
+
 // //           "Database connection failed",
+
 
 // //       });
 
 
+
 // //     }
+
 
 // //   }
 
 // // );
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // PROTECTED PROFILE ROUTE
+// // // =======================
+
+// // app.get(
+
+// //   "/api/profile",
+
+
+// //   authMiddleware,
+
+
+
+// //   (req, res) => {
+
+
+
+// //     res.status(200).json({
+
+
+
+// //       success:true,
+
+
+
+// //       message:
+
+// //         "Protected route accessed",
+
+
+
+// //       user:
+
+// //         req.user,
+
+
+
+// //     });
+
+
+
+// //   }
+
+// // );
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // LANDLORD ONLY TEST ROUTE
+// // // =======================
+
+// // app.get(
+
+// //   "/api/landlord-test",
+
+
+
+// //   authMiddleware,
+
+
+
+// //   authorizeRole(
+
+// //     "LANDLORD"
+
+// //   ),
+
+
+
+// //   (req, res) => {
+
+
+
+// //     res.status(200).json({
+
+
+
+// //       success:true,
+
+
+
+// //       message:
+
+// //         "Welcome Landlord! Property management access granted",
+
+
+
+// //       user:
+
+// //         req.user,
+
+
+
+// //     });
+
+
+
+// //   }
+
+// // );
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // ADMIN ONLY TEST ROUTE
+// // // =======================
+
+// // app.get(
+
+// //   "/api/admin-test",
+
+
+
+// //   authMiddleware,
+
+
+
+// //   authorizeRole(
+
+// //     "ADMIN"
+
+// //   ),
+
+
+
+// //   (req, res) => {
+
+
+
+// //     res.status(200).json({
+
+
+
+// //       success:true,
+
+
+
+// //       message:
+
+// //         "Welcome Admin!",
+
+
+
+// //       user:
+
+// //         req.user,
+
+
+
+// //     });
+
+
+
+// //   }
+
+// // );
+
+
+
+
+
 
 
 
 // // export default app;
 
 
+
 // import express from "express";
+
 
 // import prisma from "./lib/prisma";
 
+
+
 // import authRouter from "./modules/auth/auth.route";
+
+// import propertyRouter from "./modules/property/property.route";
+
+// import bookingRouter from "./modules/booking/booking.route";
+
+
 
 // import {
 //   authMiddleware,
@@ -243,11 +1197,17 @@
 
 
 
+
+
 // const app = express();
 
 
 
+
+
 // app.use(express.json());
+
+
 
 
 
@@ -257,9 +1217,53 @@
 // // =======================
 
 // app.use(
+
 //   "/api/auth",
+
 //   authRouter
+
 // );
+
+
+
+
+
+
+
+// // =======================
+// // PROPERTY ROUTES
+// // =======================
+
+// app.use(
+
+//   "/api/properties",
+
+//   propertyRouter
+
+// );
+
+
+
+
+
+
+
+// // =======================
+// // BOOKING ROUTES
+// // =======================
+
+// app.use(
+
+//   "/api/bookings",
+
+//   bookingRouter
+
+// );
+
+
+
+
+
 
 
 
@@ -268,13 +1272,28 @@
 // // HOME ROUTE
 // // =======================
 
-// app.get("/", (req, res) => {
+// app.get(
 
-//   res.send(
-//     "RentNest Backend Running 🚀"
-//   );
+//   "/",
 
-// });
+//   (req, res) => {
+
+
+//     res.send(
+
+//       "RentNest Backend Running 🚀"
+
+//     );
+
+
+//   }
+
+// );
+
+
+
+
+
 
 
 
@@ -284,7 +1303,9 @@
 // // =======================
 
 // app.get(
+
 //   "/api/health",
+
 //   async (req, res) => {
 
 
@@ -292,43 +1313,107 @@
 
 
 //       const userCount =
+
 //         await prisma.user.count();
+
+
+
+
+//       const propertyCount =
+
+//         await prisma.property.count();
+
+
+
+
+//       const bookingCount =
+
+//         await prisma.booking.count();
+
+
+
 
 
 
 //       res.status(200).json({
 
+
 //         success: true,
 
+
 //         message:
+
 //           "RentNest API and database are healthy",
+
+
 
 
 //         data: {
 
+
 //           database:
+
 //             "connected",
 
+
+
 //           totalUsers:
+
 //             userCount,
 
+
+
+//           totalProperties:
+
+//             propertyCount,
+
+
+
+//           totalBookings:
+
+//             bookingCount,
+
+
 //         },
+
 
 //       });
 
 
 
-//     } catch (error) {
+
+//     } catch(error) {
+
+
+
+//       console.error(
+
+//         "HEALTH ERROR:",
+
+//         error
+
+//       );
+
+
 
 
 //       res.status(500).json({
 
-//         success: false,
+
+//         success:false,
+
 
 //         message:
-//           "Database connection failed",
+
+//           error instanceof Error
+
+//           ? error.message
+
+//           : "Database connection failed",
+
 
 //       });
+
 
 
 //     }
@@ -341,6 +1426,11 @@
 
 
 
+
+
+
+
+
 // // =======================
 // // PROTECTED PROFILE ROUTE
 // // =======================
@@ -349,25 +1439,37 @@
 
 //   "/api/profile",
 
+
 //   authMiddleware,
+
 
 
 //   (req, res) => {
 
 
+
 //     res.status(200).json({
 
-//       success: true,
+
+
+//       success:true,
+
+
 
 //       message:
+
 //         "Protected route accessed",
 
 
+
 //       user:
+
 //         req.user,
 
 
+
 //     });
+
 
 
 //   }
@@ -379,39 +1481,57 @@
 
 
 
+
+
+
 // // =======================
-// // LANDLORD ONLY ROUTE
+// // LANDLORD ONLY TEST ROUTE
 // // =======================
 
 // app.get(
 
 //   "/api/landlord-test",
 
+
+
 //   authMiddleware,
 
 
+
 //   authorizeRole(
+
 //     "LANDLORD"
+
 //   ),
+
 
 
 //   (req, res) => {
 
 
+
 //     res.status(200).json({
 
-//       success: true,
+
+
+//       success:true,
+
 
 
 //       message:
+
 //         "Welcome Landlord! Property management access granted",
 
 
+
 //       user:
+
 //         req.user,
 
 
+
 //     });
+
 
 
 //   }
@@ -423,44 +1543,65 @@
 
 
 
+
+
+
 // // =======================
-// // ADMIN ONLY ROUTE
+// // ADMIN ONLY TEST ROUTE
 // // =======================
 
 // app.get(
 
 //   "/api/admin-test",
 
+
+
 //   authMiddleware,
 
 
+
 //   authorizeRole(
+
 //     "ADMIN"
+
 //   ),
+
 
 
 //   (req, res) => {
 
 
+
 //     res.status(200).json({
 
-//       success: true,
+
+
+//       success:true,
+
 
 
 //       message:
+
 //         "Welcome Admin!",
 
 
+
 //       user:
+
 //         req.user,
+
 
 
 //     });
 
 
+
 //   }
 
 // );
+
+
+
 
 
 
@@ -471,13 +1612,17 @@
 
 import express from "express";
 
+
 import prisma from "./lib/prisma";
+
 
 
 import authRouter from "./modules/auth/auth.route";
 
-
 import propertyRouter from "./modules/property/property.route";
+
+import bookingRouter from "./modules/booking/booking.route";
+
 
 
 import {
@@ -491,11 +1636,29 @@ import {
 
 
 
+
+
 const app = express();
 
 
 
+
+
 app.use(express.json());
+
+
+
+
+// Prisma Debug
+
+console.log(
+  "Prisma keys:",
+  Object.keys(prisma)
+);
+
+
+
+
 
 
 
@@ -505,9 +1668,16 @@ app.use(express.json());
 // =======================
 
 app.use(
+
   "/api/auth",
+
   authRouter
+
 );
+
+
+
+
 
 
 
@@ -517,9 +1687,34 @@ app.use(
 // =======================
 
 app.use(
+
   "/api/properties",
+
   propertyRouter
+
 );
+
+
+
+
+
+
+
+
+// =======================
+// BOOKING ROUTES
+// =======================
+
+app.use(
+
+  "/api/bookings",
+
+  bookingRouter
+
+);
+
+
+
 
 
 
@@ -530,13 +1725,27 @@ app.use(
 // HOME ROUTE
 // =======================
 
-app.get("/", (req, res) => {
+app.get(
 
-  res.send(
-    "RentNest Backend Running 🚀"
-  );
+  "/",
 
-});
+  (req, res) => {
+
+
+    res.send(
+
+      "RentNest Backend Running 🚀"
+
+    );
+
+
+  }
+
+);
+
+
+
+
 
 
 
@@ -548,7 +1757,9 @@ app.get("/", (req, res) => {
 // =======================
 
 app.get(
+
   "/api/health",
+
   async (req, res) => {
 
 
@@ -556,27 +1767,65 @@ app.get(
 
 
       const userCount =
+
         await prisma.user.count();
+
+
+
+
+      const propertyCount =
+
+        await prisma.property.count();
+
+
+
+
+      const bookingCount =
+
+        await prisma.booking.count();
+
+
+
+
 
 
 
       res.status(200).json({
 
-        success: true,
+        success:true,
 
 
         message:
+
           "RentNest API and database are healthy",
+
 
 
         data: {
 
+
           database:
+
             "connected",
 
 
+
           totalUsers:
+
             userCount,
+
+
+
+          totalProperties:
+
+            propertyCount,
+
+
+
+          totalBookings:
+
+            bookingCount,
+
 
         },
 
@@ -585,18 +1834,39 @@ app.get(
 
 
 
-    } catch (error) {
+
+
+    } catch(error) {
+
+
+
+      console.error(
+
+        "HEALTH ERROR:",
+
+        error
+
+      );
+
+
 
 
       res.status(500).json({
 
-        success: false,
+        success:false,
 
 
         message:
-          "Database connection failed",
+
+          error instanceof Error
+
+          ? error.message
+
+          : "Database connection failed",
+
 
       });
+
 
 
     }
@@ -611,15 +1881,22 @@ app.get(
 
 
 
+
+
+
+
+
 // =======================
-// PROTECTED PROFILE ROUTE
+// PROFILE ROUTE
 // =======================
 
 app.get(
 
   "/api/profile",
 
+
   authMiddleware,
+
 
 
   (req, res) => {
@@ -627,14 +1904,18 @@ app.get(
 
     res.status(200).json({
 
-      success: true,
+
+      success:true,
 
 
       message:
+
         "Protected route accessed",
 
 
+
       user:
+
         req.user,
 
 
@@ -651,19 +1932,24 @@ app.get(
 
 
 
+
+
 // =======================
-// LANDLORD ONLY TEST ROUTE
+// LANDLORD TEST ROUTE
 // =======================
 
 app.get(
 
   "/api/landlord-test",
 
+
   authMiddleware,
 
 
   authorizeRole(
+
     "LANDLORD"
+
   ),
 
 
@@ -672,18 +1958,23 @@ app.get(
 
     res.status(200).json({
 
-      success: true,
+
+      success:true,
 
 
       message:
+
         "Welcome Landlord! Property management access granted",
 
 
+
       user:
+
         req.user,
 
 
     });
+
 
 
   }
@@ -696,19 +1987,24 @@ app.get(
 
 
 
+
+
 // =======================
-// ADMIN ONLY TEST ROUTE
+// ADMIN TEST ROUTE
 // =======================
 
 app.get(
 
   "/api/admin-test",
 
+
   authMiddleware,
 
 
   authorizeRole(
+
     "ADMIN"
+
   ),
 
 
@@ -717,23 +2013,29 @@ app.get(
 
     res.status(200).json({
 
-      success: true,
+
+      success:true,
 
 
       message:
+
         "Welcome Admin!",
 
 
+
       user:
+
         req.user,
 
 
     });
 
 
+
   }
 
 );
+
 
 
 
