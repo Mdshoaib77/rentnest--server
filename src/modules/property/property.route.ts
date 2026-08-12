@@ -1,3 +1,52 @@
+// import {
+//   Router,
+// } from "express";
+
+
+// import {
+//   createPropertyController,
+// } from "./property.controller";
+
+
+// import {
+//   authMiddleware,
+// } from "../../middlewares/auth.middleware";
+
+
+// import {
+//   authorizeRole,
+// } from "../../middlewares/role.middleware";
+
+
+
+// const router = Router();
+
+
+
+// // Create Property
+// // Only LANDLORD and ADMIN can access
+
+// router.post(
+
+//   "/",
+
+//   authMiddleware,
+
+//   authorizeRole(
+//     "LANDLORD",
+//     "ADMIN"
+//   ),
+
+//   createPropertyController
+
+// );
+
+
+
+// export default router;
+
+
+
 import {
   Router,
 } from "express";
@@ -5,6 +54,8 @@ import {
 
 import {
   createPropertyController,
+  getAllPropertiesController,
+  getSinglePropertyController,
 } from "./property.controller";
 
 
@@ -23,8 +74,47 @@ const router = Router();
 
 
 
-// Create Property
-// Only LANDLORD and ADMIN can access
+
+// =======================
+// GET ALL PROPERTIES
+// Public Route
+// =======================
+
+router.get(
+
+  "/",
+
+  getAllPropertiesController
+
+);
+
+
+
+
+
+
+// =======================
+// GET SINGLE PROPERTY
+// Public Route
+// =======================
+
+router.get(
+
+  "/:id",
+
+  getSinglePropertyController
+
+);
+
+
+
+
+
+
+// =======================
+// CREATE PROPERTY
+// LANDLORD + ADMIN ONLY
+// =======================
 
 router.post(
 
@@ -32,14 +122,18 @@ router.post(
 
   authMiddleware,
 
+
   authorizeRole(
     "LANDLORD",
     "ADMIN"
   ),
 
+
   createPropertyController
 
 );
+
+
 
 
 
