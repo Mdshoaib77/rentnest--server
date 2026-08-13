@@ -1,3 +1,52 @@
+// // // import {
+// // //   Router,
+// // // } from "express";
+
+
+// // // import {
+// // //   createPropertyController,
+// // // } from "./property.controller";
+
+
+// // // import {
+// // //   authMiddleware,
+// // // } from "../../middlewares/auth.middleware";
+
+
+// // // import {
+// // //   authorizeRole,
+// // // } from "../../middlewares/role.middleware";
+
+
+
+// // // const router = Router();
+
+
+
+// // // // Create Property
+// // // // Only LANDLORD and ADMIN can access
+
+// // // router.post(
+
+// // //   "/",
+
+// // //   authMiddleware,
+
+// // //   authorizeRole(
+// // //     "LANDLORD",
+// // //     "ADMIN"
+// // //   ),
+
+// // //   createPropertyController
+
+// // // );
+
+
+
+// // // export default router;
+
+
+
 // // import {
 // //   Router,
 // // } from "express";
@@ -5,6 +54,8 @@
 
 // // import {
 // //   createPropertyController,
+// //   getAllPropertiesController,
+// //   getSinglePropertyController,
 // // } from "./property.controller";
 
 
@@ -23,8 +74,47 @@
 
 
 
-// // // Create Property
-// // // Only LANDLORD and ADMIN can access
+
+// // // =======================
+// // // GET ALL PROPERTIES
+// // // Public Route
+// // // =======================
+
+// // router.get(
+
+// //   "/",
+
+// //   getAllPropertiesController
+
+// // );
+
+
+
+
+
+
+// // // =======================
+// // // GET SINGLE PROPERTY
+// // // Public Route
+// // // =======================
+
+// // router.get(
+
+// //   "/:id",
+
+// //   getSinglePropertyController
+
+// // );
+
+
+
+
+
+
+// // // =======================
+// // // CREATE PROPERTY
+// // // LANDLORD + ADMIN ONLY
+// // // =======================
 
 // // router.post(
 
@@ -32,10 +122,12 @@
 
 // //   authMiddleware,
 
+
 // //   authorizeRole(
 // //     "LANDLORD",
 // //     "ADMIN"
 // //   ),
+
 
 // //   createPropertyController
 
@@ -43,8 +135,9 @@
 
 
 
-// // export default router;
 
+
+// // export default router;
 
 
 // import {
@@ -56,6 +149,8 @@
 //   createPropertyController,
 //   getAllPropertiesController,
 //   getSinglePropertyController,
+//   updatePropertyController,
+//   deletePropertyController,
 // } from "./property.controller";
 
 
@@ -93,6 +188,7 @@
 
 
 
+
 // // =======================
 // // GET SINGLE PROPERTY
 // // Public Route
@@ -105,6 +201,7 @@
 //   getSinglePropertyController
 
 // );
+
 
 
 
@@ -137,6 +234,65 @@
 
 
 
+
+
+
+// // =======================
+// // UPDATE PROPERTY
+// // LANDLORD + ADMIN ONLY
+// // =======================
+
+// router.patch(
+
+//   "/:id",
+
+//   authMiddleware,
+
+
+//   authorizeRole(
+//     "LANDLORD",
+//     "ADMIN"
+//   ),
+
+
+//   updatePropertyController
+
+// );
+
+
+
+
+
+
+
+
+// // =======================
+// // DELETE PROPERTY
+// // LANDLORD + ADMIN ONLY
+// // =======================
+
+// router.delete(
+
+//   "/:id",
+
+//   authMiddleware,
+
+
+//   authorizeRole(
+//     "LANDLORD",
+//     "ADMIN"
+//   ),
+
+
+//   deletePropertyController
+
+// );
+
+
+
+
+
+
 // export default router;
 
 
@@ -145,18 +301,22 @@ import {
 } from "express";
 
 
+
 import {
   createPropertyController,
   getAllPropertiesController,
   getSinglePropertyController,
+  getMyPropertiesController,
   updatePropertyController,
   deletePropertyController,
 } from "./property.controller";
 
 
+
 import {
   authMiddleware,
 } from "../../middlewares/auth.middleware";
+
 
 
 import {
@@ -165,14 +325,35 @@ import {
 
 
 
+import {
+  validate,
+} from "../../middlewares/validate.middleware";
+
+
+
+import {
+  createPropertySchema,
+  updatePropertySchema,
+  propertyIdSchema,
+} from "./property.validation";
+
+
+
+
+
 const router = Router();
+
+
+
+
+
 
 
 
 
 // =======================
 // GET ALL PROPERTIES
-// Public Route
+// PUBLIC
 // =======================
 
 router.get(
@@ -189,14 +370,22 @@ router.get(
 
 
 
+
+
 // =======================
 // GET SINGLE PROPERTY
-// Public Route
+// PUBLIC
 // =======================
 
 router.get(
 
   "/:id",
+
+  validate(
+
+    propertyIdSchema
+
+  ),
 
   getSinglePropertyController
 
@@ -208,9 +397,11 @@ router.get(
 
 
 
+
+
 // =======================
 // CREATE PROPERTY
-// LANDLORD + ADMIN ONLY
+// LANDLORD + ADMIN
 // =======================
 
 router.post(
@@ -221,8 +412,18 @@ router.post(
 
 
   authorizeRole(
+
     "LANDLORD",
+
     "ADMIN"
+
+  ),
+
+
+  validate(
+
+    createPropertySchema
+
   ),
 
 
@@ -237,9 +438,41 @@ router.post(
 
 
 
+
+// =======================
+// GET MY PROPERTIES
+// LANDLORD
+// =======================
+
+router.get(
+
+  "/my-properties",
+
+  authMiddleware,
+
+
+  authorizeRole(
+
+    "LANDLORD"
+
+  ),
+
+
+  getMyPropertiesController
+
+);
+
+
+
+
+
+
+
+
+
 // =======================
 // UPDATE PROPERTY
-// LANDLORD + ADMIN ONLY
+// LANDLORD + ADMIN
 // =======================
 
 router.patch(
@@ -250,8 +483,25 @@ router.patch(
 
 
   authorizeRole(
+
     "LANDLORD",
+
     "ADMIN"
+
+  ),
+
+
+  validate(
+
+    propertyIdSchema
+
+  ),
+
+
+  validate(
+
+    updatePropertySchema
+
   ),
 
 
@@ -266,9 +516,10 @@ router.patch(
 
 
 
+
 // =======================
 // DELETE PROPERTY
-// LANDLORD + ADMIN ONLY
+// LANDLORD + ADMIN
 // =======================
 
 router.delete(
@@ -279,14 +530,25 @@ router.delete(
 
 
   authorizeRole(
+
     "LANDLORD",
+
     "ADMIN"
+
+  ),
+
+
+  validate(
+
+    propertyIdSchema
+
   ),
 
 
   deletePropertyController
 
 );
+
 
 
 
