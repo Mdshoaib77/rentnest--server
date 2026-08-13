@@ -1,16 +1,80 @@
+// // // // // import {
+// // // // //   Router,
+// // // // // } from "express";
+
+
+// // // // // import {
+// // // // //   getAdminStatsController,
+// // // // // } from "./admin.controller";
+
+
+// // // // // import {
+// // // // //   authMiddleware,
+// // // // // } from "../../middlewares/auth.middleware";
+
+
+// // // // // import {
+// // // // //   authorizeRole,
+// // // // // } from "../../middlewares/role.middleware";
+
+
+
+
+
+// // // // // const router = Router();
+
+
+
+
+
+
+
+// // // // // // =======================
+// // // // // // ADMIN DASHBOARD STATS
+// // // // // // ADMIN ONLY
+// // // // // // =======================
+
+// // // // // router.get(
+
+// // // // //   "/stats",
+
+// // // // //   authMiddleware,
+
+// // // // //   authorizeRole(
+
+// // // // //     "ADMIN"
+
+// // // // //   ),
+
+// // // // //   getAdminStatsController
+
+// // // // // );
+
+
+
+
+
+
+// // // // // export default router;
+
+
 // // // // import {
 // // // //   Router,
 // // // // } from "express";
 
 
+
 // // // // import {
 // // // //   getAdminStatsController,
+// // // //   getAllUsersController,
 // // // // } from "./admin.controller";
+
 
 
 // // // // import {
 // // // //   authMiddleware,
 // // // // } from "../../middlewares/auth.middleware";
+
 
 
 // // // // import {
@@ -55,6 +119,36 @@
 
 
 
+
+
+
+// // // // // =======================
+// // // // // GET ALL USERS
+// // // // // ADMIN ONLY
+// // // // // =======================
+
+// // // // router.get(
+
+// // // //   "/users",
+
+// // // //   authMiddleware,
+
+// // // //   authorizeRole(
+
+// // // //     "ADMIN"
+
+// // // //   ),
+
+// // // //   getAllUsersController
+
+// // // // );
+
+
+
+
+
+
+
 // // // // export default router;
 
 
@@ -67,6 +161,7 @@
 // // // import {
 // // //   getAdminStatsController,
 // // //   getAllUsersController,
+// // //   getAllPropertiesController,
 // // // } from "./admin.controller";
 
 
@@ -149,6 +244,35 @@
 
 
 
+
+
+// // // // =======================
+// // // // GET ALL PROPERTIES
+// // // // ADMIN ONLY
+// // // // =======================
+
+// // // router.get(
+
+// // //   "/properties",
+
+// // //   authMiddleware,
+
+// // //   authorizeRole(
+
+// // //     "ADMIN"
+
+// // //   ),
+
+// // //   getAllPropertiesController
+
+// // // );
+
+
+
+
+
+
+
 // // // export default router;
 
 
@@ -162,6 +286,7 @@
 // //   getAdminStatsController,
 // //   getAllUsersController,
 // //   getAllPropertiesController,
+// //   getAllBookingsController,
 // // } from "./admin.controller";
 
 
@@ -273,8 +398,36 @@
 
 
 
-// // export default router;
 
+
+// // // =======================
+// // // GET ALL BOOKINGS
+// // // ADMIN ONLY
+// // // =======================
+
+// // router.get(
+
+// //   "/bookings",
+
+// //   authMiddleware,
+
+// //   authorizeRole(
+
+// //     "ADMIN"
+
+// //   ),
+
+// //   getAllBookingsController
+
+// // );
+
+
+
+
+
+
+
+// // export default router;
 
 // import {
 //   Router,
@@ -287,6 +440,7 @@
 //   getAllUsersController,
 //   getAllPropertiesController,
 //   getAllBookingsController,
+//   deleteUserController,
 // } from "./admin.controller";
 
 
@@ -372,6 +526,35 @@
 
 
 // // =======================
+// // DELETE USER
+// // ADMIN ONLY
+// // =======================
+
+// router.delete(
+
+//   "/users/:id",
+
+//   authMiddleware,
+
+//   authorizeRole(
+
+//     "ADMIN"
+
+//   ),
+
+//   deleteUserController
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
 // // GET ALL PROPERTIES
 // // ADMIN ONLY
 // // =======================
@@ -429,6 +612,7 @@
 
 // export default router;
 
+
 import {
   Router,
 } from "express";
@@ -441,6 +625,7 @@ import {
   getAllPropertiesController,
   getAllBookingsController,
   deleteUserController,
+  deletePropertyController,
 } from "./admin.controller";
 
 
@@ -572,6 +757,35 @@ router.get(
   ),
 
   getAllPropertiesController
+
+);
+
+
+
+
+
+
+
+
+
+// =======================
+// DELETE PROPERTY
+// ADMIN ONLY
+// =======================
+
+router.delete(
+
+  "/properties/:id",
+
+  authMiddleware,
+
+  authorizeRole(
+
+    "ADMIN"
+
+  ),
+
+  deletePropertyController
 
 );
 

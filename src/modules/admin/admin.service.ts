@@ -1,3 +1,123 @@
+// // // // // import prisma from "../../lib/prisma";
+
+
+
+
+// // // // // // =======================
+// // // // // // GET ADMIN DASHBOARD STATS
+// // // // // // =======================
+
+// // // // // export const getAdminStats = async () => {
+
+
+// // // // //   const totalUsers =
+
+// // // // //     await prisma.user.count();
+
+
+
+
+// // // // //   const totalProperties =
+
+// // // // //     await prisma.property.count();
+
+
+
+
+// // // // //   const totalBookings =
+
+// // // // //     await prisma.booking.count();
+
+
+
+
+// // // // //   const pendingBookings =
+
+// // // // //     await prisma.booking.count({
+
+// // // // //       where: {
+
+
+// // // // //         status: "PENDING",
+
+
+// // // // //       },
+
+
+// // // // //     });
+
+
+
+
+
+// // // // //   const acceptedBookings =
+
+// // // // //     await prisma.booking.count({
+
+// // // // //       where: {
+
+
+// // // // //         status: "ACCEPTED",
+
+
+// // // // //       },
+
+
+// // // // //     });
+
+
+
+
+
+
+// // // // //   const rejectedBookings =
+
+// // // // //     await prisma.booking.count({
+
+// // // // //       where: {
+
+
+// // // // //         status: "REJECTED",
+
+
+// // // // //       },
+
+
+// // // // //     });
+
+
+
+
+
+
+
+// // // // //   return {
+
+
+// // // // //     totalUsers,
+
+
+// // // // //     totalProperties,
+
+
+// // // // //     totalBookings,
+
+
+// // // // //     pendingBookings,
+
+
+// // // // //     acceptedBookings,
+
+
+// // // // //     rejectedBookings,
+
+
+// // // // //   };
+
+
+// // // // // };
+
+
 // // // // import prisma from "../../lib/prisma";
 
 
@@ -37,12 +157,9 @@
 
 // // // //       where: {
 
-
 // // // //         status: "PENDING",
 
-
 // // // //       },
-
 
 // // // //     });
 
@@ -56,15 +173,11 @@
 
 // // // //       where: {
 
-
 // // // //         status: "ACCEPTED",
-
 
 // // // //       },
 
-
 // // // //     });
-
 
 
 
@@ -76,12 +189,9 @@
 
 // // // //       where: {
 
-
 // // // //         status: "REJECTED",
 
-
 // // // //       },
-
 
 // // // //     });
 
@@ -113,6 +223,70 @@
 
 
 // // // //   };
+
+
+// // // // };
+
+
+
+
+
+
+
+
+
+// // // // // =======================
+// // // // // GET ALL USERS
+// // // // // ADMIN ONLY
+// // // // // =======================
+
+// // // // export const getAllUsers = async () => {
+
+
+// // // //   const users =
+
+// // // //     await prisma.user.findMany({
+
+// // // //       select: {
+
+
+// // // //         id: true,
+
+
+// // // //         name: true,
+
+
+// // // //         email: true,
+
+
+// // // //         role: true,
+
+
+// // // //         createdAt: true,
+
+
+// // // //         updatedAt: true,
+
+
+// // // //       },
+
+
+// // // //       orderBy: {
+
+
+// // // //         createdAt: "desc",
+
+
+// // // //       },
+
+
+// // // //     });
+
+
+
+
+
+// // // //   return users;
 
 
 // // // // };
@@ -287,6 +461,73 @@
 
 
 // // //   return users;
+
+
+// // // };
+
+
+
+
+
+
+
+
+
+// // // // =======================
+// // // // GET ALL PROPERTIES
+// // // // ADMIN ONLY
+// // // // =======================
+
+// // // export const getAllProperties = async () => {
+
+
+// // //   const properties =
+
+// // //     await prisma.property.findMany({
+
+// // //       include: {
+
+
+// // //         landlord: {
+
+
+// // //           select: {
+
+
+// // //             id: true,
+
+
+// // //             name: true,
+
+
+// // //             email: true,
+
+
+// // //           },
+
+
+// // //         },
+
+
+// // //       },
+
+
+// // //       orderBy: {
+
+
+// // //         createdAt: "desc",
+
+
+// // //       },
+
+
+// // //     });
+
+
+
+
+
+// // //   return properties;
 
 
 // // // };
@@ -532,6 +773,118 @@
 
 // // };
 
+
+
+
+
+
+
+
+
+// // // =======================
+// // // GET ALL BOOKINGS
+// // // ADMIN ONLY
+// // // =======================
+
+// // export const getAllBookings = async () => {
+
+
+// //   const bookings =
+
+// //     await prisma.booking.findMany({
+
+// //       include: {
+
+
+// //         property: {
+
+
+// //           select: {
+
+
+// //             id: true,
+
+
+// //             title: true,
+
+
+// //             location: true,
+
+
+// //             price: true,
+
+
+// //             landlord: {
+
+
+// //               select: {
+
+
+// //                 id: true,
+
+
+// //                 name: true,
+
+
+// //                 email: true,
+
+
+// //               },
+
+
+// //             },
+
+
+// //           },
+
+
+// //         },
+
+
+
+// //         tenant: {
+
+
+// //           select: {
+
+
+// //             id: true,
+
+
+// //             name: true,
+
+
+// //             email: true,
+
+
+// //           },
+
+
+// //         },
+
+
+// //       },
+
+
+// //       orderBy: {
+
+
+// //         createdAt: "desc",
+
+
+// //       },
+
+
+// //     });
+
+
+
+
+
+// //   return bookings;
+
+
+// // };
 
 // import prisma from "../../lib/prisma";
 
@@ -886,6 +1239,125 @@
 
 // };
 
+
+
+
+
+
+
+
+
+// // =======================
+// // DELETE USER
+// // ADMIN ONLY
+// // =======================
+
+// export const deleteUser = async (
+
+//   userId: string,
+
+//   adminId: string
+
+// ) => {
+
+
+//   if (
+
+//     userId === adminId
+
+//   ) {
+
+
+//     throw new Error(
+
+//       "Admin cannot delete own account"
+
+//     );
+
+
+//   }
+
+
+
+
+
+//   const user =
+
+//     await prisma.user.findUnique({
+
+//       where: {
+
+
+//         id: userId,
+
+
+//       },
+
+
+//     });
+
+
+
+
+
+//   if (!user) {
+
+
+//     throw new Error(
+
+//       "User not found"
+
+//     );
+
+
+//   }
+
+
+
+
+
+//   const deletedUser =
+
+//     await prisma.user.delete({
+
+//       where: {
+
+
+//         id: userId,
+
+
+//       },
+
+
+//       select: {
+
+
+//         id: true,
+
+
+//         name: true,
+
+
+//         email: true,
+
+
+//         role: true,
+
+
+//       },
+
+
+//     });
+
+
+
+
+
+//   return deletedUser;
+
+
+// };
+
 import prisma from "../../lib/prisma";
 
 
@@ -899,28 +1371,21 @@ export const getAdminStats = async () => {
 
 
   const totalUsers =
-
     await prisma.user.count();
 
 
 
-
   const totalProperties =
-
     await prisma.property.count();
 
 
 
-
   const totalBookings =
-
     await prisma.booking.count();
 
 
 
-
   const pendingBookings =
-
     await prisma.booking.count({
 
       where: {
@@ -934,9 +1399,7 @@ export const getAdminStats = async () => {
 
 
 
-
   const acceptedBookings =
-
     await prisma.booking.count({
 
       where: {
@@ -950,9 +1413,7 @@ export const getAdminStats = async () => {
 
 
 
-
   const rejectedBookings =
-
     await prisma.booking.count({
 
       where: {
@@ -967,28 +1428,19 @@ export const getAdminStats = async () => {
 
 
 
-
-
   return {
-
 
     totalUsers,
 
-
     totalProperties,
-
 
     totalBookings,
 
-
     pendingBookings,
-
 
     acceptedBookings,
 
-
     rejectedBookings,
-
 
   };
 
@@ -1011,50 +1463,32 @@ export const getAdminStats = async () => {
 export const getAllUsers = async () => {
 
 
-  const users =
+  return await prisma.user.findMany({
 
-    await prisma.user.findMany({
+    select: {
 
-      select: {
+      id: true,
 
+      name: true,
 
-        id: true,
+      email: true,
 
+      role: true,
 
-        name: true,
+      createdAt: true,
 
+      updatedAt: true,
 
-        email: true,
-
-
-        role: true,
-
-
-        createdAt: true,
+    },
 
 
-        updatedAt: true,
+    orderBy: {
 
+      createdAt: "desc",
 
-      },
+    },
 
-
-      orderBy: {
-
-
-        createdAt: "desc",
-
-
-      },
-
-
-    });
-
-
-
-
-
-  return users;
+  });
 
 
 };
@@ -1075,53 +1509,36 @@ export const getAllUsers = async () => {
 export const getAllProperties = async () => {
 
 
-  const properties =
+  return await prisma.property.findMany({
 
-    await prisma.property.findMany({
-
-      include: {
+    include: {
 
 
-        landlord: {
+      landlord: {
 
+        select: {
 
-          select: {
+          id: true,
 
+          name: true,
 
-            id: true,
-
-
-            name: true,
-
-
-            email: true,
-
-
-          },
-
+          email: true,
 
         },
 
-
       },
 
 
-      orderBy: {
+    },
 
 
-        createdAt: "desc",
+    orderBy: {
 
+      createdAt: "desc",
 
-      },
+    },
 
-
-    });
-
-
-
-
-
-  return properties;
+  });
 
 
 };
@@ -1142,74 +1559,38 @@ export const getAllProperties = async () => {
 export const getAllBookings = async () => {
 
 
-  const bookings =
+  return await prisma.booking.findMany({
 
-    await prisma.booking.findMany({
-
-      include: {
+    include: {
 
 
-        property: {
+      property: {
 
 
-          select: {
+        select: {
 
 
-            id: true,
+          id: true,
+
+          title: true,
+
+          location: true,
+
+          price: true,
 
 
-            title: true,
+          landlord: {
 
+            select: {
 
-            location: true,
+              id: true,
 
+              name: true,
 
-            price: true,
-
-
-            landlord: {
-
-
-              select: {
-
-
-                id: true,
-
-
-                name: true,
-
-
-                email: true,
-
-
-              },
-
+              email: true,
 
             },
 
-
-          },
-
-
-        },
-
-
-
-        tenant: {
-
-
-          select: {
-
-
-            id: true,
-
-
-            name: true,
-
-
-            email: true,
-
-
           },
 
 
@@ -1219,22 +1600,33 @@ export const getAllBookings = async () => {
       },
 
 
-      orderBy: {
 
+      tenant: {
 
-        createdAt: "desc",
+        select: {
 
+          id: true,
+
+          name: true,
+
+          email: true,
+
+        },
 
       },
 
 
-    });
+    },
 
 
+    orderBy: {
+
+      createdAt: "desc",
+
+    },
 
 
-
-  return bookings;
+  });
 
 
 };
@@ -1261,11 +1653,8 @@ export const deleteUser = async (
 ) => {
 
 
-  if (
 
-    userId === adminId
-
-  ) {
+  if (userId === adminId) {
 
 
     throw new Error(
@@ -1287,12 +1676,9 @@ export const deleteUser = async (
 
       where: {
 
-
         id: userId,
 
-
       },
-
 
     });
 
@@ -1316,33 +1702,68 @@ export const deleteUser = async (
 
 
 
-  const deletedUser =
+  return await prisma.user.delete({
 
-    await prisma.user.delete({
+    where: {
+
+      id: userId,
+
+    },
+
+
+    select: {
+
+      id: true,
+
+      name: true,
+
+      email: true,
+
+      role: true,
+
+    },
+
+
+  });
+
+
+};
+
+
+
+
+
+
+
+
+
+// =======================
+// DELETE PROPERTY
+// ADMIN ONLY
+// =======================
+
+export const deleteProperty = async (
+
+  propertyId: string
+
+) => {
+
+
+
+  const property =
+
+    await prisma.property.findUnique({
 
       where: {
 
-
-        id: userId,
-
+        id: propertyId,
 
       },
 
 
-      select: {
+      include: {
 
-
-        id: true,
-
-
-        name: true,
-
-
-        email: true,
-
-
-        role: true,
-
+        bookings: true,
 
       },
 
@@ -1353,7 +1774,63 @@ export const deleteUser = async (
 
 
 
-  return deletedUser;
+  if (!property) {
+
+
+    throw new Error(
+
+      "Property not found"
+
+    );
+
+
+  }
+
+
+
+
+
+  if (property.bookings.length > 0) {
+
+
+    throw new Error(
+
+      "Cannot delete property with existing bookings"
+
+    );
+
+
+  }
+
+
+
+
+
+  return await prisma.property.delete({
+
+    where: {
+
+      id: propertyId,
+
+    },
+
+
+    select: {
+
+      id: true,
+
+      title: true,
+
+      location: true,
+
+      price: true,
+
+      landlordId: true,
+
+    },
+
+
+  });
 
 
 };
