@@ -1,46 +1,239 @@
-// import type { Request, Response } from "express";
-// import {
-//   registerValidationSchema,
-// } from "./auth.validation";
+// // import type { Request, Response } from "express";
+// // import {
+// //   registerValidationSchema,
+// // } from "./auth.validation";
+
+// // import {
+// //   registerUser,
+// // } from "./auth.service";
+
+
+// // export const registerController = async (
+// //   req: Request,
+// //   res: Response
+// // ) => {
+
+// //   try {
+
+// //     const validatedData =
+// //       registerValidationSchema.parse(req.body);
+
+
+// //     const user =
+// //       await registerUser(validatedData);
+
+
+// //     res.status(201).json({
+// //       success: true,
+// //       message: "User registered successfully",
+// //       data: user,
+// //     });
+
+
+// //   } catch (error) {
+
+// //     res.status(400).json({
+// //       success: false,
+// //       message:
+// //         error instanceof Error
+// //           ? error.message
+// //           : "Something went wrong",
+// //     });
+
+// //   }
+
+// // };
+
+
+// import type {
+//   Request,
+//   Response,
+// } from "express";
+
 
 // import {
+
+//   registerValidationSchema,
+
+//   loginValidationSchema,
+
+// } from "./auth.validation";
+
+
+
+// import {
+
 //   registerUser,
+
+//   loginUser,
+
 // } from "./auth.service";
 
 
-// export const registerController = async (
+
+
+
+// // Register Controller
+
+// export const registerController =
+// async (
+
 //   req: Request,
+
 //   res: Response
+
 // ) => {
+
 
 //   try {
 
+
 //     const validatedData =
-//       registerValidationSchema.parse(req.body);
+
+//       registerValidationSchema.parse(
+
+//         req.body
+
+//       );
+
+
 
 
 //     const user =
-//       await registerUser(validatedData);
+
+//       await registerUser(
+
+//         validatedData
+
+//       );
+
+
+
 
 
 //     res.status(201).json({
+
 //       success: true,
-//       message: "User registered successfully",
+
+//       message:
+//         "User registered successfully",
+
 //       data: user,
+
 //     });
+
+
 
 
 //   } catch (error) {
 
+
+
 //     res.status(400).json({
+
 //       success: false,
+
 //       message:
+
 //         error instanceof Error
+
 //           ? error.message
+
 //           : "Something went wrong",
+
 //     });
 
+
 //   }
+
+
+// };
+
+
+
+
+
+
+
+// // Login Controller
+
+// export const loginController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+
+//   try {
+
+
+//     const validatedData =
+
+//       loginValidationSchema.parse(
+
+//         req.body
+
+//       );
+
+
+
+
+
+//     const result =
+
+//       await loginUser(
+
+//         validatedData
+
+//       );
+
+
+
+
+
+//     res.status(200).json({
+
+//       success: true,
+
+//       message:
+
+//         "Login successful",
+
+
+//       data: result,
+
+
+//     });
+
+
+
+
+//   } catch (error) {
+
+
+
+//     res.status(400).json({
+
+//       success: false,
+
+//       message:
+
+//         error instanceof Error
+
+//           ? error.message
+
+//           : "Login failed",
+
+//     });
+
+
+
+//   }
+
 
 // };
 
@@ -49,16 +242,6 @@ import type {
   Request,
   Response,
 } from "express";
-
-
-import {
-
-  registerValidationSchema,
-
-  loginValidationSchema,
-
-} from "./auth.validation";
-
 
 
 import {
@@ -73,9 +256,16 @@ import {
 
 
 
-// Register Controller
+
+
+
+
+// =======================
+// REGISTER CONTROLLER
+// =======================
 
 export const registerController =
+
 async (
 
   req: Request,
@@ -88,22 +278,11 @@ async (
   try {
 
 
-    const validatedData =
-
-      registerValidationSchema.parse(
-
-        req.body
-
-      );
-
-
-
-
     const user =
 
       await registerUser(
 
-        validatedData
+        req.body
 
       );
 
@@ -113,14 +292,21 @@ async (
 
     res.status(201).json({
 
+
       success: true,
 
+
       message:
+
         "User registered successfully",
+
+
 
       data: user,
 
+
     });
+
 
 
 
@@ -131,17 +317,22 @@ async (
 
     res.status(400).json({
 
+
       success: false,
+
 
       message:
 
+
         error instanceof Error
 
-          ? error.message
+        ? error.message
 
-          : "Something went wrong",
+        : "Something went wrong",
+
 
     });
+
 
 
   }
@@ -155,9 +346,16 @@ async (
 
 
 
-// Login Controller
+
+
+
+
+// =======================
+// LOGIN CONTROLLER
+// =======================
 
 export const loginController =
+
 async (
 
   req: Request,
@@ -171,9 +369,10 @@ async (
   try {
 
 
-    const validatedData =
 
-      loginValidationSchema.parse(
+    const result =
+
+      await loginUser(
 
         req.body
 
@@ -183,25 +382,16 @@ async (
 
 
 
-    const result =
-
-      await loginUser(
-
-        validatedData
-
-      );
-
-
-
-
-
     res.status(200).json({
 
+
       success: true,
+
 
       message:
 
         "Login successful",
+
 
 
       data: result,
@@ -212,21 +402,26 @@ async (
 
 
 
+
   } catch (error) {
 
 
 
     res.status(400).json({
 
+
       success: false,
+
 
       message:
 
+
         error instanceof Error
 
-          ? error.message
+        ? error.message
 
-          : "Login failed",
+        : "Login failed",
+
 
     });
 
