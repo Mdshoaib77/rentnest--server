@@ -1,608 +1,242 @@
+"use strict";
 // // // import {
 // // //   Router,
 // // // } from "express";
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
 // // // import {
 // // //   createBookingController,
 // // // } from "./booking.controller";
-
-
 // // // import {
 // // //   authMiddleware,
 // // // } from "../../middlewares/auth.middleware";
-
-
 // // // import {
 // // //   authorizeRole,
 // // // } from "../../middlewares/role.middleware";
-
-
-
 // // // const router = Router();
-
-
-
-
-
 // // // // =======================
 // // // // CREATE BOOKING
 // // // // TENANT ONLY
 // // // // =======================
-
 // // // router.post(
-
 // // //   "/",
-
 // // //   authMiddleware,
-
-
 // // //   authorizeRole(
 // // //     "TENANT"
 // // //   ),
-
-
 // // //   createBookingController
-
 // // // );
-
-
-
-
-
 // // // export default router;
-
-
 // // import {
 // //   Router,
 // // } from "express";
-
-
 // // import {
 // //   createBookingController,
 // //   getMyBookingsController,
 // //   getLandlordBookingsController,
 // // } from "./booking.controller";
-
-
-
 // // import {
 // //   authMiddleware,
 // // } from "../../middlewares/auth.middleware";
-
-
-
 // // import {
 // //   authorizeRole,
 // // } from "../../middlewares/role.middleware";
-
-
-
-
-
 // // const router = Router();
-
-
-
-
-
-
-
 // // // =======================
 // // // CREATE BOOKING
 // // // TENANT ONLY
 // // // =======================
-
 // // router.post(
-
 // //   "/",
-
 // //   authMiddleware,
-
 // //   authorizeRole(
 // //     "TENANT"
 // //   ),
-
 // //   createBookingController
-
 // // );
-
-
-
-
-
-
-
 // // // =======================
 // // // GET MY BOOKINGS
 // // // TENANT ONLY
 // // // =======================
-
 // // router.get(
-
 // //   "/my-bookings",
-
 // //   authMiddleware,
-
 // //   authorizeRole(
 // //     "TENANT"
 // //   ),
-
 // //   getMyBookingsController
-
 // // );
-
-
-
-
-
-
-
 // // // =======================
 // // // GET LANDLORD BOOKINGS
 // // // LANDLORD ONLY
 // // // =======================
-
 // // router.get(
-
 // //   "/landlord",
-
 // //   authMiddleware,
-
 // //   authorizeRole(
 // //     "LANDLORD"
 // //   ),
-
 // //   getLandlordBookingsController
-
 // // );
-
-
-
-
-
-
 // // export default router;
-
-
 // import {
 //   Router,
 // } from "express";
-
-
-
 // import {
 //   createBookingController,
 //   getMyBookingsController,
 //   getLandlordBookingsController,
 //   updateBookingStatusController,
 // } from "./booking.controller";
-
-
-
 // import {
 //   authMiddleware,
 // } from "../../middlewares/auth.middleware";
-
-
-
 // import {
 //   authorizeRole,
 // } from "../../middlewares/role.middleware";
-
-
-
-
-
 // const router = Router();
-
-
-
-
-
-
-
 // // =======================
 // // CREATE BOOKING
 // // TENANT ONLY
 // // =======================
-
 // router.post(
-
 //   "/",
-
 //   authMiddleware,
-
 //   authorizeRole(
 //     "TENANT"
 //   ),
-
 //   createBookingController
-
 // );
-
-
-
-
-
-
-
-
-
 // // =======================
 // // GET MY BOOKINGS
 // // TENANT ONLY
 // // =======================
-
 // router.get(
-
 //   "/my-bookings",
-
 //   authMiddleware,
-
 //   authorizeRole(
 //     "TENANT"
 //   ),
-
 //   getMyBookingsController
-
 // );
-
-
-
-
-
-
-
-
-
 // // =======================
 // // GET LANDLORD BOOKINGS
 // // LANDLORD ONLY
 // // =======================
-
 // router.get(
-
 //   "/landlord",
-
 //   authMiddleware,
-
 //   authorizeRole(
 //     "LANDLORD"
 //   ),
-
 //   getLandlordBookingsController
-
 // );
-
-
-
-
-
-
-
-
-
 // // =======================
 // // UPDATE BOOKING STATUS
 // // LANDLORD ONLY
 // // =======================
-
 // router.patch(
-
 //   "/:id/status",
-
 //   authMiddleware,
-
 //   authorizeRole(
 //     "LANDLORD"
 //   ),
-
 //   updateBookingStatusController
-
 // );
-
-
-
-
-
-
-
 // export default router;
-
-
-
 // import {
 //   Router,
 // } from "express";
-
-
-
 // import {
-
 //   createBookingController,
-
 //   getTenantBookingsController,
-
 //   getLandlordBookingsController,
-
 //   updateBookingStatusController,
-
 // } from "./booking.controller";
-
-
-
 // import {
-
 //   authMiddleware,
-
 // } from "../../middlewares/auth.middleware";
-
-
-
 // import {
-
 //   authorizeRole,
-
 // } from "../../middlewares/role.middleware";
-
-
-
 // import {
-
 //   validate,
-
 // } from "../../middlewares/validate.middleware";
-
-
-
 // import {
-
 //   createBookingSchema,
-
 //   bookingIdSchema,
-
 //   updateBookingStatusSchema,
-
 // } from "./booking.validation";
-
-
-
-
-
 // const router = Router();
-
-
-
-
-
-
-
-
-
 // // =======================
 // // CREATE BOOKING
 // // TENANT ONLY
 // // =======================
-
 // router.post(
-
 //   "/",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "TENANT"
-
 //   ),
-
-
 //   validate(
-
 //     createBookingSchema
-
 //   ),
-
-
 //   createBookingController
-
 // );
-
-
-
-
-
-
-
-
-
 // // =======================
 // // TENANT BOOKINGS
 // // TENANT ONLY
 // // =======================
-
 // router.get(
-
 //   "/tenant",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "TENANT"
-
 //   ),
-
-
 //   getTenantBookingsController
-
 // );
-
-
-
-
-
-
-
-
-
 // // =======================
 // // LANDLORD BOOKINGS
 // // LANDLORD ONLY
 // // =======================
-
 // router.get(
-
 //   "/landlord",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "LANDLORD"
-
 //   ),
-
-
 //   getLandlordBookingsController
-
 // );
-
-
-
-
-
-
-
-
-
 // // =======================
 // // UPDATE BOOKING STATUS
 // // LANDLORD + ADMIN
 // // =======================
-
 // router.patch(
-
 //   "/:id/status",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "LANDLORD",
-
 //     "ADMIN"
-
 //   ),
-
-
 //   validate(
-
 //     bookingIdSchema
-
 //   ),
-
-
 //   validate(
-
 //     updateBookingStatusSchema
-
 //   ),
-
-
 //   updateBookingStatusController
-
 // );
-
-
-
-
-
-
-
 // export default router;
-
-
-import {
-  Router,
-} from "express";
-
-
-
-import {
-
-  createBookingController,
-
-  getTenantBookingsController,
-
-  getLandlordBookingsController,
-
-  updateBookingStatusController,
-
-} from "./booking.controller";
-
-
-
-import {
-
-  authMiddleware,
-
-} from "../../middlewares/auth.middleware";
-
-
-
-import {
-
-  authorizeRole,
-
-} from "../../middlewares/role.middleware";
-
-
-
-import {
-
-  validate,
-
-} from "../../middlewares/validate.middleware";
-
-
-
-import {
-
-  createBookingSchema,
-
-  bookingIdSchema,
-
-  updateBookingStatusSchema,
-
-} from "./booking.validation";
-
-
-
-
-
-
-const router = Router();
-
-
-
-
-
-
-
-
-
+const express_1 = require("express");
+const booking_controller_1 = require("./booking.controller");
+const auth_middleware_1 = require("../../middlewares/auth.middleware");
+const role_middleware_1 = require("../../middlewares/role.middleware");
+const validate_middleware_1 = require("../../middlewares/validate.middleware");
+const booking_validation_1 = require("./booking.validation");
+const router = (0, express_1.Router)();
 // =======================
 // CREATE BOOKING
 // TENANT ONLY
 // =======================
-
-
 /**
  * @swagger
  * /api/bookings:
@@ -652,49 +286,11 @@ const router = Router();
  *         description: Booking creation failed
  *
  */
-
-
-router.post(
-
-  "/",
-
-  authMiddleware,
-
-
-  authorizeRole(
-
-    "TENANT"
-
-  ),
-
-
-  validate(
-
-    createBookingSchema
-
-  ),
-
-
-  createBookingController
-
-);
-
-
-
-
-
-
-
-
-
-
-
+router.post("/", auth_middleware_1.authMiddleware, (0, role_middleware_1.authorizeRole)("TENANT"), (0, validate_middleware_1.validate)(booking_validation_1.createBookingSchema), booking_controller_1.createBookingController);
 // =======================
 // TENANT BOOKINGS
 // TENANT ONLY
 // =======================
-
-
 /**
  * @swagger
  * /api/bookings/tenant:
@@ -714,42 +310,11 @@ router.post(
  *         description: Bookings fetched successfully
  *
  */
-
-
-router.get(
-
-  "/tenant",
-
-  authMiddleware,
-
-
-  authorizeRole(
-
-    "TENANT"
-
-  ),
-
-
-  getTenantBookingsController
-
-);
-
-
-
-
-
-
-
-
-
-
-
+router.get("/tenant", auth_middleware_1.authMiddleware, (0, role_middleware_1.authorizeRole)("TENANT"), booking_controller_1.getTenantBookingsController);
 // =======================
 // LANDLORD BOOKINGS
 // LANDLORD ONLY
 // =======================
-
-
 /**
  * @swagger
  * /api/bookings/landlord:
@@ -769,42 +334,11 @@ router.get(
  *         description: Landlord bookings fetched successfully
  *
  */
-
-
-router.get(
-
-  "/landlord",
-
-  authMiddleware,
-
-
-  authorizeRole(
-
-    "LANDLORD"
-
-  ),
-
-
-  getLandlordBookingsController
-
-);
-
-
-
-
-
-
-
-
-
-
-
+router.get("/landlord", auth_middleware_1.authMiddleware, (0, role_middleware_1.authorizeRole)("LANDLORD"), booking_controller_1.getLandlordBookingsController);
 // =======================
 // UPDATE BOOKING STATUS
 // LANDLORD + ADMIN
 // =======================
-
-
 /**
  * @swagger
  * /api/bookings/{id}/status:
@@ -865,48 +399,5 @@ router.get(
  *         description: Status update failed
  *
  */
-
-
-router.patch(
-
-  "/:id/status",
-
-  authMiddleware,
-
-
-  authorizeRole(
-
-    "LANDLORD",
-
-    "ADMIN"
-
-  ),
-
-
-  validate(
-
-    bookingIdSchema
-
-  ),
-
-
-  validate(
-
-    updateBookingStatusSchema
-
-  ),
-
-
-  updateBookingStatusController
-
-);
-
-
-
-
-
-
-
-
-
-export default router;
+router.patch("/:id/status", auth_middleware_1.authMiddleware, (0, role_middleware_1.authorizeRole)("LANDLORD", "ADMIN"), (0, validate_middleware_1.validate)(booking_validation_1.bookingIdSchema), (0, validate_middleware_1.validate)(booking_validation_1.updateBookingStatusSchema), booking_controller_1.updateBookingStatusController);
+exports.default = router;

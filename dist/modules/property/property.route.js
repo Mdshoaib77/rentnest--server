@@ -1,150 +1,78 @@
+"use strict";
 // // // import {
 // // //   Router,
 // // // } from "express";
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
 // // // import {
 // // //   createPropertyController,
 // // // } from "./property.controller";
-
-
 // // // import {
 // // //   authMiddleware,
 // // // } from "../../middlewares/auth.middleware";
-
-
 // // // import {
 // // //   authorizeRole,
 // // // } from "../../middlewares/role.middleware";
-
-
-
 // // // const router = Router();
-
-
-
 // // // // Create Property
 // // // // Only LANDLORD and ADMIN can access
-
 // // // router.post(
-
 // // //   "/",
-
 // // //   authMiddleware,
-
 // // //   authorizeRole(
 // // //     "LANDLORD",
 // // //     "ADMIN"
 // // //   ),
-
 // // //   createPropertyController
-
 // // // );
-
-
-
 // // // export default router;
-
-
-
 // // import {
 // //   Router,
 // // } from "express";
-
-
 // // import {
 // //   createPropertyController,
 // //   getAllPropertiesController,
 // //   getSinglePropertyController,
 // // } from "./property.controller";
-
-
 // // import {
 // //   authMiddleware,
 // // } from "../../middlewares/auth.middleware";
-
-
 // // import {
 // //   authorizeRole,
 // // } from "../../middlewares/role.middleware";
-
-
-
 // // const router = Router();
-
-
-
-
 // // // =======================
 // // // GET ALL PROPERTIES
 // // // Public Route
 // // // =======================
-
 // // router.get(
-
 // //   "/",
-
 // //   getAllPropertiesController
-
 // // );
-
-
-
-
-
-
 // // // =======================
 // // // GET SINGLE PROPERTY
 // // // Public Route
 // // // =======================
-
 // // router.get(
-
 // //   "/:id",
-
 // //   getSinglePropertyController
-
 // // );
-
-
-
-
-
-
 // // // =======================
 // // // CREATE PROPERTY
 // // // LANDLORD + ADMIN ONLY
 // // // =======================
-
 // // router.post(
-
 // //   "/",
-
 // //   authMiddleware,
-
-
 // //   authorizeRole(
 // //     "LANDLORD",
 // //     "ADMIN"
 // //   ),
-
-
 // //   createPropertyController
-
 // // );
-
-
-
-
-
 // // export default router;
-
-
 // import {
 //   Router,
 // } from "express";
-
-
 // import {
 //   createPropertyController,
 //   getAllPropertiesController,
@@ -152,156 +80,72 @@
 //   updatePropertyController,
 //   deletePropertyController,
 // } from "./property.controller";
-
-
 // import {
 //   authMiddleware,
 // } from "../../middlewares/auth.middleware";
-
-
 // import {
 //   authorizeRole,
 // } from "../../middlewares/role.middleware";
-
-
-
 // const router = Router();
-
-
-
-
 // // =======================
 // // GET ALL PROPERTIES
 // // Public Route
 // // =======================
-
 // router.get(
-
 //   "/",
-
 //   getAllPropertiesController
-
 // );
-
-
-
-
-
-
-
 // // =======================
 // // GET SINGLE PROPERTY
 // // Public Route
 // // =======================
-
 // router.get(
-
 //   "/:id",
-
 //   getSinglePropertyController
-
 // );
-
-
-
-
-
-
-
 // // =======================
 // // CREATE PROPERTY
 // // LANDLORD + ADMIN ONLY
 // // =======================
-
 // router.post(
-
 //   "/",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
 //     "LANDLORD",
 //     "ADMIN"
 //   ),
-
-
 //   createPropertyController
-
 // );
-
-
-
-
-
-
-
-
 // // =======================
 // // UPDATE PROPERTY
 // // LANDLORD + ADMIN ONLY
 // // =======================
-
 // router.patch(
-
 //   "/:id",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
 //     "LANDLORD",
 //     "ADMIN"
 //   ),
-
-
 //   updatePropertyController
-
 // );
-
-
-
-
-
-
-
-
 // // =======================
 // // DELETE PROPERTY
 // // LANDLORD + ADMIN ONLY
 // // =======================
-
 // router.delete(
-
 //   "/:id",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
 //     "LANDLORD",
 //     "ADMIN"
 //   ),
-
-
 //   deletePropertyController
-
 // );
-
-
-
-
-
-
 // export default router;
-
-
 // import {
 //   Router,
 // } from "express";
-
-
-
 // import {
 //   createPropertyController,
 //   getAllPropertiesController,
@@ -310,260 +154,107 @@
 //   updatePropertyController,
 //   deletePropertyController,
 // } from "./property.controller";
-
-
-
 // import {
 //   authMiddleware,
 // } from "../../middlewares/auth.middleware";
-
-
-
 // import {
 //   authorizeRole,
 // } from "../../middlewares/role.middleware";
-
-
-
 // import {
 //   validate,
 // } from "../../middlewares/validate.middleware";
-
-
-
 // import {
 //   createPropertySchema,
 //   updatePropertySchema,
 //   propertyIdSchema,
 // } from "./property.validation";
-
-
-
-
-
 // const router = Router();
-
-
-
-
-
-
-
-
-
 // // =======================
 // // GET ALL PROPERTIES
 // // PUBLIC
 // // =======================
-
 // router.get(
-
 //   "/",
-
 //   getAllPropertiesController
-
 // );
-
-
-
-
-
-
-
-
-
 // // =======================
 // // GET SINGLE PROPERTY
 // // PUBLIC
 // // =======================
-
 // router.get(
-
 //   "/:id",
-
 //   validate(
-
 //     propertyIdSchema
-
 //   ),
-
 //   getSinglePropertyController
-
 // );
-
-
-
-
-
-
-
-
-
 // // =======================
 // // CREATE PROPERTY
 // // LANDLORD + ADMIN
 // // =======================
-
 // router.post(
-
 //   "/",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "LANDLORD",
-
 //     "ADMIN"
-
 //   ),
-
-
 //   validate(
-
 //     createPropertySchema
-
 //   ),
-
-
 //   createPropertyController
-
 // );
-
-
-
-
-
-
-
-
-
 // // =======================
 // // GET MY PROPERTIES
 // // LANDLORD
 // // =======================
-
 // router.get(
-
 //   "/my-properties",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "LANDLORD"
-
 //   ),
-
-
 //   getMyPropertiesController
-
 // );
-
-
-
-
-
-
-
-
-
 // // =======================
 // // UPDATE PROPERTY
 // // LANDLORD + ADMIN
 // // =======================
-
 // router.patch(
-
 //   "/:id",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "LANDLORD",
-
 //     "ADMIN"
-
 //   ),
-
-
 //   validate(
-
 //     propertyIdSchema
-
 //   ),
-
-
 //   validate(
-
 //     updatePropertySchema
-
 //   ),
-
-
 //   updatePropertyController
-
 // );
-
-
-
-
-
-
-
-
-
 // // =======================
 // // DELETE PROPERTY
 // // LANDLORD + ADMIN
 // // =======================
-
 // router.delete(
-
 //   "/:id",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "LANDLORD",
-
 //     "ADMIN"
-
 //   ),
-
-
 //   validate(
-
 //     propertyIdSchema
-
 //   ),
-
-
 //   deletePropertyController
-
 // );
-
-
-
-
-
-
-
 // export default router;
-
-
 // import {
 //   Router,
 // } from "express";
-
-
-
 // import {
 //   createPropertyController,
 //   getAllPropertiesController,
@@ -572,54 +263,25 @@
 //   updatePropertyController,
 //   deletePropertyController,
 // } from "./property.controller";
-
-
-
 // import {
 //   authMiddleware,
 // } from "../../middlewares/auth.middleware";
-
-
-
 // import {
 //   authorizeRole,
 // } from "../../middlewares/role.middleware";
-
-
-
 // import {
 //   validate,
 // } from "../../middlewares/validate.middleware";
-
-
-
 // import {
 //   createPropertySchema,
 //   updatePropertySchema,
 //   propertyIdSchema,
 // } from "./property.validation";
-
-
-
-
-
-
 // const router = Router();
-
-
-
-
-
-
-
-
-
 // // =======================
 // // GET ALL PROPERTIES
 // // PUBLIC
 // // =======================
-
-
 // /**
 //  * @swagger
 //  * /api/properties:
@@ -661,32 +323,14 @@
 //  *         description: Properties fetched successfully
 //  *
 //  */
-
-
 // router.get(
-
 //   "/",
-
 //   getAllPropertiesController
-
 // );
-
-
-
-
-
-
-
-
-
-
-
 // // =======================
 // // GET SINGLE PROPERTY
 // // PUBLIC
 // // =======================
-
-
 // /**
 //  * @swagger
 //  * /api/properties/{id}:
@@ -714,38 +358,17 @@
 //  *         description: Property not found
 //  *
 //  */
-
-
 // router.get(
-
 //   "/:id",
-
 //   validate(
-
 //     propertyIdSchema
-
 //   ),
-
 //   getSinglePropertyController
-
 // );
-
-
-
-
-
-
-
-
-
-
-
 // // =======================
 // // CREATE PROPERTY
 // // LANDLORD + ADMIN
 // // =======================
-
-
 // /**
 //  * @swagger
 //  * /api/properties:
@@ -806,51 +429,22 @@
 //  *         description: Property created successfully
 //  *
 //  */
-
-
 // router.post(
-
 //   "/",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "LANDLORD",
-
 //     "ADMIN"
-
 //   ),
-
-
 //   validate(
-
 //     createPropertySchema
-
 //   ),
-
-
 //   createPropertyController
-
 // );
-
-
-
-
-
-
-
-
-
-
-
 // // =======================
 // // GET MY PROPERTIES
 // // LANDLORD
 // // =======================
-
-
 // /**
 //  * @swagger
 //  * /api/properties/my-properties:
@@ -869,42 +463,18 @@
 //  *         description: My properties fetched successfully
 //  *
 //  */
-
-
 // router.get(
-
 //   "/my-properties",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "LANDLORD"
-
 //   ),
-
-
 //   getMyPropertiesController
-
 // );
-
-
-
-
-
-
-
-
-
-
-
 // // =======================
 // // UPDATE PROPERTY
 // // LANDLORD + ADMIN
 // // =======================
-
-
 // /**
 //  * @swagger
 //  * /api/properties/{id}:
@@ -931,58 +501,25 @@
 //  *         description: Property updated successfully
 //  *
 //  */
-
-
 // router.patch(
-
 //   "/:id",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "LANDLORD",
-
 //     "ADMIN"
-
 //   ),
-
-
 //   validate(
-
 //     propertyIdSchema
-
 //   ),
-
-
 //   validate(
-
 //     updatePropertySchema
-
 //   ),
-
-
 //   updatePropertyController
-
 // );
-
-
-
-
-
-
-
-
-
-
-
 // // =======================
 // // DELETE PROPERTY
 // // LANDLORD + ADMIN
 // // =======================
-
-
 // /**
 //  * @swagger
 //  * /api/properties/{id}:
@@ -1012,99 +549,30 @@
 //  *         description: Cannot delete property with existing bookings
 //  *
 //  */
-
-
 // router.delete(
-
 //   "/:id",
-
 //   authMiddleware,
-
-
 //   authorizeRole(
-
 //     "LANDLORD",
-
 //     "ADMIN"
-
 //   ),
-
-
 //   validate(
-
 //     propertyIdSchema
-
 //   ),
-
-
 //   deletePropertyController
-
 // );
-
-
-
-
-
-
-
-
-
 // export default router;
-
-import {
-  Router,
-} from "express";
-
-
-import {
-  createPropertyController,
-  getAllPropertiesController,
-  getSinglePropertyController,
-  getMyPropertiesController,
-  updatePropertyController,
-  deletePropertyController,
-} from "./property.controller";
-
-
-import {
-  authMiddleware,
-} from "../../middlewares/auth.middleware";
-
-
-import {
-  authorizeRole,
-} from "../../middlewares/role.middleware";
-
-
-import {
-  validate,
-} from "../../middlewares/validate.middleware";
-
-
-import {
-  createPropertySchema,
-  updatePropertySchema,
-  propertyIdSchema,
-} from "./property.validation";
-
-
-
-
-
-const router = Router();
-
-
-
-
-
-
-
+const express_1 = require("express");
+const property_controller_1 = require("./property.controller");
+const auth_middleware_1 = require("../../middlewares/auth.middleware");
+const role_middleware_1 = require("../../middlewares/role.middleware");
+const validate_middleware_1 = require("../../middlewares/validate.middleware");
+const property_validation_1 = require("./property.validation");
+const router = (0, express_1.Router)();
 // =======================
 // GET ALL PROPERTIES
 // PUBLIC
 // =======================
-
-
 /**
  * @swagger
  * /api/properties:
@@ -1118,32 +586,11 @@ const router = Router();
  *       200:
  *         description: Properties fetched successfully
  */
-
-
-router.get(
-
-  "/",
-
-  getAllPropertiesController
-
-);
-
-
-
-
-
-
-
-
-
-
-
+router.get("/", property_controller_1.getAllPropertiesController);
 // =======================
 // GET MY PROPERTIES
 // LANDLORD
 // =======================
-
-
 /**
  * @swagger
  * /api/properties/my-properties:
@@ -1159,42 +606,11 @@ router.get(
  *       200:
  *         description: My properties fetched successfully
  */
-
-
-router.get(
-
-  "/my-properties",
-
-  authMiddleware,
-
-
-  authorizeRole(
-
-    "LANDLORD"
-
-  ),
-
-
-  getMyPropertiesController
-
-);
-
-
-
-
-
-
-
-
-
-
-
+router.get("/my-properties", auth_middleware_1.authMiddleware, (0, role_middleware_1.authorizeRole)("LANDLORD"), property_controller_1.getMyPropertiesController);
 // =======================
 // GET SINGLE PROPERTY
 // PUBLIC
 // =======================
-
-
 /**
  * @swagger
  * /api/properties/{id}:
@@ -1214,38 +630,11 @@ router.get(
  *       200:
  *         description: Property fetched successfully
  */
-
-
-router.get(
-
-  "/:id",
-
-  validate(
-
-    propertyIdSchema
-
-  ),
-
-  getSinglePropertyController
-
-);
-
-
-
-
-
-
-
-
-
-
-
+router.get("/:id", (0, validate_middleware_1.validate)(property_validation_1.propertyIdSchema), property_controller_1.getSinglePropertyController);
 // =======================
 // CREATE PROPERTY
 // LANDLORD + ADMIN
 // =======================
-
-
 /**
  * @swagger
  * /api/properties:
@@ -1257,40 +646,11 @@ router.get(
  *     security:
  *       - bearerAuth: []
  */
-
-
-router.post(
-
-  "/",
-
-  authMiddleware,
-
-
-  authorizeRole(
-
-    "LANDLORD",
-
-    "ADMIN"
-
-  ),
-
-
-  validate(
-
-    createPropertySchema
-
-  ),
-
-
-  createPropertyController
-
-);
+router.post("/", auth_middleware_1.authMiddleware, (0, role_middleware_1.authorizeRole)("LANDLORD", "ADMIN"), (0, validate_middleware_1.validate)(property_validation_1.createPropertySchema), property_controller_1.createPropertyController);
 // =======================
 // UPDATE PROPERTY
 // LANDLORD + ADMIN
 // =======================
-
-
 /**
  * @swagger
  * /api/properties/{id}:
@@ -1328,58 +688,11 @@ router.post(
  *         description: Property updated successfully
  *
  */
-
-
-router.patch(
-
-  "/:id",
-
-  authMiddleware,
-
-
-  authorizeRole(
-
-    "LANDLORD",
-
-    "ADMIN"
-
-  ),
-
-
-  validate(
-
-    propertyIdSchema
-
-  ),
-
-
-  validate(
-
-    updatePropertySchema
-
-  ),
-
-
-  updatePropertyController
-
-);
-
-
-
-
-
-
-
-
-
-
-
+router.patch("/:id", auth_middleware_1.authMiddleware, (0, role_middleware_1.authorizeRole)("LANDLORD", "ADMIN"), (0, validate_middleware_1.validate)(property_validation_1.propertyIdSchema), (0, validate_middleware_1.validate)(property_validation_1.updatePropertySchema), property_controller_1.updatePropertyController);
 // =======================
 // DELETE PROPERTY
 // LANDLORD + ADMIN
 // =======================
-
-
 /**
  * @swagger
  * /api/properties/{id}:
@@ -1410,41 +723,5 @@ router.patch(
  *         description: Cannot delete property with existing bookings
  *
  */
-
-
-router.delete(
-
-  "/:id",
-
-  authMiddleware,
-
-
-  authorizeRole(
-
-    "LANDLORD",
-
-    "ADMIN"
-
-  ),
-
-
-  validate(
-
-    propertyIdSchema
-
-  ),
-
-
-  deletePropertyController
-
-);
-
-
-
-
-
-
-
-
-
-export default router;
+router.delete("/:id", auth_middleware_1.authMiddleware, (0, role_middleware_1.authorizeRole)("LANDLORD", "ADMIN"), (0, validate_middleware_1.validate)(property_validation_1.propertyIdSchema), property_controller_1.deletePropertyController);
+exports.default = router;
