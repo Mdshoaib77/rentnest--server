@@ -1,91 +1,185 @@
+// // // // // import { z } from "zod";
+
+
+// // // // // export const registerValidationSchema = z.object({
+// // // // //   name: z
+// // // // //     .string()
+// // // // //     .min(2, "Name must be at least 2 characters"),
+
+// // // // //   email: z
+// // // // //     .string()
+// // // // //     .email("Invalid email address"),
+
+// // // // //   password: z
+// // // // //     .string()
+// // // // //     .min(6, "Password must be at least 6 characters"),
+
+// // // // //   role: z
+// // // // //     .enum(["TENANT", "LANDLORD", "ADMIN"])
+// // // // //     .optional(),
+// // // // // });
+
+
+// // // // // export type RegisterInput = z.infer<
+// // // // //   typeof registerValidationSchema
+// // // // // >;
+
+
 // // // // import { z } from "zod";
 
 
 // // // // export const registerValidationSchema = z.object({
+
 // // // //   name: z
 // // // //     .string()
 // // // //     .min(2, "Name must be at least 2 characters"),
+
 
 // // // //   email: z
 // // // //     .string()
 // // // //     .email("Invalid email address"),
 
+
 // // // //   password: z
 // // // //     .string()
 // // // //     .min(6, "Password must be at least 6 characters"),
 
+
 // // // //   role: z
-// // // //     .enum(["TENANT", "LANDLORD", "ADMIN"])
+// // // //     .enum([
+// // // //       "TENANT",
+// // // //       "LANDLORD",
+// // // //       "ADMIN",
+// // // //     ])
 // // // //     .optional(),
+
 // // // // });
 
 
-// // // // export type RegisterInput = z.infer<
-// // // //   typeof registerValidationSchema
-// // // // >;
+// // // // export type RegisterInput =
+// // // //   z.infer<
+// // // //     typeof registerValidationSchema
+// // // //   >;
+
+
+
+// // // // // Login Validation
+
+// // // // export const loginValidationSchema = z.object({
+
+// // // //   email: z
+// // // //     .string()
+// // // //     .email("Invalid email address"),
+
+
+// // // //   password: z
+// // // //     .string()
+// // // //     .min(6, "Password must be at least 6 characters"),
+
+// // // // });
+
+
+// // // // export type LoginInput =
+// // // //   z.infer<
+// // // //     typeof loginValidationSchema
+// // // //   >;
 
 
 // // // import { z } from "zod";
 
 
-// // // export const registerValidationSchema = z.object({
-
-// // //   name: z
-// // //     .string()
-// // //     .min(2, "Name must be at least 2 characters"),
 
 
-// // //   email: z
-// // //     .string()
-// // //     .email("Invalid email address"),
+// // // // =======================
+// // // // REGISTER VALIDATION
+// // // // =======================
+
+// // // export const registerSchema = z.object({
+
+// // //   body: z.object({
+
+// // //     name: z
+// // //       .string()
+// // //       .min(
+// // //         2,
+// // //         "Name must be at least 2 characters"
+// // //       ),
 
 
-// // //   password: z
-// // //     .string()
-// // //     .min(6, "Password must be at least 6 characters"),
+
+// // //     email: z
+// // //       .string()
+// // //       .email(
+// // //         "Invalid email address"
+// // //       ),
 
 
-// // //   role: z
-// // //     .enum([
-// // //       "TENANT",
-// // //       "LANDLORD",
-// // //       "ADMIN",
-// // //     ])
-// // //     .optional(),
+
+// // //     password: z
+// // //       .string()
+// // //       .min(
+// // //         6,
+// // //         "Password must be at least 6 characters"
+// // //       ),
+
+
+
+// // //     role: z
+// // //       .enum([
+// // //         "TENANT",
+// // //         "LANDLORD",
+// // //         "ADMIN",
+// // //       ])
+// // //       .optional(),
+
+
+// // //   }),
+
 
 // // // });
 
 
-// // // export type RegisterInput =
-// // //   z.infer<
-// // //     typeof registerValidationSchema
-// // //   >;
 
 
 
-// // // // Login Validation
-
-// // // export const loginValidationSchema = z.object({
-
-// // //   email: z
-// // //     .string()
-// // //     .email("Invalid email address"),
 
 
-// // //   password: z
-// // //     .string()
-// // //     .min(6, "Password must be at least 6 characters"),
+
+
+// // // // =======================
+// // // // LOGIN VALIDATION
+// // // // =======================
+
+// // // export const loginSchema = z.object({
+
+// // //   body: z.object({
+
+
+// // //     email: z
+// // //       .string()
+// // //       .email(
+// // //         "Invalid email address"
+// // //       ),
+
+
+
+// // //     password: z
+// // //       .string()
+// // //       .min(
+// // //         1,
+// // //         "Password is required"
+// // //       ),
+
+
+// // //   }),
+
 
 // // // });
 
 
-// // // export type LoginInput =
-// // //   z.infer<
-// // //     typeof loginValidationSchema
-// // //   >;
-
-
-// // import { z } from "zod";
+// // import {
+// //   z,
+// // } from "zod";
 
 
 
@@ -97,6 +191,7 @@
 // // export const registerSchema = z.object({
 
 // //   body: z.object({
+
 
 // //     name: z
 // //       .string()
@@ -126,9 +221,13 @@
 
 // //     role: z
 // //       .enum([
+
 // //         "TENANT",
+
 // //         "LANDLORD",
+
 // //         "ADMIN",
+
 // //       ])
 // //       .optional(),
 
@@ -192,7 +291,6 @@
 
 //   body: z.object({
 
-
 //     name: z
 //       .string()
 //       .min(
@@ -234,7 +332,6 @@
 
 //   }),
 
-
 // });
 
 
@@ -252,7 +349,6 @@
 // export const loginSchema = z.object({
 
 //   body: z.object({
-
 
 //     email: z
 //       .string()
@@ -272,9 +368,7 @@
 
 //   }),
 
-
 // });
-
 
 import {
   z,
@@ -290,6 +384,7 @@ import {
 export const registerSchema = z.object({
 
   body: z.object({
+
 
     name: z
       .string()
@@ -332,6 +427,7 @@ export const registerSchema = z.object({
 
   }),
 
+
 });
 
 
@@ -349,6 +445,7 @@ export const registerSchema = z.object({
 export const loginSchema = z.object({
 
   body: z.object({
+
 
     email: z
       .string()
@@ -368,4 +465,37 @@ export const loginSchema = z.object({
 
   }),
 
+
 });
+
+
+
+
+
+
+
+
+
+// =======================
+// TYPES
+// =======================
+
+export type RegisterInput =
+
+  z.infer<
+
+    typeof registerSchema
+
+  >["body"];
+
+
+
+
+
+export type LoginInput =
+
+  z.infer<
+
+    typeof loginSchema
+
+  >["body"];

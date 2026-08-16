@@ -1,3 +1,96 @@
+// // import { z } from "zod";
+
+
+
+
+// // // =======================
+// // // CREATE BOOKING VALIDATION
+// // // =======================
+
+// // export const createBookingValidationSchema =
+
+// //   z.object({
+
+// //     propertyId:
+
+// //       z
+// //         .string()
+// //         .uuid(
+// //           "Invalid property id"
+// //         ),
+
+
+
+// //     startDate:
+
+// //       z
+// //         .string()
+// //         .datetime(
+// //           "Invalid start date"
+// //         ),
+
+
+
+// //     endDate:
+
+// //       z
+// //         .string()
+// //         .datetime(
+// //           "Invalid end date"
+// //         ),
+
+
+// //   })
+
+// //   .refine(
+
+// //     (data) => {
+
+// //       return (
+
+// //         new Date(data.endDate)
+
+// //         >
+
+// //         new Date(data.startDate)
+
+// //       );
+
+// //     },
+
+// //     {
+
+// //       message:
+// //         "End date must be after start date",
+
+// //       path:
+// //         [
+// //           "endDate"
+// //         ],
+
+// //     }
+
+// //   );
+
+
+
+
+
+
+// // // =======================
+// // // TYPE EXPORT
+// // // =======================
+
+// // export type CreateBookingInput =
+
+// //   z.infer<
+
+// //     typeof createBookingValidationSchema
+
+// //   >;
+
+
+
 // import { z } from "zod";
 
 
@@ -61,11 +154,15 @@
 //     {
 
 //       message:
+
 //         "End date must be after start date",
 
 //       path:
+
 //         [
+
 //           "endDate"
+
 //         ],
 
 //     }
@@ -77,8 +174,10 @@
 
 
 
+
+
 // // =======================
-// // TYPE EXPORT
+// // CREATE BOOKING TYPE
 // // =======================
 
 // export type CreateBookingInput =
@@ -91,7 +190,57 @@
 
 
 
-import { z } from "zod";
+
+
+
+
+
+
+// // =======================
+// // UPDATE BOOKING STATUS VALIDATION
+// // =======================
+
+// export const updateBookingStatusValidationSchema =
+
+//   z.object({
+
+//     status:
+
+//       z.enum([
+
+//         "ACCEPTED",
+
+//         "REJECTED",
+
+//       ]),
+
+
+//   });
+
+
+
+
+
+
+
+
+
+// // =======================
+// // UPDATE BOOKING STATUS TYPE
+// // =======================
+
+// export type UpdateBookingStatusInput =
+
+//   z.infer<
+
+//     typeof updateBookingStatusValidationSchema
+
+//   >;
+
+
+import {
+  z,
+} from "zod";
 
 
 
@@ -100,93 +249,61 @@ import { z } from "zod";
 // CREATE BOOKING VALIDATION
 // =======================
 
-export const createBookingValidationSchema =
+export const createBookingSchema = z.object({
 
-  z.object({
-
-    propertyId:
-
-      z
-        .string()
-        .uuid(
-          "Invalid property id"
-        ),
+  body: z.object({
 
 
-
-    startDate:
-
-      z
-        .string()
-        .datetime(
-          "Invalid start date"
-        ),
+    propertyId: z
+      .string()
+      .uuid(
+        "Invalid property id"
+      ),
 
 
 
-    endDate:
+    startDate: z
+      .string()
+      .datetime(
+        "Invalid start date"
+      ),
 
-      z
-        .string()
-        .datetime(
-          "Invalid end date"
-        ),
+
+
+    endDate: z
+      .string()
+      .datetime(
+        "Invalid end date"
+      ),
+
 
 
   })
-
   .refine(
 
-    (data) => {
+    (data) =>
 
-      return (
+      new Date(data.startDate)
 
-        new Date(data.endDate)
+      <
 
-        >
+      new Date(data.endDate),
 
-        new Date(data.startDate)
-
-      );
-
-    },
 
     {
-
       message:
+        "Start date must be before end date",
 
-        "End date must be after start date",
-
-      path:
-
-        [
-
-          "endDate"
-
-        ],
+      path:[
+        "endDate"
+      ],
 
     }
 
-  );
+  ),
 
 
-
-
-
-
-
-
-// =======================
-// CREATE BOOKING TYPE
-// =======================
-
-export type CreateBookingInput =
-
-  z.infer<
-
-    typeof createBookingValidationSchema
-
-  >;
+});
 
 
 
@@ -197,25 +314,33 @@ export type CreateBookingInput =
 
 
 // =======================
-// UPDATE BOOKING STATUS VALIDATION
+// UPDATE BOOKING STATUS
 // =======================
 
-export const updateBookingStatusValidationSchema =
+export const updateBookingStatusSchema = z.object({
 
-  z.object({
-
-    status:
-
-      z.enum([
-
-        "ACCEPTED",
-
-        "REJECTED",
-
-      ]),
+  body: z.object({
 
 
-  });
+    status: z.enum([
+
+      "PENDING",
+
+      "ACCEPTED",
+
+      "REJECTED",
+
+      "PAID",
+
+      "CANCELLED",
+
+    ]),
+
+
+  }),
+
+
+});
 
 
 
@@ -226,13 +351,22 @@ export const updateBookingStatusValidationSchema =
 
 
 // =======================
-// UPDATE BOOKING STATUS TYPE
+// BOOKING ID VALIDATION
 // =======================
 
-export type UpdateBookingStatusInput =
+export const bookingIdSchema = z.object({
 
-  z.infer<
+  params: z.object({
 
-    typeof updateBookingStatusValidationSchema
 
-  >;
+    id: z
+      .string()
+      .uuid(
+        "Invalid booking id"
+      ),
+
+
+  }),
+
+
+});

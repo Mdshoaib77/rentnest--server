@@ -2509,7 +2509,524 @@
 // export default app;
 
 
+// import express from "express";
+
+
+// import prisma from "./lib/prisma";
+
+
+
+// import authRouter from "./modules/auth/auth.route";
+
+// import propertyRouter from "./modules/property/property.route";
+
+// import bookingRouter from "./modules/booking/booking.route";
+
+// import adminRouter from "./modules/admin/admin.route";
+
+
+
+// import {
+//   authMiddleware,
+// } from "./middlewares/auth.middleware";
+
+
+// import {
+//   authorizeRole,
+// } from "./middlewares/role.middleware";
+
+
+// import {
+//   errorHandler,
+// } from "./middlewares/error.middleware";
+
+
+
+
+
+
+
+// const app = express();
+
+
+
+
+
+
+
+// app.use(express.json());
+
+
+
+
+
+
+
+// // Prisma Debug
+
+// console.log(
+
+//   "Prisma keys:",
+
+//   Object.keys(prisma)
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // AUTH ROUTES
+// // =======================
+
+// app.use(
+
+//   "/api/auth",
+
+//   authRouter
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // PROPERTY ROUTES
+// // =======================
+
+// app.use(
+
+//   "/api/properties",
+
+//   propertyRouter
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // BOOKING ROUTES
+// // =======================
+
+// app.use(
+
+//   "/api/bookings",
+
+//   bookingRouter
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // ADMIN ROUTES
+// // =======================
+
+// app.use(
+
+//   "/api/admin",
+
+//   adminRouter
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // HOME ROUTE
+// // =======================
+
+// app.get(
+
+//   "/",
+
+//   (req, res) => {
+
+
+//     res.send(
+
+//       "RentNest Backend Running 🚀"
+
+//     );
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // DATABASE HEALTH CHECK
+// // =======================
+
+// app.get(
+
+//   "/api/health",
+
+//   async (req, res) => {
+
+
+//     try {
+
+
+//       const userCount =
+
+//         await prisma.user.count();
+
+
+
+
+
+//       const propertyCount =
+
+//         await prisma.property.count();
+
+
+
+
+
+//       const bookingCount =
+
+//         await prisma.booking.count();
+
+
+
+
+
+
+
+//       res.status(200).json({
+
+
+//         success:true,
+
+
+//         message:
+
+//           "RentNest API and database are healthy",
+
+
+
+//         data: {
+
+
+//           database:
+
+//             "connected",
+
+
+
+//           totalUsers:
+
+//             userCount,
+
+
+
+//           totalProperties:
+
+//             propertyCount,
+
+
+
+//           totalBookings:
+
+//             bookingCount,
+
+
+//         },
+
+
+//       });
+
+
+
+
+
+
+//     } catch(error) {
+
+
+
+//       console.error(
+
+//         "HEALTH ERROR:",
+
+//         error
+
+//       );
+
+
+
+
+
+
+//       res.status(500).json({
+
+
+//         success:false,
+
+
+//         message:
+
+//           error instanceof Error
+
+//           ? error.message
+
+//           : "Database connection failed",
+
+
+//       });
+
+
+
+
+//     }
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // PROFILE ROUTE
+// // =======================
+
+// app.get(
+
+//   "/api/profile",
+
+
+//   authMiddleware,
+
+
+
+//   (req, res) => {
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Protected route accessed",
+
+
+
+//       user:
+
+//         req.user,
+
+
+//     });
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // LANDLORD TEST ROUTE
+// // =======================
+
+// app.get(
+
+//   "/api/landlord-test",
+
+
+//   authMiddleware,
+
+
+//   authorizeRole(
+
+//     "LANDLORD"
+
+//   ),
+
+
+//   (req, res) => {
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Welcome Landlord! Property management access granted",
+
+
+
+//       user:
+
+//         req.user,
+
+
+//     });
+
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // ADMIN TEST ROUTE
+// // =======================
+
+// app.get(
+
+//   "/api/admin-test",
+
+
+//   authMiddleware,
+
+
+//   authorizeRole(
+
+//     "ADMIN"
+
+//   ),
+
+
+//   (req, res) => {
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Welcome Admin!",
+
+
+
+//       user:
+
+//         req.user,
+
+
+//     });
+
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GLOBAL ERROR HANDLER
+// // MUST BE LAST
+// // =======================
+
+// app.use(
+
+//   errorHandler
+
+// );
+
+
+
+
+
+
+
+
+// export default app;
+
+
 import express from "express";
+
+
+import helmet from "helmet";
+
+import cors from "cors";
+
+import rateLimit from "express-rate-limit";
+
 
 
 import prisma from "./lib/prisma";
@@ -2546,6 +3063,8 @@ import {
 
 
 
+
+
 const app = express();
 
 
@@ -2554,7 +3073,125 @@ const app = express();
 
 
 
-app.use(express.json());
+
+
+// =======================
+// SECURITY MIDDLEWARE
+// =======================
+
+
+// Helmet Security Headers
+
+app.use(
+
+  helmet()
+
+);
+
+
+
+
+
+// CORS Configuration
+
+app.use(
+
+  cors({
+
+    origin:
+
+      "*",
+
+
+    methods:[
+
+      "GET",
+
+      "POST",
+
+      "PATCH",
+
+      "PUT",
+
+      "DELETE",
+
+    ],
+
+
+    allowedHeaders:[
+
+      "Content-Type",
+
+      "Authorization",
+
+    ],
+
+
+  })
+
+);
+
+
+
+
+
+// Rate Limiting
+
+const limiter = rateLimit({
+
+  windowMs:
+
+    15 * 60 * 1000,
+
+
+  max:
+
+    100,
+
+
+  message:{
+
+
+    success:false,
+
+
+    message:
+
+      "Too many requests, please try again later",
+
+
+  },
+
+
+});
+
+
+
+app.use(
+
+  limiter
+
+);
+
+
+
+
+
+
+
+
+
+// Body Parser
+
+app.use(
+
+  express.json()
+
+);
+
+
+
+
 
 
 
@@ -2571,6 +3208,8 @@ console.log(
   Object.keys(prisma)
 
 );
+
+
 
 
 
@@ -2602,6 +3241,8 @@ app.use(
 
 
 
+
+
 // =======================
 // PROPERTY ROUTES
 // =======================
@@ -2613,6 +3254,8 @@ app.use(
   propertyRouter
 
 );
+
+
 
 
 
@@ -2642,6 +3285,8 @@ app.use(
 
 
 
+
+
 // =======================
 // ADMIN ROUTES
 // =======================
@@ -2653,6 +3298,8 @@ app.use(
   adminRouter
 
 );
+
+
 
 
 
@@ -2683,6 +3330,9 @@ app.get(
   }
 
 );
+
+
+
 
 
 
@@ -2744,7 +3394,7 @@ app.get(
 
 
 
-        data: {
+        data:{
 
 
           database:
@@ -2796,7 +3446,6 @@ app.get(
 
 
 
-
       res.status(500).json({
 
 
@@ -2804,6 +3453,7 @@ app.get(
 
 
         message:
+
 
           error instanceof Error
 
@@ -2834,7 +3484,6 @@ app.get(
 
 
 
-
 // =======================
 // PROFILE ROUTE
 // =======================
@@ -2843,9 +3492,7 @@ app.get(
 
   "/api/profile",
 
-
   authMiddleware,
-
 
 
   (req, res) => {
@@ -2892,7 +3539,6 @@ app.get(
 app.get(
 
   "/api/landlord-test",
-
 
   authMiddleware,
 
@@ -2950,7 +3596,6 @@ app.get(
 
   "/api/admin-test",
 
-
   authMiddleware,
 
 
@@ -2997,6 +3642,8 @@ app.get(
 
 
 
+
+
 // =======================
 // GLOBAL ERROR HANDLER
 // MUST BE LAST
@@ -3007,6 +3654,7 @@ app.use(
   errorHandler
 
 );
+
 
 
 
