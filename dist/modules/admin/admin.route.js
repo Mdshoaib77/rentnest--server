@@ -455,6 +455,286 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //   updateBookingStatusController
 // );
 // export default router;
+// import {
+//   Router,
+// } from "express";
+// import {
+//   getAdminStatsController,
+//   getAllUsersController,
+//   getAllPropertiesController,
+//   getAllBookingsController,
+//   deleteUserController,
+//   deletePropertyController,
+//   updateBookingStatusController,
+// } from "./admin.controller";
+// import {
+//   authMiddleware,
+// } from "../../middlewares/auth.middleware";
+// import {
+//   authorizeRole,
+// } from "../../middlewares/role.middleware";
+// const router = Router();
+// // =======================
+// // ADMIN DASHBOARD STATS
+// // =======================
+// /**
+//  * @swagger
+//  * /api/admin/stats:
+//  *   get:
+//  *     summary: Get admin dashboard statistics
+//  *     tags:
+//  *       - Admin
+//  *
+//  *     security:
+//  *       - bearerAuth: []
+//  *
+//  *     responses:
+//  *
+//  *       200:
+//  *         description: Admin statistics fetched successfully
+//  *
+//  */
+// router.get(
+//   "/stats",
+//   authMiddleware,
+//   authorizeRole(
+//     "ADMIN"
+//   ),
+//   getAdminStatsController
+// );
+// // =======================
+// // GET ALL USERS
+// // =======================
+// /**
+//  * @swagger
+//  * /api/admin/users:
+//  *   get:
+//  *     summary: Get all users
+//  *     tags:
+//  *       - Admin
+//  *
+//  *     security:
+//  *       - bearerAuth: []
+//  *
+//  *     responses:
+//  *
+//  *       200:
+//  *         description: Users fetched successfully
+//  *
+//  */
+// router.get(
+//   "/users",
+//   authMiddleware,
+//   authorizeRole(
+//     "ADMIN"
+//   ),
+//   getAllUsersController
+// );
+// // =======================
+// // DELETE USER
+// // =======================
+// /**
+//  * @swagger
+//  * /api/admin/users/{id}:
+//  *   delete:
+//  *     summary: Delete user
+//  *     tags:
+//  *       - Admin
+//  *
+//  *     security:
+//  *       - bearerAuth: []
+//  *
+//  *
+//  *     parameters:
+//  *
+//  *       - in: path
+//  *         name: id
+//  *         required: true
+//  *         schema:
+//  *           type: string
+//  *
+//  *
+//  *     responses:
+//  *
+//  *       200:
+//  *         description: User deleted successfully
+//  *
+//  *       400:
+//  *         description: Delete failed
+//  *
+//  */
+// router.delete(
+//   "/users/:id",
+//   authMiddleware,
+//   authorizeRole(
+//     "ADMIN"
+//   ),
+//   deleteUserController
+// );
+// // =======================
+// // GET ALL PROPERTIES
+// // =======================
+// /**
+//  * @swagger
+//  * /api/admin/properties:
+//  *   get:
+//  *     summary: Get all properties for admin
+//  *     tags:
+//  *       - Admin
+//  *
+//  *     security:
+//  *       - bearerAuth: []
+//  *
+//  *     responses:
+//  *
+//  *       200:
+//  *         description: Properties fetched successfully
+//  *
+//  */
+// router.get(
+//   "/properties",
+//   authMiddleware,
+//   authorizeRole(
+//     "ADMIN"
+//   ),
+//   getAllPropertiesController
+// );
+// // =======================
+// // DELETE PROPERTY
+// // =======================
+// /**
+//  * @swagger
+//  * /api/admin/properties/{id}:
+//  *   delete:
+//  *     summary: Delete property by admin
+//  *     tags:
+//  *       - Admin
+//  *
+//  *     security:
+//  *       - bearerAuth: []
+//  *
+//  *
+//  *     parameters:
+//  *
+//  *       - in: path
+//  *         name: id
+//  *         required: true
+//  *
+//  *         schema:
+//  *           type: string
+//  *
+//  *
+//  *     responses:
+//  *
+//  *       200:
+//  *         description: Property deleted successfully
+//  *
+//  *       400:
+//  *         description: Cannot delete property with existing bookings
+//  *
+//  */
+// router.delete(
+//   "/properties/:id",
+//   authMiddleware,
+//   authorizeRole(
+//     "ADMIN"
+//   ),
+//   deletePropertyController
+// );
+// // =======================
+// // GET ALL BOOKINGS
+// // =======================
+// /**
+//  * @swagger
+//  * /api/admin/bookings:
+//  *   get:
+//  *     summary: Get all bookings
+//  *     tags:
+//  *       - Admin
+//  *
+//  *     security:
+//  *       - bearerAuth: []
+//  *
+//  *     responses:
+//  *
+//  *       200:
+//  *         description: Bookings fetched successfully
+//  *
+//  */
+// router.get(
+//   "/bookings",
+//   authMiddleware,
+//   authorizeRole(
+//     "ADMIN"
+//   ),
+//   getAllBookingsController
+// );
+// // =======================
+// // UPDATE BOOKING STATUS
+// // =======================
+// /**
+//  * @swagger
+//  * /api/admin/bookings/{id}/status:
+//  *   patch:
+//  *     summary: Update booking status by admin
+//  *     tags:
+//  *       - Admin
+//  *
+//  *     security:
+//  *       - bearerAuth: []
+//  *
+//  *
+//  *     parameters:
+//  *
+//  *       - in: path
+//  *         name: id
+//  *         required: true
+//  *
+//  *         schema:
+//  *           type: string
+//  *
+//  *
+//  *     requestBody:
+//  *       required: true
+//  *
+//  *       content:
+//  *         application/json:
+//  *
+//  *           schema:
+//  *             type: object
+//  *
+//  *             required:
+//  *               - status
+//  *
+//  *             properties:
+//  *
+//  *               status:
+//  *                 type: string
+//  *
+//  *                 enum:
+//  *                   - PENDING
+//  *                   - ACCEPTED
+//  *                   - REJECTED
+//  *                   - PAID
+//  *
+//  *                 example: PAID
+//  *
+//  *
+//  *     responses:
+//  *
+//  *       200:
+//  *         description: Booking status updated successfully
+//  *
+//  */
+// router.patch(
+//   "/bookings/:id/status",
+//   authMiddleware,
+//   authorizeRole(
+//     "ADMIN"
+//   ),
+//   updateBookingStatusController
+// );
+// export default router;
 const express_1 = require("express");
 const admin_controller_1 = require("./admin.controller");
 const auth_middleware_1 = require("../../middlewares/auth.middleware");
@@ -465,7 +745,7 @@ const router = (0, express_1.Router)();
 // =======================
 /**
  * @swagger
- * /api/admin/stats:
+ * /api/v1/admin/stats:
  *   get:
  *     summary: Get admin dashboard statistics
  *     tags:
@@ -486,7 +766,7 @@ router.get("/stats", auth_middleware_1.authMiddleware, (0, role_middleware_1.aut
 // =======================
 /**
  * @swagger
- * /api/admin/users:
+ * /api/v1/admin/users:
  *   get:
  *     summary: Get all users
  *     tags:
@@ -507,7 +787,7 @@ router.get("/users", auth_middleware_1.authMiddleware, (0, role_middleware_1.aut
 // =======================
 /**
  * @swagger
- * /api/admin/users/{id}:
+ * /api/v1/admin/users/{id}:
  *   delete:
  *     summary: Delete user
  *     tags:
@@ -531,9 +811,6 @@ router.get("/users", auth_middleware_1.authMiddleware, (0, role_middleware_1.aut
  *       200:
  *         description: User deleted successfully
  *
- *       400:
- *         description: Delete failed
- *
  */
 router.delete("/users/:id", auth_middleware_1.authMiddleware, (0, role_middleware_1.authorizeRole)("ADMIN"), admin_controller_1.deleteUserController);
 // =======================
@@ -541,7 +818,7 @@ router.delete("/users/:id", auth_middleware_1.authMiddleware, (0, role_middlewar
 // =======================
 /**
  * @swagger
- * /api/admin/properties:
+ * /api/v1/admin/properties:
  *   get:
  *     summary: Get all properties for admin
  *     tags:
@@ -562,7 +839,7 @@ router.get("/properties", auth_middleware_1.authMiddleware, (0, role_middleware_
 // =======================
 /**
  * @swagger
- * /api/admin/properties/{id}:
+ * /api/v1/admin/properties/{id}:
  *   delete:
  *     summary: Delete property by admin
  *     tags:
@@ -587,9 +864,6 @@ router.get("/properties", auth_middleware_1.authMiddleware, (0, role_middleware_
  *       200:
  *         description: Property deleted successfully
  *
- *       400:
- *         description: Cannot delete property with existing bookings
- *
  */
 router.delete("/properties/:id", auth_middleware_1.authMiddleware, (0, role_middleware_1.authorizeRole)("ADMIN"), admin_controller_1.deletePropertyController);
 // =======================
@@ -597,7 +871,7 @@ router.delete("/properties/:id", auth_middleware_1.authMiddleware, (0, role_midd
 // =======================
 /**
  * @swagger
- * /api/admin/bookings:
+ * /api/v1/admin/bookings:
  *   get:
  *     summary: Get all bookings
  *     tags:
@@ -618,7 +892,7 @@ router.get("/bookings", auth_middleware_1.authMiddleware, (0, role_middleware_1.
 // =======================
 /**
  * @swagger
- * /api/admin/bookings/{id}/status:
+ * /api/v1/admin/bookings/{id}/status:
  *   patch:
  *     summary: Update booking status by admin
  *     tags:

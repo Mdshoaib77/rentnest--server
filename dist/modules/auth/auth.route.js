@@ -1,141 +1,5 @@
 "use strict";
-// // // // import { Router } from "express";
-// // // // import {
-// // // //   registerController,
-// // // // } from "./auth.controller";
 Object.defineProperty(exports, "__esModule", { value: true });
-// // // // const router = Router();
-// // // // router.post(
-// // // //   "/register",
-// // // //   registerController
-// // // // );
-// // // // export default router;
-// // // import {
-// // //   Router,
-// // // } from "express";
-// // // import {
-// // //   registerController,
-// // //   loginController,
-// // // } from "./auth.controller";
-// // // const router =
-// // //   Router();
-// // // router.post(
-// // //   "/register",
-// // //   registerController
-// // // );
-// // // router.post(
-// // //   "/login",
-// // //   loginController
-// // // );
-// // // export default router;
-// // import {
-// //   Router,
-// // } from "express";
-// // import {
-// //   registerController,
-// //   loginController,
-// // } from "./auth.controller";
-// // import {
-// //   registerSchema,
-// //   loginSchema,
-// // } from "./auth.validation";
-// // import {
-// //   validate,
-// // } from "../../middlewares/validate.middleware";
-// // const router = Router();
-// // // =======================
-// // // REGISTER
-// // // =======================
-// // router.post(
-// //   "/register",
-// //   validate(
-// //     registerSchema
-// //   ),
-// //   registerController
-// // );
-// // // =======================
-// // // LOGIN
-// // // =======================
-// // router.post(
-// //   "/login",
-// //   validate(
-// //     loginSchema
-// //   ),
-// //   loginController
-// // );
-// // export default router;
-// import {
-//   Router,
-// } from "express";
-// import {
-//   registerController,
-//   loginController,
-// } from "./auth.controller";
-// import {
-//   registerSchema,
-//   loginSchema,
-// } from "./auth.validation";
-// import {
-//   validate,
-// } from "../../middlewares/validate.middleware";
-// const router = Router();
-// // =======================
-// // REGISTER
-// // =======================
-// router.post(
-//   "/register",
-//   validate(
-//     registerSchema
-//   ),
-//   registerController
-// );
-// // =======================
-// // LOGIN
-// // =======================
-// router.post(
-//   "/login",
-//   validate(
-//     loginSchema
-//   ),
-//   loginController
-// );
-// export default router;
-// import {
-//   Router,
-// } from "express";
-// import {
-//   registerController,
-//   loginController,
-// } from "./auth.controller";
-// import {
-//   registerSchema,
-//   loginSchema,
-// } from "./auth.validation";
-// import {
-//   validate,
-// } from "../../middlewares/validate.middleware";
-// const router = Router();
-// // =======================
-// // REGISTER
-// // =======================
-// router.post(
-//   "/register",
-//   validate(
-//     registerSchema
-//   ),
-//   registerController
-// );
-// // =======================
-// // LOGIN
-// // =======================
-// router.post(
-//   "/login",
-//   validate(
-//     loginSchema
-//   ),
-//   loginController
-// );
-// export default router;
 const express_1 = require("express");
 const auth_controller_1 = require("./auth.controller");
 const auth_validation_1 = require("./auth.validation");
@@ -146,7 +10,7 @@ const router = (0, express_1.Router)();
 // =======================
 /**
  * @swagger
- * /api/auth/register:
+ * /api/v1/auth/register:
  *   post:
  *     summary: Register new user
  *     description: Create a new RentNest account
@@ -200,7 +64,7 @@ router.post("/register", (0, validate_middleware_1.validate)(auth_validation_1.r
 // =======================
 /**
  * @swagger
- * /api/auth/login:
+ * /api/v1/auth/login:
  *   post:
  *     summary: Login user
  *     description: Login and get JWT token
