@@ -8,8 +8,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // app.listen(port, () => {
 //   console.log(`RentNest server running on port ${port}`);
 // });
+// import app from "./app";
+// const port = 5000;
+// app.listen(port, () => {
+//   console.log(`RentNest server running on port ${port}`);
+// });
 const app_1 = __importDefault(require("./app"));
-const port = 5000;
-app_1.default.listen(port, () => {
-    console.log(`RentNest server running on port ${port}`);
+const env_validation_1 = require("./config/env.validation");
+// =======================
+// START SERVER
+// =======================
+app_1.default.listen(env_validation_1.env.PORT, () => {
+    console.log(`RentNest server running on port ${env_validation_1.env.PORT}`);
+    console.log(`Environment: ${env_validation_1.env.NODE_ENV}`);
 });

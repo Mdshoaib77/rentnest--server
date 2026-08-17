@@ -4299,6 +4299,1211 @@
 // export default app;
 
 
+// import express from "express";
+
+
+// import helmet from "helmet";
+
+// import cors from "cors";
+
+// import rateLimit from "express-rate-limit";
+
+// import swaggerUi from "swagger-ui-express";
+
+
+// import prisma from "./lib/prisma";
+
+
+// import {
+//   swaggerSpec,
+// } from "./config/swagger";
+
+
+
+// import authRouter from "./modules/auth/auth.route";
+
+// import propertyRouter from "./modules/property/property.route";
+
+// import bookingRouter from "./modules/booking/booking.route";
+
+// import adminRouter from "./modules/admin/admin.route";
+
+
+
+// import {
+//   authMiddleware,
+// } from "./middlewares/auth.middleware";
+
+
+// import {
+//   authorizeRole,
+// } from "./middlewares/role.middleware";
+
+
+// import {
+//   errorHandler,
+// } from "./middlewares/error.middleware";
+
+
+
+
+
+
+// const app = express();
+
+
+
+
+
+
+// // =======================
+// // SECURITY MIDDLEWARE
+// // =======================
+
+
+// app.use(
+
+//   helmet()
+
+// );
+
+
+
+
+
+// app.use(
+
+//   cors({
+
+//     origin:"*",
+
+
+//     methods:[
+
+//       "GET",
+//       "POST",
+//       "PATCH",
+//       "PUT",
+//       "DELETE",
+
+//     ],
+
+
+//     allowedHeaders:[
+
+//       "Content-Type",
+//       "Authorization",
+
+//     ],
+
+//   })
+
+// );
+
+
+
+
+
+
+
+// const limiter = rateLimit({
+
+//   windowMs:
+
+//     15 * 60 * 1000,
+
+
+//   max:
+
+//     100,
+
+
+//   message:{
+
+
+//     success:false,
+
+
+//     message:
+
+//       "Too many requests, please try again later",
+
+//   },
+
+// });
+
+
+
+// app.use(
+
+//   limiter
+
+// );
+
+
+
+
+
+
+
+// app.use(
+
+//   express.json()
+
+// );
+
+
+
+
+
+
+
+// // =======================
+// // SWAGGER DOCUMENTATION
+// // =======================
+
+
+// app.use(
+
+//   "/api-docs",
+
+//   swaggerUi.serve,
+
+//   swaggerUi.setup(
+
+//     swaggerSpec
+
+//   )
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // ROUTES
+// // =======================
+
+
+// app.use(
+
+//   "/api/auth",
+
+//   authRouter
+
+// );
+
+
+
+// app.use(
+
+//   "/api/properties",
+
+//   propertyRouter
+
+// );
+
+
+
+// app.use(
+
+//   "/api/bookings",
+
+//   bookingRouter
+
+// );
+
+
+
+// app.use(
+
+//   "/api/admin",
+
+//   adminRouter
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // HOME ROUTE
+// // =======================
+
+
+// app.get(
+
+//   "/",
+
+//   (req,res)=>{
+
+
+//     res.send(
+
+//       "RentNest Backend Running 🚀"
+
+//     );
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // DATABASE HEALTH CHECK
+// // =======================
+
+
+// app.get(
+
+//   "/api/health",
+
+//   async(req,res)=>{
+
+
+//     try{
+
+
+//       const userCount =
+
+//         await prisma.user.count();
+
+
+
+//       const propertyCount =
+
+//         await prisma.property.count();
+
+
+
+//       const bookingCount =
+
+//         await prisma.booking.count();
+
+
+
+
+
+//       res.status(200).json({
+
+
+//         success:true,
+
+
+//         message:
+
+//           "RentNest API and database are healthy",
+
+
+
+//         data:{
+
+
+//           database:
+
+//             "connected",
+
+
+
+//           totalUsers:
+
+//             userCount,
+
+
+
+//           totalProperties:
+
+//             propertyCount,
+
+
+
+//           totalBookings:
+
+//             bookingCount,
+
+
+//         },
+
+
+//       });
+
+
+
+
+
+//     }catch(error){
+
+
+//       res.status(500).json({
+
+
+//         success:false,
+
+
+//         message:
+
+//           "Database connection failed",
+
+
+//       });
+
+
+//     }
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // PROFILE ROUTE
+// // =======================
+
+
+// app.get(
+
+//   "/api/profile",
+
+//   authMiddleware,
+
+
+//   (req,res)=>{
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Protected route accessed",
+
+
+
+//       user:
+
+//         req.user,
+
+
+//     });
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // LANDLORD TEST
+// // =======================
+
+
+// app.get(
+
+//   "/api/landlord-test",
+
+//   authMiddleware,
+
+
+//   authorizeRole(
+
+//     "LANDLORD"
+
+//   ),
+
+
+//   (req,res)=>{
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Welcome Landlord! Property management access granted",
+
+
+
+//       user:
+
+//         req.user,
+
+
+//     });
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // ADMIN TEST
+// // =======================
+
+
+// app.get(
+
+//   "/api/admin-test",
+
+//   authMiddleware,
+
+
+//   authorizeRole(
+
+//     "ADMIN"
+
+//   ),
+
+
+//   (req,res)=>{
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Welcome Admin!",
+
+
+
+//       user:
+
+//         req.user,
+
+
+//     });
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GLOBAL ERROR HANDLER
+// // LAST
+// // =======================
+
+
+// app.use(
+
+//   errorHandler
+
+// );
+
+
+
+
+
+
+
+
+// export default app;
+
+// import express from "express";
+
+
+// import helmet from "helmet";
+
+// import cors from "cors";
+
+// import rateLimit from "express-rate-limit";
+
+// import swaggerUi from "swagger-ui-express";
+
+
+// import prisma from "./lib/prisma";
+
+
+// import {
+//   swaggerSpec,
+// } from "./config/swagger";
+
+
+// import {
+//   env,
+// } from "./config/env.validation";
+
+
+
+// import authRouter from "./modules/auth/auth.route";
+
+// import propertyRouter from "./modules/property/property.route";
+
+// import bookingRouter from "./modules/booking/booking.route";
+
+// import adminRouter from "./modules/admin/admin.route";
+
+
+
+// import {
+//   authMiddleware,
+// } from "./middlewares/auth.middleware";
+
+
+// import {
+//   authorizeRole,
+// } from "./middlewares/role.middleware";
+
+
+// import {
+//   errorHandler,
+// } from "./middlewares/error.middleware";
+
+
+
+
+
+
+
+// const app = express();
+
+
+
+
+
+
+
+// // =======================
+// // SECURITY MIDDLEWARE
+// // =======================
+
+
+
+// // Trust proxy for production
+
+
+// app.set(
+
+//   "trust proxy",
+
+//   1
+
+// );
+
+
+
+
+
+
+
+// // Helmet Security Headers
+
+
+// app.use(
+
+//   helmet({
+
+//     contentSecurityPolicy:
+
+//       env.NODE_ENV === "production",
+
+
+//   })
+
+// );
+
+
+
+
+
+
+
+
+
+// // CORS Configuration
+
+
+// app.use(
+
+//   cors({
+
+//     origin:
+
+//       env.FRONTEND_URL,
+
+
+//     methods:[
+
+//       "GET",
+
+//       "POST",
+
+//       "PATCH",
+
+//       "PUT",
+
+//       "DELETE",
+
+//     ],
+
+
+//     allowedHeaders:[
+
+//       "Content-Type",
+
+//       "Authorization",
+
+//     ],
+
+//   })
+
+// );
+
+
+
+
+
+
+
+
+
+// // Rate Limiting
+
+
+// const limiter = rateLimit({
+
+//   windowMs:
+
+//     15 * 60 * 1000,
+
+
+//   max:
+
+//     env.RATE_LIMIT_MAX,
+
+
+//   message:{
+
+
+//     success:false,
+
+
+//     message:
+
+//       "Too many requests, please try again later",
+
+//   },
+
+// });
+
+
+
+
+
+// app.use(
+
+//   limiter
+
+// );
+
+
+
+
+
+
+
+
+
+// // Body Parser
+
+
+// app.use(
+
+//   express.json({
+
+//     limit:
+
+//       "10kb",
+
+//   })
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // SWAGGER DOCUMENTATION
+// // =======================
+
+
+// app.use(
+
+//   "/api-docs",
+
+//   swaggerUi.serve,
+
+//   swaggerUi.setup(
+
+//     swaggerSpec
+
+//   )
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // ROUTES
+// // =======================
+
+
+// app.use(
+
+//   "/api/auth",
+
+//   authRouter
+
+// );
+
+
+
+// app.use(
+
+//   "/api/properties",
+
+//   propertyRouter
+
+// );
+
+
+
+// app.use(
+
+//   "/api/bookings",
+
+//   bookingRouter
+
+// );
+
+
+
+// app.use(
+
+//   "/api/admin",
+
+//   adminRouter
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // HOME ROUTE
+// // =======================
+
+
+// app.get(
+
+//   "/",
+
+//   (req,res)=>{
+
+
+//     res.send(
+
+//       "RentNest Backend Running 🚀"
+
+//     );
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // DATABASE HEALTH CHECK
+// // =======================
+
+
+// app.get(
+
+//   "/api/health",
+
+//   async(req,res)=>{
+
+
+//     try{
+
+
+//       const userCount =
+
+//         await prisma.user.count();
+
+
+
+//       const propertyCount =
+
+//         await prisma.property.count();
+
+
+
+//       const bookingCount =
+
+//         await prisma.booking.count();
+
+
+
+
+
+//       res.status(200).json({
+
+
+//         success:true,
+
+
+//         message:
+
+//           "RentNest API and database are healthy",
+
+
+
+//         data:{
+
+
+//           database:
+
+//             "connected",
+
+
+
+//           totalUsers:
+
+//             userCount,
+
+
+
+//           totalProperties:
+
+//             propertyCount,
+
+
+
+//           totalBookings:
+
+//             bookingCount,
+
+
+//         },
+
+
+//       });
+
+
+
+
+
+
+
+//     }catch(error){
+
+
+//       res.status(500).json({
+
+
+//         success:false,
+
+
+//         message:
+
+//           "Database connection failed",
+
+
+//       });
+
+
+//     }
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // PROFILE ROUTE
+// // =======================
+
+
+// app.get(
+
+//   "/api/profile",
+
+//   authMiddleware,
+
+
+//   (req,res)=>{
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Protected route accessed",
+
+
+
+//       user:
+
+//         req.user,
+
+
+//     });
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // LANDLORD TEST
+// // =======================
+
+
+// app.get(
+
+//   "/api/landlord-test",
+
+//   authMiddleware,
+
+
+//   authorizeRole(
+
+//     "LANDLORD"
+
+//   ),
+
+
+//   (req,res)=>{
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Welcome Landlord! Property management access granted",
+
+
+
+//       user:
+
+//         req.user,
+
+
+//     });
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // ADMIN TEST
+// // =======================
+
+
+// app.get(
+
+//   "/api/admin-test",
+
+//   authMiddleware,
+
+
+//   authorizeRole(
+
+//     "ADMIN"
+
+//   ),
+
+
+//   (req,res)=>{
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Welcome Admin!",
+
+
+
+//       user:
+
+//         req.user,
+
+
+//     });
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GLOBAL ERROR HANDLER
+// // LAST
+// // =======================
+
+
+// app.use(
+
+//   errorHandler
+
+// );
+
+
+
+
+
+
+
+
+
+// export default app;
+
+
 import express from "express";
 
 
@@ -4319,14 +5524,13 @@ import {
 } from "./config/swagger";
 
 
+import {
+  env,
+} from "./config/env.validation";
 
-import authRouter from "./modules/auth/auth.route";
 
-import propertyRouter from "./modules/property/property.route";
 
-import bookingRouter from "./modules/booking/booking.route";
-
-import adminRouter from "./modules/admin/admin.route";
+import apiV1Router from "./routes/v1";
 
 
 
@@ -4349,7 +5553,12 @@ import {
 
 
 
+
+
 const app = express();
+
+
+
 
 
 
@@ -4361,9 +5570,15 @@ const app = express();
 // =======================
 
 
-app.use(
 
-  helmet()
+// Trust proxy for production
+
+
+app.set(
+
+  "trust proxy",
+
+  1
 
 );
 
@@ -4371,30 +5586,21 @@ app.use(
 
 
 
+
+
+
+
+// Helmet Security Headers
+
+
 app.use(
 
-  cors({
+  helmet({
 
-    origin:"*",
+    contentSecurityPolicy:
 
+      env.NODE_ENV === "production",
 
-    methods:[
-
-      "GET",
-      "POST",
-      "PATCH",
-      "PUT",
-      "DELETE",
-
-    ],
-
-
-    allowedHeaders:[
-
-      "Content-Type",
-      "Authorization",
-
-    ],
 
   })
 
@@ -4406,31 +5612,100 @@ app.use(
 
 
 
+
+
+
+
+// CORS Configuration
+
+
+app.use(
+
+  cors({
+
+
+    origin:
+
+      env.FRONTEND_URL,
+
+
+    methods:[
+
+      "GET",
+
+      "POST",
+
+      "PATCH",
+
+      "PUT",
+
+      "DELETE",
+
+    ],
+
+
+    allowedHeaders:[
+
+      "Content-Type",
+
+      "Authorization",
+
+    ],
+
+
+  })
+
+);
+
+
+
+
+
+
+
+
+
+
+
+// Rate Limiting
+
+
 const limiter = rateLimit({
+
 
   windowMs:
 
     15 * 60 * 1000,
 
 
+
   max:
 
-    100,
+    env.RATE_LIMIT_MAX,
+
 
 
   message:{
 
 
+
     success:false,
+
 
 
     message:
 
       "Too many requests, please try again later",
 
+
+
   },
 
+
 });
+
+
+
 
 
 
@@ -4446,11 +5721,32 @@ app.use(
 
 
 
+
+
+
+
+// Body Parser
+
+
 app.use(
 
-  express.json()
+  express.json({
+
+    limit:
+
+      "10kb",
+
+  })
 
 );
+
+
+
+
+
+
+
+
 
 
 
@@ -4485,48 +5781,25 @@ app.use(
 
 
 
+
+
+
 // =======================
-// ROUTES
+// API VERSION 1 ROUTES
 // =======================
 
 
 app.use(
 
-  "/api/auth",
+  "/api/v1",
 
-  authRouter
-
-);
-
-
-
-app.use(
-
-  "/api/properties",
-
-  propertyRouter
+  apiV1Router
 
 );
 
 
 
-app.use(
 
-  "/api/bookings",
-
-  bookingRouter
-
-);
-
-
-
-app.use(
-
-  "/api/admin",
-
-  adminRouter
-
-);
 
 
 
@@ -4558,6 +5831,9 @@ app.get(
   }
 
 );
+
+
+
 
 
 
@@ -4602,10 +5878,13 @@ app.get(
 
 
 
+
       res.status(200).json({
 
 
+
         success:true,
+
 
 
         message:
@@ -4614,12 +5893,15 @@ app.get(
 
 
 
+
         data:{
+
 
 
           database:
 
             "connected",
+
 
 
 
@@ -4629,9 +5911,11 @@ app.get(
 
 
 
+
           totalProperties:
 
             propertyCount,
+
 
 
 
@@ -4640,10 +5924,15 @@ app.get(
             bookingCount,
 
 
+
         },
 
 
+
       });
+
+
+
 
 
 
@@ -4652,10 +5941,13 @@ app.get(
     }catch(error){
 
 
+
       res.status(500).json({
 
 
+
         success:false,
+
 
 
         message:
@@ -4663,15 +5955,23 @@ app.get(
           "Database connection failed",
 
 
+
       });
+
 
 
     }
 
 
+
   }
 
 );
+
+
+
+
+
 
 
 
@@ -4693,13 +5993,17 @@ app.get(
   authMiddleware,
 
 
+
   (req,res)=>{
+
 
 
     res.status(200).json({
 
 
+
       success:true,
+
 
 
       message:
@@ -4708,17 +6012,23 @@ app.get(
 
 
 
+
       user:
 
         req.user,
 
 
+
     });
+
 
 
   }
 
 );
+
+
+
 
 
 
@@ -4740,6 +6050,7 @@ app.get(
   authMiddleware,
 
 
+
   authorizeRole(
 
     "LANDLORD"
@@ -4747,13 +6058,17 @@ app.get(
   ),
 
 
+
   (req,res)=>{
+
 
 
     res.status(200).json({
 
 
+
       success:true,
+
 
 
       message:
@@ -4762,17 +6077,23 @@ app.get(
 
 
 
+
       user:
 
         req.user,
 
 
+
     });
+
 
 
   }
 
 );
+
+
+
 
 
 
@@ -4794,6 +6115,7 @@ app.get(
   authMiddleware,
 
 
+
   authorizeRole(
 
     "ADMIN"
@@ -4801,13 +6123,17 @@ app.get(
   ),
 
 
+
   (req,res)=>{
+
 
 
     res.status(200).json({
 
 
+
       success:true,
+
 
 
       message:
@@ -4816,17 +6142,22 @@ app.get(
 
 
 
+
       user:
 
         req.user,
 
 
+
     });
+
 
 
   }
 
 );
+
+
 
 
 
@@ -4847,6 +6178,7 @@ app.use(
   errorHandler
 
 );
+
 
 
 
