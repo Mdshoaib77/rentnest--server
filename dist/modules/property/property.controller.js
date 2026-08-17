@@ -6,6 +6,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePropertyController = exports.updatePropertyController = exports.getMyPropertiesController = exports.getSinglePropertyController = exports.getAllPropertiesController = exports.createPropertyController = void 0;
 const property_service_1 = require("./property.service");
+const apiResponse_1 = require("../../utils/apiResponse");
 // =======================
 // CREATE PROPERTY
 // =======================
@@ -13,25 +14,15 @@ const createPropertyController = async (req, res) => {
     try {
         const landlordId = req.user?.id;
         if (!landlordId) {
-            return res.status(401).json({
-                success: false,
-                message: "User not authenticated",
-            });
+            return (0, apiResponse_1.sendErrorResponse)(res, 401, "User not authenticated");
         }
         const property = await (0, property_service_1.createProperty)(req.body, landlordId);
-        res.status(201).json({
-            success: true,
-            message: "Property created successfully",
-            data: property,
-        });
+        return (0, apiResponse_1.sendResponse)(res, 201, "Property created successfully", property);
     }
     catch (error) {
-        res.status(400).json({
-            success: false,
-            message: error instanceof Error
-                ? error.message
-                : "Something went wrong",
-        });
+        return (0, apiResponse_1.sendErrorResponse)(res, 400, error instanceof Error
+            ? error.message
+            : "Something went wrong");
     }
 };
 exports.createPropertyController = createPropertyController;
@@ -59,17 +50,10 @@ const getAllPropertiesController = async (req, res) => {
                 : 10,
         };
         const result = await (0, property_service_1.getAllProperties)(filters);
-        res.status(200).json({
-            success: true,
-            message: "Properties fetched successfully",
-            ...result,
-        });
+        return (0, apiResponse_1.sendResponse)(res, 200, "Properties fetched successfully", result.data, result.meta);
     }
     catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Failed to fetch properties",
-        });
+        return (0, apiResponse_1.sendErrorResponse)(res, 500, "Failed to fetch properties");
     }
 };
 exports.getAllPropertiesController = getAllPropertiesController;
@@ -80,22 +64,12 @@ const getSinglePropertyController = async (req, res) => {
     try {
         const property = await (0, property_service_1.getSingleProperty)(req.params.id);
         if (!property) {
-            return res.status(404).json({
-                success: false,
-                message: "Property not found",
-            });
+            return (0, apiResponse_1.sendErrorResponse)(res, 404, "Property not found");
         }
-        res.status(200).json({
-            success: true,
-            message: "Property fetched successfully",
-            data: property,
-        });
+        return (0, apiResponse_1.sendResponse)(res, 200, "Property fetched successfully", property);
     }
     catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Failed to fetch property",
-        });
+        return (0, apiResponse_1.sendErrorResponse)(res, 500, "Failed to fetch property");
     }
 };
 exports.getSinglePropertyController = getSinglePropertyController;
@@ -107,27 +81,17 @@ const getMyPropertiesController = async (req, res) => {
     try {
         const landlordId = req.user?.id;
         if (!landlordId) {
-            return res.status(401).json({
-                success: false,
-                message: "User not authenticated",
-            });
+            return (0, apiResponse_1.sendErrorResponse)(res, 401, "User not authenticated");
         }
         const properties = await (0, property_service_1.getAllProperties)({
             landlordId,
         });
-        res.status(200).json({
-            success: true,
-            message: "My properties fetched successfully",
-            data: properties,
-        });
+        return (0, apiResponse_1.sendResponse)(res, 200, "My properties fetched successfully", properties);
     }
     catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error instanceof Error
-                ? error.message
-                : "Failed to fetch properties",
-        });
+        return (0, apiResponse_1.sendErrorResponse)(res, 500, error instanceof Error
+            ? error.message
+            : "Failed to fetch properties");
     }
 };
 exports.getMyPropertiesController = getMyPropertiesController;
@@ -138,25 +102,15 @@ const updatePropertyController = async (req, res) => {
     try {
         const landlordId = req.user?.id;
         if (!landlordId) {
-            return res.status(401).json({
-                success: false,
-                message: "User not authenticated",
-            });
+            return (0, apiResponse_1.sendErrorResponse)(res, 401, "User not authenticated");
         }
         const property = await (0, property_service_1.updateProperty)(req.params.id, landlordId, req.body);
-        res.status(200).json({
-            success: true,
-            message: "Property updated successfully",
-            data: property,
-        });
+        return (0, apiResponse_1.sendResponse)(res, 200, "Property updated successfully", property);
     }
     catch (error) {
-        res.status(400).json({
-            success: false,
-            message: error instanceof Error
-                ? error.message
-                : "Update failed",
-        });
+        return (0, apiResponse_1.sendErrorResponse)(res, 400, error instanceof Error
+            ? error.message
+            : "Update failed");
     }
 };
 exports.updatePropertyController = updatePropertyController;
@@ -167,25 +121,15 @@ const deletePropertyController = async (req, res) => {
     try {
         const landlordId = req.user?.id;
         if (!landlordId) {
-            return res.status(401).json({
-                success: false,
-                message: "User not authenticated",
-            });
+            return (0, apiResponse_1.sendErrorResponse)(res, 401, "User not authenticated");
         }
         const property = await (0, property_service_1.deleteProperty)(req.params.id, landlordId);
-        res.status(200).json({
-            success: true,
-            message: "Property deleted successfully",
-            data: property,
-        });
+        return (0, apiResponse_1.sendResponse)(res, 200, "Property deleted successfully", property);
     }
     catch (error) {
-        res.status(400).json({
-            success: false,
-            message: error instanceof Error
-                ? error.message
-                : "Delete failed",
-        });
+        return (0, apiResponse_1.sendErrorResponse)(res, 400, error instanceof Error
+            ? error.message
+            : "Delete failed");
     }
 };
 exports.deletePropertyController = deletePropertyController;

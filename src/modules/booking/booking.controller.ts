@@ -2022,6 +2022,517 @@
 
 
 
+// import type {
+//   Request,
+//   Response,
+// } from "express";
+
+
+// import {
+
+//   createBooking,
+
+//   getMyBookings,
+
+//   getLandlordBookings,
+
+//   updateBookingStatus,
+
+// } from "./booking.service";
+
+
+
+
+
+
+
+
+
+// // =======================
+// // CREATE BOOKING
+// // TENANT ONLY
+// // =======================
+
+// export const createBookingController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const tenantId =
+
+//       req.user?.id;
+
+
+
+
+
+//     if (!tenantId) {
+
+
+//       return res.status(401).json({
+
+
+//         success: false,
+
+
+//         message:
+
+//           "User not authenticated",
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+//     const booking =
+
+//       await createBooking(
+
+//         req.body,
+
+//         tenantId
+
+//       );
+
+
+
+
+
+//     res.status(201).json({
+
+
+//       success: true,
+
+
+//       message:
+
+//         "Booking created successfully",
+
+
+
+//       data:
+
+//         booking,
+
+
+//     });
+
+
+
+
+
+//   } catch (error) {
+
+
+//     res.status(400).json({
+
+
+//       success: false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Booking creation failed",
+
+
+//     });
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET TENANT BOOKINGS
+// // TENANT ONLY
+// // =======================
+
+// export const getTenantBookingsController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const tenantId =
+
+//       req.user?.id;
+
+
+
+
+
+//     if (!tenantId) {
+
+
+//       return res.status(401).json({
+
+
+//         success: false,
+
+
+//         message:
+
+//           "User not authenticated",
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+//     const bookings =
+
+//       await getMyBookings(
+
+//         tenantId
+
+//       );
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success: true,
+
+
+//       message:
+
+//         "Bookings fetched successfully",
+
+
+
+//       data:
+
+//         bookings,
+
+
+//     });
+
+
+
+
+
+//   } catch (error) {
+
+
+//     res.status(500).json({
+
+
+//       success: false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Failed to fetch bookings",
+
+
+//     });
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET LANDLORD BOOKINGS
+// // LANDLORD ONLY
+// // =======================
+
+// export const getLandlordBookingsController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+
+//     if (!landlordId) {
+
+
+//       return res.status(401).json({
+
+
+//         success: false,
+
+
+//         message:
+
+//           "User not authenticated",
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+//     const bookings =
+
+//       await getLandlordBookings(
+
+//         landlordId
+
+//       );
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success: true,
+
+
+//       message:
+
+//         "Landlord bookings fetched successfully",
+
+
+
+//       data:
+
+//         bookings,
+
+
+//     });
+
+
+
+
+
+//   } catch (error) {
+
+
+//     res.status(500).json({
+
+
+//       success: false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Failed to fetch landlord bookings",
+
+
+//     });
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // UPDATE BOOKING STATUS
+// // LANDLORD ONLY
+// // =======================
+
+// export const updateBookingStatusController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+
+//     if (!landlordId) {
+
+
+//       return res.status(401).json({
+
+
+//         success: false,
+
+
+//         message:
+
+//           "User not authenticated",
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+//     const bookingId =
+
+//       String(req.params.id);
+
+
+
+
+
+//     const booking =
+
+//       await updateBookingStatus(
+
+//         bookingId,
+
+//         landlordId,
+
+//         req.body
+
+//       );
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success: true,
+
+
+//       message:
+
+//         "Booking status updated successfully",
+
+
+
+//       data:
+
+//         booking,
+
+
+//     });
+
+
+
+
+
+//   } catch (error) {
+
+
+//     res.status(400).json({
+
+
+//       success: false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Status update failed",
+
+
+//     });
+
+
+//   }
+
+
+// };
+
+
 import type {
   Request,
   Response,
@@ -2039,6 +2550,17 @@ import {
   updateBookingStatus,
 
 } from "./booking.service";
+
+
+import {
+
+  sendResponse,
+
+  sendErrorResponse,
+
+} from "../../utils/apiResponse";
+
+
 
 
 
@@ -2077,21 +2599,20 @@ async (
     if (!tenantId) {
 
 
-      return res.status(401).json({
+      return sendErrorResponse(
 
+        res,
 
-        success: false,
+        401,
 
+        "User not authenticated"
 
-        message:
-
-          "User not authenticated",
-
-
-      });
+      );
 
 
     }
+
+
 
 
 
@@ -2111,24 +2632,20 @@ async (
 
 
 
-    res.status(201).json({
 
 
-      success: true,
+    return sendResponse(
 
+      res,
 
-      message:
+      201,
 
-        "Booking created successfully",
+      "Booking created successfully",
 
+      booking
 
+    );
 
-      data:
-
-        booking,
-
-
-    });
 
 
 
@@ -2137,22 +2654,19 @@ async (
   } catch (error) {
 
 
-    res.status(400).json({
+    return sendErrorResponse(
 
+      res,
 
-      success: false,
+      400,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Booking creation failed"
 
-        ? error.message
-
-        : "Booking creation failed",
-
-
-    });
+    );
 
 
   }
@@ -2196,24 +2710,25 @@ async (
 
 
 
+
+
     if (!tenantId) {
 
 
-      return res.status(401).json({
+      return sendErrorResponse(
 
+        res,
 
-        success: false,
+        401,
 
+        "User not authenticated"
 
-        message:
-
-          "User not authenticated",
-
-
-      });
+      );
 
 
     }
+
+
 
 
 
@@ -2231,24 +2746,20 @@ async (
 
 
 
-    res.status(200).json({
 
 
-      success: true,
+    return sendResponse(
 
+      res,
 
-      message:
+      200,
 
-        "Bookings fetched successfully",
+      "Bookings fetched successfully",
 
+      bookings
 
+    );
 
-      data:
-
-        bookings,
-
-
-    });
 
 
 
@@ -2257,22 +2768,19 @@ async (
   } catch (error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success: false,
+      500,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Failed to fetch bookings"
 
-        ? error.message
-
-        : "Failed to fetch bookings",
-
-
-    });
+    );
 
 
   }
@@ -2316,24 +2824,25 @@ async (
 
 
 
+
+
     if (!landlordId) {
 
 
-      return res.status(401).json({
+      return sendErrorResponse(
 
+        res,
 
-        success: false,
+        401,
 
+        "User not authenticated"
 
-        message:
-
-          "User not authenticated",
-
-
-      });
+      );
 
 
     }
+
+
 
 
 
@@ -2351,24 +2860,20 @@ async (
 
 
 
-    res.status(200).json({
 
 
-      success: true,
+    return sendResponse(
 
+      res,
 
-      message:
+      200,
 
-        "Landlord bookings fetched successfully",
+      "Landlord bookings fetched successfully",
 
+      bookings
 
+    );
 
-      data:
-
-        bookings,
-
-
-    });
 
 
 
@@ -2377,22 +2882,19 @@ async (
   } catch (error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success: false,
+      500,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Failed to fetch landlord bookings"
 
-        ? error.message
-
-        : "Failed to fetch landlord bookings",
-
-
-    });
+    );
 
 
   }
@@ -2436,21 +2938,20 @@ async (
 
 
 
+
+
     if (!landlordId) {
 
 
-      return res.status(401).json({
+      return sendErrorResponse(
 
+        res,
 
-        success: false,
+        401,
 
+        "User not authenticated"
 
-        message:
-
-          "User not authenticated",
-
-
-      });
+      );
 
 
     }
@@ -2459,9 +2960,13 @@ async (
 
 
 
+
+
     const bookingId =
 
       String(req.params.id);
+
+
 
 
 
@@ -2483,24 +2988,20 @@ async (
 
 
 
-    res.status(200).json({
 
 
-      success: true,
+    return sendResponse(
 
+      res,
 
-      message:
+      200,
 
-        "Booking status updated successfully",
+      "Booking status updated successfully",
 
+      booking
 
+    );
 
-      data:
-
-        booking,
-
-
-    });
 
 
 
@@ -2509,22 +3010,19 @@ async (
   } catch (error) {
 
 
-    res.status(400).json({
+    return sendErrorResponse(
 
+      res,
 
-      success: false,
+      400,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Status update failed"
 
-        ? error.message
-
-        : "Status update failed",
-
-
-    });
+    );
 
 
   }

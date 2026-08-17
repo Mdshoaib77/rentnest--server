@@ -2632,6 +2632,732 @@
 
 // };
 
+// import type {
+//   Request,
+//   Response,
+// } from "express";
+
+
+// import {
+//   getAdminStats,
+//   getAllUsers,
+//   getAllProperties,
+//   getAllBookings,
+//   deleteUser,
+//   deleteProperty,
+//   updateBookingStatus,
+// } from "./admin.service";
+
+
+
+
+// // =======================
+// // GET ADMIN DASHBOARD STATS
+// // =======================
+
+// export const getAdminStatsController =
+
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const stats =
+
+//       await getAdminStats();
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success: true,
+
+
+//       message:
+
+//         "Admin dashboard stats fetched successfully",
+
+
+
+//       data:
+
+//         stats,
+
+
+//     });
+
+
+
+
+
+//   } catch (error) {
+
+
+//     res.status(500).json({
+
+
+//       success: false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Failed to fetch admin stats",
+
+
+//     });
+
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET ALL USERS
+// // ADMIN ONLY
+// // =======================
+
+// export const getAllUsersController =
+
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const users =
+
+//       await getAllUsers();
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success: true,
+
+
+//       message:
+
+//         "Users fetched successfully",
+
+
+
+//       data:
+
+//         users,
+
+
+//     });
+
+
+
+
+
+//   } catch (error) {
+
+
+//     res.status(500).json({
+
+
+//       success: false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Failed to fetch users",
+
+
+//     });
+
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET ALL PROPERTIES
+// // ADMIN ONLY
+// // =======================
+
+// export const getAllPropertiesController =
+
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const properties =
+
+//       await getAllProperties();
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success: true,
+
+
+//       message:
+
+//         "Properties fetched successfully",
+
+
+
+//       data:
+
+//         properties,
+
+
+//     });
+
+
+
+
+
+//   } catch (error) {
+
+
+//     res.status(500).json({
+
+
+//       success: false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Failed to fetch properties",
+
+
+//     });
+
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET ALL BOOKINGS
+// // ADMIN ONLY
+// // =======================
+
+// export const getAllBookingsController =
+
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const bookings =
+
+//       await getAllBookings();
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success: true,
+
+
+//       message:
+
+//         "Bookings fetched successfully",
+
+
+
+//       data:
+
+//         bookings,
+
+
+//     });
+
+
+
+
+
+//   } catch (error) {
+
+
+//     res.status(500).json({
+
+
+//       success: false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Failed to fetch bookings",
+
+
+//     });
+
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // DELETE USER
+// // ADMIN ONLY
+// // =======================
+
+// export const deleteUserController =
+
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const userId =
+
+//       req.params.id as string;
+
+
+
+
+
+//     const adminId =
+
+//       req.user?.id;
+
+
+
+
+
+//     if (!adminId) {
+
+
+//       return res.status(401).json({
+
+
+//         success: false,
+
+
+//         message:
+
+//           "Unauthorized user",
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+
+
+//     const deletedUser =
+
+//       await deleteUser(
+
+//         userId,
+
+//         adminId
+
+//       );
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success: true,
+
+
+//       message:
+
+//         "User deleted successfully",
+
+
+
+//       data:
+
+//         deletedUser,
+
+
+//     });
+
+
+
+
+
+//   } catch (error) {
+
+
+//     res.status(500).json({
+
+
+//       success: false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Failed to delete user",
+
+
+//     });
+
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // DELETE PROPERTY
+// // ADMIN ONLY
+// // =======================
+
+// export const deletePropertyController =
+
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const propertyId =
+
+//       req.params.id as string;
+
+
+
+
+
+//     const deletedProperty =
+
+//       await deleteProperty(
+
+//         propertyId
+
+//       );
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success: true,
+
+
+//       message:
+
+//         "Property deleted successfully",
+
+
+
+//       data:
+
+//         deletedProperty,
+
+
+//     });
+
+
+
+
+
+//   } catch (error) {
+
+
+//     res.status(500).json({
+
+
+//       success: false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Failed to delete property",
+
+
+//     });
+
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // UPDATE BOOKING STATUS
+// // ADMIN ONLY
+// // =======================
+
+// export const updateBookingStatusController =
+
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const bookingId =
+
+//       req.params.id as string;
+
+
+
+
+
+//     const {
+
+//       status,
+
+//     } = req.body;
+
+
+
+
+
+//     if (!status) {
+
+
+//       return res.status(400).json({
+
+
+//         success: false,
+
+
+//         message:
+
+//           "Status is required",
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+
+
+//     const updatedBooking =
+
+//       await updateBookingStatus(
+
+//         bookingId,
+
+//         status
+
+//       );
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success: true,
+
+
+//       message:
+
+//         "Booking status updated successfully",
+
+
+
+//       data:
+
+//         updatedBooking,
+
+
+//     });
+
+
+
+
+
+//   } catch (error) {
+
+
+//     res.status(500).json({
+
+
+//       success: false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Failed to update booking status",
+
+
+//     });
+
+
+
+//   }
+
+
+// };
+
+
 import type {
   Request,
   Response,
@@ -2647,6 +3373,12 @@ import {
   deleteProperty,
   updateBookingStatus,
 } from "./admin.service";
+
+
+import {
+  sendResponse,
+  sendErrorResponse,
+} from "../../utils/apiResponse";
 
 
 
@@ -2677,24 +3409,17 @@ async (
 
 
 
-    res.status(200).json({
+    return sendResponse(
 
+      res,
 
-      success: true,
+      200,
 
+      "Admin dashboard stats fetched successfully",
 
-      message:
+      stats
 
-        "Admin dashboard stats fetched successfully",
-
-
-
-      data:
-
-        stats,
-
-
-    });
+    );
 
 
 
@@ -2703,22 +3428,19 @@ async (
   } catch (error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success: false,
+      500,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Failed to fetch admin stats"
 
-        ? error.message
-
-        : "Failed to fetch admin stats",
-
-
-    });
+    );
 
 
 
@@ -2764,24 +3486,17 @@ async (
 
 
 
-    res.status(200).json({
+    return sendResponse(
 
+      res,
 
-      success: true,
+      200,
 
+      "Users fetched successfully",
 
-      message:
+      users
 
-        "Users fetched successfully",
-
-
-
-      data:
-
-        users,
-
-
-    });
+    );
 
 
 
@@ -2790,22 +3505,19 @@ async (
   } catch (error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success: false,
+      500,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Failed to fetch users"
 
-        ? error.message
-
-        : "Failed to fetch users",
-
-
-    });
+    );
 
 
 
@@ -2851,24 +3563,17 @@ async (
 
 
 
-    res.status(200).json({
+    return sendResponse(
 
+      res,
 
-      success: true,
+      200,
 
+      "Properties fetched successfully",
 
-      message:
+      properties
 
-        "Properties fetched successfully",
-
-
-
-      data:
-
-        properties,
-
-
-    });
+    );
 
 
 
@@ -2877,22 +3582,19 @@ async (
   } catch (error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success: false,
+      500,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Failed to fetch properties"
 
-        ? error.message
-
-        : "Failed to fetch properties",
-
-
-    });
+    );
 
 
 
@@ -2938,24 +3640,17 @@ async (
 
 
 
-    res.status(200).json({
+    return sendResponse(
 
+      res,
 
-      success: true,
+      200,
 
+      "Bookings fetched successfully",
 
-      message:
+      bookings
 
-        "Bookings fetched successfully",
-
-
-
-      data:
-
-        bookings,
-
-
-    });
+    );
 
 
 
@@ -2964,22 +3659,19 @@ async (
   } catch (error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success: false,
+      500,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Failed to fetch bookings"
 
-        ? error.message
-
-        : "Failed to fetch bookings",
-
-
-    });
+    );
 
 
 
@@ -3036,18 +3728,15 @@ async (
     if (!adminId) {
 
 
-      return res.status(401).json({
+      return sendErrorResponse(
 
+        res,
 
-        success: false,
+        401,
 
+        "Unauthorized user"
 
-        message:
-
-          "Unauthorized user",
-
-
-      });
+      );
 
 
     }
@@ -3072,24 +3761,17 @@ async (
 
 
 
-    res.status(200).json({
+    return sendResponse(
 
+      res,
 
-      success: true,
+      200,
 
+      "User deleted successfully",
 
-      message:
+      deletedUser
 
-        "User deleted successfully",
-
-
-
-      data:
-
-        deletedUser,
-
-
-    });
+    );
 
 
 
@@ -3098,22 +3780,19 @@ async (
   } catch (error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success: false,
+      500,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Failed to delete user"
 
-        ? error.message
-
-        : "Failed to delete user",
-
-
-    });
+    );
 
 
 
@@ -3171,24 +3850,17 @@ async (
 
 
 
-    res.status(200).json({
+    return sendResponse(
 
+      res,
 
-      success: true,
+      200,
 
+      "Property deleted successfully",
 
-      message:
+      deletedProperty
 
-        "Property deleted successfully",
-
-
-
-      data:
-
-        deletedProperty,
-
-
-    });
+    );
 
 
 
@@ -3197,22 +3869,19 @@ async (
   } catch (error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success: false,
+      500,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Failed to delete property"
 
-        ? error.message
-
-        : "Failed to delete property",
-
-
-    });
+    );
 
 
 
@@ -3271,18 +3940,15 @@ async (
     if (!status) {
 
 
-      return res.status(400).json({
+      return sendErrorResponse(
 
+        res,
 
-        success: false,
+        400,
 
+        "Status is required"
 
-        message:
-
-          "Status is required",
-
-
-      });
+      );
 
 
     }
@@ -3307,24 +3973,17 @@ async (
 
 
 
-    res.status(200).json({
+    return sendResponse(
 
+      res,
 
-      success: true,
+      200,
 
+      "Booking status updated successfully",
 
-      message:
+      updatedBooking
 
-        "Booking status updated successfully",
-
-
-
-      data:
-
-        updatedBooking,
-
-
-    });
+    );
 
 
 
@@ -3333,22 +3992,19 @@ async (
   } catch (error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success: false,
+      500,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Failed to update booking status"
 
-        ? error.message
-
-        : "Failed to update booking status",
-
-
-    });
+    );
 
 
 

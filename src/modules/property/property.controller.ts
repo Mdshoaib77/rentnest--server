@@ -2063,6 +2063,783 @@
 // };
 
 
+// import type {
+//   Request,
+//   Response,
+// } from "express";
+
+
+// import {
+//   createProperty,
+//   getAllProperties,
+//   getSingleProperty,
+//   updateProperty,
+//   deleteProperty,
+// } from "./property.service";
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // CREATE PROPERTY
+// // =======================
+
+// export const createPropertyController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+
+//     if (!landlordId) {
+
+
+//       return res.status(401).json({
+
+
+//         success:false,
+
+
+//         message:
+
+//           "User not authenticated",
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+
+
+//     const property =
+
+//       await createProperty(
+
+//         req.body,
+
+//         landlordId
+
+//       );
+
+
+
+
+
+
+//     res.status(201).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Property created successfully",
+
+
+
+//       data:
+
+//         property,
+
+
+//     });
+
+
+
+
+
+
+//   } catch(error) {
+
+
+//     res.status(400).json({
+
+
+//       success:false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Something went wrong",
+
+
+//     });
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET ALL PROPERTIES
+// // =======================
+
+// export const getAllPropertiesController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const filters = {
+
+
+//       location:
+
+//         req.query.location as string,
+
+
+
+//       minPrice:
+
+//         req.query.minPrice
+
+//         ? Number(req.query.minPrice)
+
+//         : undefined,
+
+
+
+//       maxPrice:
+
+//         req.query.maxPrice
+
+//         ? Number(req.query.maxPrice)
+
+//         : undefined,
+
+
+
+//       bedrooms:
+
+//         req.query.bedrooms
+
+//         ? Number(req.query.bedrooms)
+
+//         : undefined,
+
+
+
+//       page:
+
+//         req.query.page
+
+//         ? Number(req.query.page)
+
+//         : 1,
+
+
+
+//       limit:
+
+//         req.query.limit
+
+//         ? Number(req.query.limit)
+
+//         : 10,
+
+
+//     };
+
+
+
+
+
+
+//     const result =
+
+//       await getAllProperties(
+
+//         filters
+
+//       );
+
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Properties fetched successfully",
+
+
+
+//       ...result,
+
+
+//     });
+
+
+
+
+
+
+//   } catch(error) {
+
+
+//     res.status(500).json({
+
+
+//       success:false,
+
+
+//       message:
+
+//         "Failed to fetch properties",
+
+
+//     });
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET SINGLE PROPERTY
+// // =======================
+
+// export const getSinglePropertyController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const property =
+
+//       await getSingleProperty(
+
+//         req.params.id as string
+
+//       );
+
+
+
+
+
+
+//     if(!property){
+
+
+//       return res.status(404).json({
+
+
+//         success:false,
+
+
+//         message:
+
+//           "Property not found",
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Property fetched successfully",
+
+
+
+//       data:
+
+//         property,
+
+
+//     });
+
+
+
+
+
+
+//   } catch(error) {
+
+
+//     res.status(500).json({
+
+
+//       success:false,
+
+
+//       message:
+
+//         "Failed to fetch property",
+
+
+//     });
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET MY PROPERTIES
+// // LANDLORD
+// // =======================
+
+// export const getMyPropertiesController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+
+//     if(!landlordId){
+
+
+//       return res.status(401).json({
+
+
+//         success:false,
+
+
+//         message:
+
+//           "User not authenticated",
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+
+
+//     const properties =
+
+//       await getAllProperties({
+
+
+//         landlordId,
+
+
+//       });
+
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "My properties fetched successfully",
+
+
+
+//       data:
+
+//         properties,
+
+
+//     });
+
+
+
+
+
+
+//   } catch(error) {
+
+
+//     res.status(500).json({
+
+
+//       success:false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Failed to fetch properties",
+
+
+//     });
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // UPDATE PROPERTY
+// // =======================
+
+// export const updatePropertyController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+
+//     if(!landlordId){
+
+
+//       return res.status(401).json({
+
+
+//         success:false,
+
+
+//         message:
+
+//           "User not authenticated",
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+
+
+//     const property =
+
+//       await updateProperty(
+
+//         req.params.id as string,
+
+//         landlordId,
+
+//         req.body
+
+//       );
+
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Property updated successfully",
+
+
+
+//       data:
+
+//         property,
+
+
+//     });
+
+
+
+
+
+
+//   } catch(error) {
+
+
+//     res.status(400).json({
+
+
+//       success:false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Update failed",
+
+
+//     });
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // DELETE PROPERTY
+// // =======================
+
+// export const deletePropertyController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+
+//     if(!landlordId){
+
+
+//       return res.status(401).json({
+
+
+//         success:false,
+
+
+//         message:
+
+//           "User not authenticated",
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+
+
+//     const property =
+
+//       await deleteProperty(
+
+//         req.params.id as string,
+
+//         landlordId
+
+//       );
+
+
+
+
+
+
+//     res.status(200).json({
+
+
+//       success:true,
+
+
+//       message:
+
+//         "Property deleted successfully",
+
+
+
+//       data:
+
+//         property,
+
+
+//     });
+
+
+
+
+
+
+//   } catch(error) {
+
+
+//     res.status(400).json({
+
+
+//       success:false,
+
+
+//       message:
+
+//         error instanceof Error
+
+//         ? error.message
+
+//         : "Delete failed",
+
+
+//     });
+
+
+//   }
+
+
+// };
+
+
 import type {
   Request,
   Response,
@@ -2076,6 +2853,12 @@ import {
   updateProperty,
   deleteProperty,
 } from "./property.service";
+
+
+import {
+  sendResponse,
+  sendErrorResponse,
+} from "../../utils/apiResponse";
 
 
 
@@ -2111,22 +2894,18 @@ async (
 
 
 
-
     if (!landlordId) {
 
 
-      return res.status(401).json({
+      return sendErrorResponse(
 
+        res,
 
-        success:false,
+        401,
 
+        "User not authenticated"
 
-        message:
-
-          "User not authenticated",
-
-
-      });
+      );
 
 
     }
@@ -2151,26 +2930,17 @@ async (
 
 
 
+    return sendResponse(
 
-    res.status(201).json({
+      res,
 
+      201,
 
-      success:true,
+      "Property created successfully",
 
+      property
 
-      message:
-
-        "Property created successfully",
-
-
-
-      data:
-
-        property,
-
-
-    });
-
+    );
 
 
 
@@ -2179,22 +2949,19 @@ async (
   } catch(error) {
 
 
-    res.status(400).json({
+    return sendErrorResponse(
 
+      res,
 
-      success:false,
+      400,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Something went wrong"
 
-        ? error.message
-
-        : "Something went wrong",
-
-
-    });
+    );
 
 
   }
@@ -2294,6 +3061,7 @@ async (
 
 
 
+
     const result =
 
       await getAllProperties(
@@ -2307,22 +3075,21 @@ async (
 
 
 
-    res.status(200).json({
 
+    return sendResponse(
 
-      success:true,
+      res,
 
+      200,
 
-      message:
+      "Properties fetched successfully",
 
-        "Properties fetched successfully",
+      result.data,
 
+      result.meta
 
+    );
 
-      ...result,
-
-
-    });
 
 
 
@@ -2332,18 +3099,15 @@ async (
   } catch(error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success:false,
+      500,
 
+      "Failed to fetch properties"
 
-      message:
-
-        "Failed to fetch properties",
-
-
-    });
+    );
 
 
   }
@@ -2391,21 +3155,19 @@ async (
 
 
 
+
     if(!property){
 
 
-      return res.status(404).json({
+      return sendErrorResponse(
 
+        res,
 
-        success:false,
+        404,
 
+        "Property not found"
 
-        message:
-
-          "Property not found",
-
-
-      });
+      );
 
 
     }
@@ -2415,24 +3177,19 @@ async (
 
 
 
-    res.status(200).json({
 
+    return sendResponse(
 
-      success:true,
+      res,
 
+      200,
 
-      message:
+      "Property fetched successfully",
 
-        "Property fetched successfully",
+      property
 
+    );
 
-
-      data:
-
-        property,
-
-
-    });
 
 
 
@@ -2442,18 +3199,15 @@ async (
   } catch(error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success:false,
+      500,
 
+      "Failed to fetch property"
 
-      message:
-
-        "Failed to fetch property",
-
-
-    });
+    );
 
 
   }
@@ -2497,24 +3251,24 @@ async (
 
 
 
+
+
     if(!landlordId){
 
 
-      return res.status(401).json({
+      return sendErrorResponse(
 
+        res,
 
-        success:false,
+        401,
 
+        "User not authenticated"
 
-        message:
-
-          "User not authenticated",
-
-
-      });
+      );
 
 
     }
+
 
 
 
@@ -2530,31 +3284,26 @@ async (
         landlordId,
 
 
-      });
+      } as any);
 
 
 
 
 
 
-    res.status(200).json({
 
+    return sendResponse(
 
-      success:true,
+      res,
 
+      200,
 
-      message:
+      "My properties fetched successfully",
 
-        "My properties fetched successfully",
+      properties
 
+    );
 
-
-      data:
-
-        properties,
-
-
-    });
 
 
 
@@ -2564,22 +3313,19 @@ async (
   } catch(error) {
 
 
-    res.status(500).json({
+    return sendErrorResponse(
 
+      res,
 
-      success:false,
+      500,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Failed to fetch properties"
 
-        ? error.message
-
-        : "Failed to fetch properties",
-
-
-    });
+    );
 
 
   }
@@ -2622,21 +3368,20 @@ async (
 
 
 
+
+
     if(!landlordId){
 
 
-      return res.status(401).json({
+      return sendErrorResponse(
 
+        res,
 
-        success:false,
+        401,
 
+        "User not authenticated"
 
-        message:
-
-          "User not authenticated",
-
-
-      });
+      );
 
 
     }
@@ -2664,24 +3409,19 @@ async (
 
 
 
-    res.status(200).json({
 
+    return sendResponse(
 
-      success:true,
+      res,
 
+      200,
 
-      message:
+      "Property updated successfully",
 
-        "Property updated successfully",
+      property
 
+    );
 
-
-      data:
-
-        property,
-
-
-    });
 
 
 
@@ -2691,22 +3431,19 @@ async (
   } catch(error) {
 
 
-    res.status(400).json({
+    return sendErrorResponse(
 
+      res,
 
-      success:false,
+      400,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Update failed"
 
-        ? error.message
-
-        : "Update failed",
-
-
-    });
+    );
 
 
   }
@@ -2749,21 +3486,20 @@ async (
 
 
 
+
+
     if(!landlordId){
 
 
-      return res.status(401).json({
+      return sendErrorResponse(
 
+        res,
 
-        success:false,
+        401,
 
+        "User not authenticated"
 
-        message:
-
-          "User not authenticated",
-
-
-      });
+      );
 
 
     }
@@ -2789,24 +3525,19 @@ async (
 
 
 
-    res.status(200).json({
 
+    return sendResponse(
 
-      success:true,
+      res,
 
+      200,
 
-      message:
+      "Property deleted successfully",
 
-        "Property deleted successfully",
+      property
 
+    );
 
-
-      data:
-
-        property,
-
-
-    });
 
 
 
@@ -2816,22 +3547,19 @@ async (
   } catch(error) {
 
 
-    res.status(400).json({
+    return sendErrorResponse(
 
+      res,
 
-      success:false,
+      400,
 
+      error instanceof Error
 
-      message:
+      ? error.message
 
-        error instanceof Error
+      : "Delete failed"
 
-        ? error.message
-
-        : "Delete failed",
-
-
-    });
+    );
 
 
   }
