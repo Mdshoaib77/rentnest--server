@@ -1,27 +1,79 @@
-// // // // // // // // // // This is your Prisma schema file,
-// // // // // // // // // // learn more about it in the docs: https://pris.ly/d/prisma-schema
+// // // // // // // // // // // // This is your Prisma schema file,
+// // // // // // // // // // // // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// // // // // // // // // // Get a free hosted Postgres database in seconds: `npx create-db`
+// // // // // // // // // // // // Get a free hosted Postgres database in seconds: `npx create-db`
+
+// // // // // // // // // // // generator client {
+// // // // // // // // // // //   provider = "prisma-client"
+// // // // // // // // // // //   output   = "../src/generated/prisma"
+// // // // // // // // // // // }
+
+// // // // // // // // // // // datasource db {
+// // // // // // // // // // //   provider = "postgresql"
+// // // // // // // // // // // }
+
+// // // // // // // // // // generator client {
+// // // // // // // // // //   provider = "prisma-client-js"
+// // // // // // // // // // }
+
+// // // // // // // // // // datasource db {
+// // // // // // // // // //   provider = "postgresql"
+// // // // // // // // // // }
 
 // // // // // // // // // generator client {
-// // // // // // // // //   provider = "prisma-client"
-// // // // // // // // //   output   = "../src/generated/prisma"
+// // // // // // // // //   provider = "prisma-client-js"
 // // // // // // // // // }
 
 // // // // // // // // // datasource db {
 // // // // // // // // //   provider = "postgresql"
 // // // // // // // // // }
 
+// // // // // // // // // enum Role {
+// // // // // // // // //   TENANT
+// // // // // // // // //   LANDLORD
+// // // // // // // // //   ADMIN
+// // // // // // // // // }
+
+// // // // // // // // // model User {
+// // // // // // // // //   id        String   @id @default(uuid())
+// // // // // // // // //   name      String
+// // // // // // // // //   email     String   @unique
+// // // // // // // // //   password  String
+// // // // // // // // //   role      Role     @default(TENANT)
+
+// // // // // // // // //   createdAt DateTime @default(now())
+// // // // // // // // //   updatedAt DateTime @updatedAt
+// // // // // // // // // }
+
 // // // // // // // // generator client {
-// // // // // // // //   provider = "prisma-client-js"
+// // // // // // // //   provider = "prisma-client"
+// // // // // // // //   output   = "../src/generated/prisma"
 // // // // // // // // }
 
 // // // // // // // // datasource db {
 // // // // // // // //   provider = "postgresql"
 // // // // // // // // }
 
+// // // // // // // // enum Role {
+// // // // // // // //   TENANT
+// // // // // // // //   LANDLORD
+// // // // // // // //   ADMIN
+// // // // // // // // }
+
+// // // // // // // // model User {
+// // // // // // // //   id        String   @id @default(uuid())
+// // // // // // // //   name      String
+// // // // // // // //   email     String   @unique
+// // // // // // // //   password  String
+// // // // // // // //   role      Role     @default(TENANT)
+
+// // // // // // // //   createdAt DateTime @default(now())
+// // // // // // // //   updatedAt DateTime @updatedAt
+// // // // // // // // }
+
 // // // // // // // generator client {
-// // // // // // //   provider = "prisma-client-js"
+// // // // // // //   provider = "prisma-client"
+// // // // // // //   output   = "../src/generated/prisma"
 // // // // // // // }
 
 // // // // // // // datasource db {
@@ -35,14 +87,52 @@
 // // // // // // // }
 
 // // // // // // // model User {
-// // // // // // //   id        String   @id @default(uuid())
-// // // // // // //   name      String
-// // // // // // //   email     String   @unique
-// // // // // // //   password  String
-// // // // // // //   role      Role     @default(TENANT)
+
+// // // // // // //   id String @id @default(uuid())
+
+// // // // // // //   name String
+
+// // // // // // //   email String @unique
+
+// // // // // // //   password String
+
+// // // // // // //   role Role @default(TENANT)
+
+// // // // // // //   properties Property[]
 
 // // // // // // //   createdAt DateTime @default(now())
+
 // // // // // // //   updatedAt DateTime @updatedAt
+
+// // // // // // // }
+
+// // // // // // // model Property {
+
+// // // // // // //   id String @id @default(uuid())
+
+// // // // // // //   title String
+
+// // // // // // //   description String
+
+// // // // // // //   location String
+
+// // // // // // //   price Float
+
+// // // // // // //   bedrooms Int
+
+// // // // // // //   bathrooms Int
+
+// // // // // // //   landlordId String
+
+// // // // // // //   landlord User @relation(
+// // // // // // //     fields: [landlordId],
+// // // // // // //     references: [id]
+// // // // // // //   )
+
+// // // // // // //   createdAt DateTime @default(now())
+
+// // // // // // //   updatedAt DateTime @updatedAt
+
 // // // // // // // }
 
 // // // // // // generator client {
@@ -61,50 +151,49 @@
 // // // // // // }
 
 // // // // // // model User {
-// // // // // //   id        String   @id @default(uuid())
-// // // // // //   name      String
-// // // // // //   email     String   @unique
-// // // // // //   password  String
-// // // // // //   role      Role     @default(TENANT)
+// // // // // //   id String @id @default(uuid())
+
+// // // // // //   name String
+
+// // // // // //   email String @unique
+
+// // // // // //   password String
+
+// // // // // //   role Role @default(TENANT)
+
+// // // // // //   properties Property[]
 
 // // // // // //   createdAt DateTime @default(now())
+
 // // // // // //   updatedAt DateTime @updatedAt
 // // // // // // }
 
-// // // // // generator client {
-// // // // //   provider = "prisma-client"
-// // // // //   output   = "../src/generated/prisma"
-// // // // // }
+// // // // // // model Property {
+// // // // // //   id String @id @default(uuid())
 
-// // // // // datasource db {
-// // // // //   provider = "postgresql"
-// // // // // }
+// // // // // //   title String
 
-// // // // // enum Role {
-// // // // //   TENANT
-// // // // //   LANDLORD
-// // // // //   ADMIN
-// // // // // }
+// // // // // //   description String
 
-// // // // // model User {
+// // // // // //   location String
 
-// // // // //   id String @id @default(uuid())
+// // // // // //   price Float
 
-// // // // //   name String
+// // // // // //   bedrooms Int
 
-// // // // //   email String @unique
+// // // // // //   bathrooms Int
 
-// // // // //   password String
+// // // // // //   landlordId String
 
-// // // // //   role Role @default(TENANT)
+// // // // // //   landlord User @relation(
+// // // // // //     fields: [landlordId],
+// // // // // //     references: [id]
+// // // // // //   )
 
-// // // // //   properties Property[]
+// // // // // //   createdAt DateTime @default(now())
 
-// // // // //   createdAt DateTime @default(now())
-
-// // // // //   updatedAt DateTime @updatedAt
-
-// // // // // }
+// // // // // //   updatedAt DateTime @updatedAt
+// // // // // // }
 
 // // // // // model Property {
 
@@ -124,10 +213,7 @@
 
 // // // // //   landlordId String
 
-// // // // //   landlord User @relation(
-// // // // //     fields: [landlordId],
-// // // // //     references: [id]
-// // // // //   )
+// // // // //   landlord User @relation(fields: [landlordId], references: [id])
 
 // // // // //   createdAt DateTime @default(now())
 
@@ -185,15 +271,86 @@
 
 // // // //   landlordId String
 
-// // // //   landlord User @relation(
-// // // //     fields: [landlordId],
-// // // //     references: [id]
-// // // //   )
+// // // //   landlord User @relation(fields: [landlordId], references: [id])
 
 // // // //   createdAt DateTime @default(now())
 
 // // // //   updatedAt DateTime @updatedAt
 // // // // }
+
+// // // generator client {
+// // //   provider = "prisma-client-js"
+// // // }
+
+// // // datasource db {
+// // //   provider = "postgresql"
+// // // }
+
+// // // // =======================
+// // // // USER ROLE
+// // // // =======================
+
+// // // enum Role {
+
+// // //   TENANT
+
+// // //   LANDLORD
+
+// // //   ADMIN
+
+// // // }
+
+// // // // =======================
+// // // // BOOKING STATUS
+// // // // =======================
+
+// // // enum BookingStatus {
+
+// // //   PENDING
+
+// // //   ACCEPTED
+
+// // //   REJECTED
+
+// // //   CANCELLED
+
+// // //   PAID
+
+// // // }
+
+// // // // =======================
+// // // // USER MODEL
+// // // // =======================
+
+// // // model User {
+
+// // //   id String @id @default(uuid())
+
+// // //   name String
+
+// // //   email String @unique
+
+// // //   password String
+
+// // //   role Role @default(TENANT)
+
+// // //   createdAt DateTime @default(now())
+
+// // //   updatedAt DateTime @updatedAt
+
+// // //   // Landlord properties
+
+// // //   properties Property[]
+
+// // //   // Tenant bookings
+
+// // //   bookings Booking[]
+
+// // // }
+
+// // // // =======================
+// // // // PROPERTY MODEL
+// // // // =======================
 
 // // // model Property {
 
@@ -213,7 +370,61 @@
 
 // // //   landlordId String
 
-// // //   landlord User @relation(fields: [landlordId], references: [id])
+// // //   landlord User @relation(
+
+// // //     fields: [landlordId],
+
+// // //     references: [id],
+
+// // //     onDelete: Cascade
+
+// // //   )
+
+// // //   bookings Booking[]
+
+// // //   createdAt DateTime @default(now())
+
+// // //   updatedAt DateTime @updatedAt
+
+// // // }
+
+// // // // =======================
+// // // // BOOKING MODEL
+// // // // =======================
+
+// // // model Booking {
+
+// // //   id String @id @default(uuid())
+
+// // //   tenantId String
+
+// // //   propertyId String
+
+// // //   tenant User @relation(
+
+// // //     fields: [tenantId],
+
+// // //     references: [id],
+
+// // //     onDelete: Cascade
+
+// // //   )
+
+// // //   property Property @relation(
+
+// // //     fields: [propertyId],
+
+// // //     references: [id],
+
+// // //     onDelete: Cascade
+
+// // //   )
+
+// // //   startDate DateTime
+
+// // //   endDate DateTime
+
+// // //   status BookingStatus @default(PENDING)
 
 // // //   createdAt DateTime @default(now())
 
@@ -222,19 +433,38 @@
 // // // }
 
 // // generator client {
-// //   provider = "prisma-client"
-// //   output   = "../src/generated/prisma"
+// //   provider = "prisma-client-js"
 // // }
 
 // // datasource db {
 // //   provider = "postgresql"
 // // }
 
+// // // =======================
+// // // USER ROLE
+// // // =======================
+
 // // enum Role {
 // //   TENANT
 // //   LANDLORD
 // //   ADMIN
 // // }
+
+// // // =======================
+// // // BOOKING STATUS
+// // // =======================
+
+// // enum BookingStatus {
+// //   PENDING
+// //   ACCEPTED
+// //   REJECTED
+// //   CANCELLED
+// //   PAID
+// // }
+
+// // // =======================
+// // // USER MODEL
+// // // =======================
 
 // // model User {
 // //   id String @id @default(uuid())
@@ -247,12 +477,22 @@
 
 // //   role Role @default(TENANT)
 
-// //   properties Property[]
-
 // //   createdAt DateTime @default(now())
 
 // //   updatedAt DateTime @updatedAt
+
+// //   // Landlord properties
+
+// //   properties Property[]
+
+// //   // Tenant bookings
+
+// //   bookings Booking[]
 // // }
+
+// // // =======================
+// // // PROPERTY MODEL
+// // // =======================
 
 // // model Property {
 // //   id String @id @default(uuid())
@@ -271,7 +511,35 @@
 
 // //   landlordId String
 
-// //   landlord User @relation(fields: [landlordId], references: [id])
+// //   landlord User @relation(fields: [landlordId], references: [id], onDelete: Cascade)
+
+// //   bookings Booking[]
+
+// //   createdAt DateTime @default(now())
+
+// //   updatedAt DateTime @updatedAt
+// // }
+
+// // // =======================
+// // // BOOKING MODEL
+// // // =======================
+
+// // model Booking {
+// //   id String @id @default(uuid())
+
+// //   tenantId String
+
+// //   propertyId String
+
+// //   tenant User @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+// //   property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+// //   startDate DateTime
+
+// //   endDate DateTime
+
+// //   status BookingStatus @default(PENDING)
 
 // //   createdAt DateTime @default(now())
 
@@ -279,11 +547,15 @@
 // // }
 
 // generator client {
+
 //   provider = "prisma-client-js"
+
 // }
 
 // datasource db {
+
 //   provider = "postgresql"
+
 // }
 
 // // =======================
@@ -346,6 +618,12 @@
 
 //   bookings Booking[]
 
+//   // =======================
+//   // DATABASE INDEX
+//   // =======================
+
+//   @@index([role])
+
 // }
 
 // // =======================
@@ -385,6 +663,18 @@
 //   createdAt DateTime @default(now())
 
 //   updatedAt DateTime @updatedAt
+
+//   // =======================
+//   // DATABASE INDEX
+//   // =======================
+
+//   @@index([location])
+
+//   @@index([price])
+
+//   @@index([bedrooms])
+
+//   @@index([landlordId])
 
 // }
 
@@ -430,6 +720,18 @@
 
 //   updatedAt DateTime @updatedAt
 
+//   // =======================
+//   // DATABASE INDEX
+//   // =======================
+
+//   @@index([tenantId])
+
+//   @@index([propertyId])
+
+//   @@index([status])
+
+//   @@index([startDate, endDate])
+
 // }
 
 generator client {
@@ -446,7 +748,9 @@ datasource db {
 
 enum Role {
   TENANT
+
   LANDLORD
+
   ADMIN
 }
 
@@ -456,9 +760,13 @@ enum Role {
 
 enum BookingStatus {
   PENDING
+
   ACCEPTED
+
   REJECTED
+
   CANCELLED
+
   PAID
 }
 
@@ -488,6 +796,10 @@ model User {
   // Tenant bookings
 
   bookings Booking[]
+
+  // DATABASE INDEX
+
+  @@index([role])
 }
 
 // =======================
@@ -518,6 +830,13 @@ model Property {
   createdAt DateTime @default(now())
 
   updatedAt DateTime @updatedAt
+
+  // DATABASE INDEX
+
+  @@index([location])
+  @@index([price])
+  @@index([bedrooms])
+  @@index([landlordId])
 }
 
 // =======================
@@ -544,4 +863,11 @@ model Booking {
   createdAt DateTime @default(now())
 
   updatedAt DateTime @updatedAt
+
+  // DATABASE INDEX
+
+  @@index([tenantId])
+  @@index([propertyId])
+  @@index([status])
+  @@index([startDate, endDate])
 }
