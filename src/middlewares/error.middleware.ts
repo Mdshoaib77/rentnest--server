@@ -1,8 +1,195 @@
+// // import type {
+// //   Request,
+// //   Response,
+// //   NextFunction,
+// // } from "express";
+
+
+
+
+// // // =======================
+// // // GLOBAL ERROR HANDLER
+// // // =======================
+
+// // export const errorHandler = (
+
+// //   error: any,
+
+// //   req: Request,
+
+// //   res: Response,
+
+// //   next: NextFunction
+
+// // ) => {
+
+
+
+// //   console.error(
+
+// //     "GLOBAL ERROR:",
+
+// //     error
+
+// //   );
+
+
+
+
+
+// //   // Prisma Known Error
+
+// //   if (
+
+// //     error.code === "P2002"
+
+// //   ) {
+
+
+// //     return res.status(400).json({
+
+
+// //       success: false,
+
+
+// //       message:
+
+// //         "Duplicate data already exists",
+
+
+// //       error:
+
+// //         error.meta,
+
+
+// //     });
+
+
+// //   }
+
+
+
+
+
+// //   // Prisma Not Found Error
+
+// //   if (
+
+// //     error.code === "P2025"
+
+// //   ) {
+
+
+// //     return res.status(404).json({
+
+
+// //       success: false,
+
+
+// //       message:
+
+// //         "Requested data not found",
+
+
+// //     });
+
+
+// //   }
+
+
+
+
+
+
+
+
+// //   // Custom Error
+
+// //   if (
+
+// //     error.message
+
+// //   ) {
+
+
+// //     return res.status(
+
+// //       error.statusCode || 500
+
+// //     ).json({
+
+
+// //       success: false,
+
+
+// //       message:
+
+// //         error.message,
+
+
+// //     });
+
+
+// //   }
+
+
+
+
+
+
+
+
+// //   // Unknown Error
+
+// //   return res.status(500).json({
+
+
+// //     success: false,
+
+
+// //     message:
+
+// //       "Internal Server Error",
+
+
+// //   });
+
+
+
+// // };
+
+
 // import type {
 //   Request,
 //   Response,
 //   NextFunction,
 // } from "express";
+
+
+// import {
+//   ZodError,
+// } from "zod";
+
+
+// import {
+//   Prisma,
+// } from "@prisma/client";
+
+
+// import {
+//   JsonWebTokenError,
+//   TokenExpiredError,
+// } from "jsonwebtoken";
+
+
+// import {
+//   AppError,
+// } from "../utils/AppError";
+
+
+
+
+
 
 
 
@@ -13,7 +200,7 @@
 
 // export const errorHandler = (
 
-//   error: any,
+//   error: unknown,
 
 //   req: Request,
 
@@ -22,6 +209,7 @@
 //   next: NextFunction
 
 // ) => {
+
 
 
 
@@ -37,11 +225,18 @@
 
 
 
-//   // Prisma Known Error
+
+
+
+
+//   // =======================
+//   // ZOD VALIDATION ERROR
+//   // =======================
+
 
 //   if (
 
-//     error.code === "P2002"
+//     error instanceof ZodError
 
 //   ) {
 
@@ -49,17 +244,35 @@
 //     return res.status(400).json({
 
 
-//       success: false,
+//       success:false,
 
 
 //       message:
 
-//         "Duplicate data already exists",
+//         "Validation failed",
 
 
-//       error:
 
-//         error.meta,
+//       errors:
+
+//         error.issues.map(
+
+//           (issue) => ({
+
+
+//             field:
+
+//               issue.path.join("."),
+
+
+//             message:
+
+//               issue.message,
+
+
+//           })
+
+//         ),
 
 
 //     });
@@ -71,24 +284,148 @@
 
 
 
-//   // Prisma Not Found Error
+
+
+
+
+//   // =======================
+//   // PRISMA KNOWN ERROR
+//   // =======================
+
 
 //   if (
 
-//     error.code === "P2025"
+//     error instanceof Prisma.PrismaClientKnownRequestError
 
 //   ) {
 
 
-//     return res.status(404).json({
 
 
-//       success: false,
+//     // Duplicate data
+
+
+//     if (
+
+//       error.code === "P2002"
+
+//     ) {
+
+
+//       return res.status(400).json({
+
+
+//         success:false,
+
+
+//         message:
+
+//           "Duplicate data already exists",
+
+
+
+//         error:
+
+//           error.meta,
+
+
+//       });
+
+
+//     }
+
+
+
+
+
+
+//     // Not Found
+
+
+//     if (
+
+//       error.code === "P2025"
+
+//     ) {
+
+
+//       return res.status(404).json({
+
+
+//         success:false,
+
+
+//         message:
+
+//           "Requested data not found",
+
+
+//       });
+
+
+//     }
+
+
+
+//   }
+
+
+
+
+
+
+
+
+
+//   // =======================
+//   // JWT ERROR
+//   // =======================
+
+
+//   if (
+
+//     error instanceof TokenExpiredError
+
+//   ) {
+
+
+//     return res.status(401).json({
+
+
+//       success:false,
 
 
 //       message:
 
-//         "Requested data not found",
+//         "Token expired, please login again",
+
+
+//     });
+
+
+//   }
+
+
+
+
+
+
+//   if (
+
+//     error instanceof JsonWebTokenError
+
+//   ) {
+
+
+//     return res.status(401).json({
+
+
+//       success:false,
+
+
+//       message:
+
+//         "Invalid token",
 
 
 //     });
@@ -103,23 +440,27 @@
 
 
 
-//   // Custom Error
+
+//   // =======================
+//   // CUSTOM ERROR
+//   // =======================
+
 
 //   if (
 
-//     error.message
+//     error instanceof AppError
 
 //   ) {
 
 
 //     return res.status(
 
-//       error.statusCode || 500
+//       error.statusCode
 
 //     ).json({
 
 
-//       success: false,
+//       success:false,
 
 
 //       message:
@@ -139,12 +480,16 @@
 
 
 
-//   // Unknown Error
+
+//   // =======================
+//   // UNKNOWN ERROR
+//   // =======================
+
 
 //   return res.status(500).json({
 
 
-//     success: false,
+//     success:false,
 
 
 //     message:
@@ -158,33 +503,29 @@
 
 // };
 
-
 import type {
+
   Request,
+
   Response,
+
   NextFunction,
+
 } from "express";
 
 
 import {
-  ZodError,
-} from "zod";
 
-
-import {
   Prisma,
+
 } from "@prisma/client";
 
 
 import {
-  JsonWebTokenError,
-  TokenExpiredError,
-} from "jsonwebtoken";
 
+  sendErrorResponse,
 
-import {
-  AppError,
-} from "../utils/AppError";
+} from "../utils/apiResponse";
 
 
 
@@ -198,6 +539,7 @@ import {
 // GLOBAL ERROR HANDLER
 // =======================
 
+
 export const errorHandler = (
 
   error: unknown,
@@ -209,7 +551,6 @@ export const errorHandler = (
   next: NextFunction
 
 ) => {
-
 
 
 
@@ -228,68 +569,8 @@ export const errorHandler = (
 
 
 
-
   // =======================
-  // ZOD VALIDATION ERROR
-  // =======================
-
-
-  if (
-
-    error instanceof ZodError
-
-  ) {
-
-
-    return res.status(400).json({
-
-
-      success:false,
-
-
-      message:
-
-        "Validation failed",
-
-
-
-      errors:
-
-        error.issues.map(
-
-          (issue) => ({
-
-
-            field:
-
-              issue.path.join("."),
-
-
-            message:
-
-              issue.message,
-
-
-          })
-
-        ),
-
-
-    });
-
-
-  }
-
-
-
-
-
-
-
-
-
-  // =======================
-  // PRISMA KNOWN ERROR
+  // PRISMA DUPLICATE ERROR
   // =======================
 
 
@@ -297,74 +578,30 @@ export const errorHandler = (
 
     error instanceof Prisma.PrismaClientKnownRequestError
 
+    &&
+
+    error.code === "P2002"
+
   ) {
 
 
+    return sendErrorResponse(
 
+      res,
 
-    // Duplicate data
+      400,
 
+      "Duplicate data already exists",
 
-    if (
+      {
 
-      error.code === "P2002"
-
-    ) {
-
-
-      return res.status(400).json({
-
-
-        success:false,
-
-
-        message:
-
-          "Duplicate data already exists",
-
-
-
-        error:
+        field:
 
           error.meta,
 
+      }
 
-      });
-
-
-    }
-
-
-
-
-
-
-    // Not Found
-
-
-    if (
-
-      error.code === "P2025"
-
-    ) {
-
-
-      return res.status(404).json({
-
-
-        success:false,
-
-
-        message:
-
-          "Requested data not found",
-
-
-      });
-
-
-    }
-
+    );
 
 
   }
@@ -378,57 +615,30 @@ export const errorHandler = (
 
 
   // =======================
-  // JWT ERROR
+  // PRISMA NOT FOUND ERROR
   // =======================
 
 
   if (
 
-    error instanceof TokenExpiredError
+    error instanceof Prisma.PrismaClientKnownRequestError
+
+    &&
+
+    error.code === "P2025"
 
   ) {
 
 
-    return res.status(401).json({
+    return sendErrorResponse(
 
+      res,
 
-      success:false,
+      404,
 
+      "Requested data not found"
 
-      message:
-
-        "Token expired, please login again",
-
-
-    });
-
-
-  }
-
-
-
-
-
-
-  if (
-
-    error instanceof JsonWebTokenError
-
-  ) {
-
-
-    return res.status(401).json({
-
-
-      success:false,
-
-
-      message:
-
-        "Invalid token",
-
-
-    });
+    );
 
 
   }
@@ -448,27 +658,20 @@ export const errorHandler = (
 
   if (
 
-    error instanceof AppError
+    error instanceof Error
 
   ) {
 
 
-    return res.status(
+    return sendErrorResponse(
 
-      error.statusCode
+      res,
 
-    ).json({
+      500,
 
+      error.message
 
-      success:false,
-
-
-      message:
-
-        error.message,
-
-
-    });
+    );
 
 
   }
@@ -486,19 +689,15 @@ export const errorHandler = (
   // =======================
 
 
-  return res.status(500).json({
+  return sendErrorResponse(
 
+    res,
 
-    success:false,
+    500,
 
+    "Internal Server Error"
 
-    message:
-
-      "Internal Server Error",
-
-
-  });
-
+  );
 
 
 };

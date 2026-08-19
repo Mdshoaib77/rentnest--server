@@ -2533,10 +2533,510 @@
 // };
 
 
+// import type {
+//   Request,
+//   Response,
+// } from "express";
+
+
+// import {
+
+//   createBooking,
+
+//   getMyBookings,
+
+//   getLandlordBookings,
+
+//   updateBookingStatus,
+
+// } from "./booking.service";
+
+
+// import {
+
+//   sendResponse,
+
+//   sendErrorResponse,
+
+// } from "../../utils/apiResponse";
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // CREATE BOOKING
+// // TENANT ONLY
+// // =======================
+
+// export const createBookingController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const tenantId =
+
+//       req.user?.id;
+
+
+
+
+
+//     if (!tenantId) {
+
+
+//       return sendErrorResponse(
+
+//         res,
+
+//         401,
+
+//         "User not authenticated"
+
+//       );
+
+
+//     }
+
+
+
+
+
+
+
+//     const booking =
+
+//       await createBooking(
+
+//         req.body,
+
+//         tenantId
+
+//       );
+
+
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       201,
+
+//       "Booking created successfully",
+
+//       booking
+
+//     );
+
+
+
+
+
+
+//   } catch (error) {
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       400,
+
+//       error instanceof Error
+
+//       ? error.message
+
+//       : "Booking creation failed"
+
+//     );
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET TENANT BOOKINGS
+// // TENANT ONLY
+// // =======================
+
+// export const getTenantBookingsController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const tenantId =
+
+//       req.user?.id;
+
+
+
+
+
+
+
+//     if (!tenantId) {
+
+
+//       return sendErrorResponse(
+
+//         res,
+
+//         401,
+
+//         "User not authenticated"
+
+//       );
+
+
+//     }
+
+
+
+
+
+
+
+//     const bookings =
+
+//       await getMyBookings(
+
+//         tenantId
+
+//       );
+
+
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       200,
+
+//       "Bookings fetched successfully",
+
+//       bookings
+
+//     );
+
+
+
+
+
+
+//   } catch (error) {
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       500,
+
+//       error instanceof Error
+
+//       ? error.message
+
+//       : "Failed to fetch bookings"
+
+//     );
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET LANDLORD BOOKINGS
+// // LANDLORD ONLY
+// // =======================
+
+// export const getLandlordBookingsController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+
+
+
+//     if (!landlordId) {
+
+
+//       return sendErrorResponse(
+
+//         res,
+
+//         401,
+
+//         "User not authenticated"
+
+//       );
+
+
+//     }
+
+
+
+
+
+
+
+//     const bookings =
+
+//       await getLandlordBookings(
+
+//         landlordId
+
+//       );
+
+
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       200,
+
+//       "Landlord bookings fetched successfully",
+
+//       bookings
+
+//     );
+
+
+
+
+
+
+//   } catch (error) {
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       500,
+
+//       error instanceof Error
+
+//       ? error.message
+
+//       : "Failed to fetch landlord bookings"
+
+//     );
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // UPDATE BOOKING STATUS
+// // LANDLORD ONLY
+// // =======================
+
+// export const updateBookingStatusController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+
+
+
+//     if (!landlordId) {
+
+
+//       return sendErrorResponse(
+
+//         res,
+
+//         401,
+
+//         "User not authenticated"
+
+//       );
+
+
+//     }
+
+
+
+
+
+
+
+//     const bookingId =
+
+//       String(req.params.id);
+
+
+
+
+
+
+
+//     const booking =
+
+//       await updateBookingStatus(
+
+//         bookingId,
+
+//         landlordId,
+
+//         req.body
+
+//       );
+
+
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       200,
+
+//       "Booking status updated successfully",
+
+//       booking
+
+//     );
+
+
+
+
+
+
+//   } catch (error) {
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       400,
+
+//       error instanceof Error
+
+//       ? error.message
+
+//       : "Status update failed"
+
+//     );
+
+
+//   }
+
+
+// };
+
+
+
 import type {
   Request,
   Response,
 } from "express";
+
 
 
 import {
@@ -2550,6 +3050,7 @@ import {
   updateBookingStatus,
 
 } from "./booking.service";
+
 
 
 import {
@@ -2596,6 +3097,7 @@ async (
 
 
 
+
     if (!tenantId) {
 
 
@@ -2611,6 +3113,7 @@ async (
 
 
     }
+
 
 
 
@@ -2645,6 +3148,7 @@ async (
       booking
 
     );
+
 
 
 
@@ -2712,6 +3216,7 @@ async (
 
 
 
+
     if (!tenantId) {
 
 
@@ -2727,6 +3232,7 @@ async (
 
 
     }
+
 
 
 
@@ -2759,6 +3265,7 @@ async (
       bookings
 
     );
+
 
 
 
@@ -2826,6 +3333,7 @@ async (
 
 
 
+
     if (!landlordId) {
 
 
@@ -2841,6 +3349,7 @@ async (
 
 
     }
+
 
 
 
@@ -2873,6 +3382,7 @@ async (
       bookings
 
     );
+
 
 
 
@@ -2940,6 +3450,7 @@ async (
 
 
 
+
     if (!landlordId) {
 
 
@@ -2962,9 +3473,11 @@ async (
 
 
 
+
     const bookingId =
 
       String(req.params.id);
+
 
 
 
@@ -3001,6 +3514,7 @@ async (
       booking
 
     );
+
 
 
 

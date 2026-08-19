@@ -2840,6 +2840,734 @@
 // };
 
 
+// import type {
+//   Request,
+//   Response,
+// } from "express";
+
+
+// import {
+//   createProperty,
+//   getAllProperties,
+//   getSingleProperty,
+//   updateProperty,
+//   deleteProperty,
+// } from "./property.service";
+
+
+// import {
+//   sendResponse,
+//   sendErrorResponse,
+// } from "../../utils/apiResponse";
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // CREATE PROPERTY
+// // =======================
+
+// export const createPropertyController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+//     if (!landlordId) {
+
+
+//       return sendErrorResponse(
+
+//         res,
+
+//         401,
+
+//         "User not authenticated"
+
+//       );
+
+
+//     }
+
+
+
+
+
+
+
+//     const property =
+
+//       await createProperty(
+
+//         req.body,
+
+//         landlordId
+
+//       );
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       201,
+
+//       "Property created successfully",
+
+//       property
+
+//     );
+
+
+
+
+
+//   } catch(error) {
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       400,
+
+//       error instanceof Error
+
+//       ? error.message
+
+//       : "Something went wrong"
+
+//     );
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET ALL PROPERTIES
+// // =======================
+
+// export const getAllPropertiesController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const filters = {
+
+
+//       location:
+
+//         req.query.location as string,
+
+
+
+//       minPrice:
+
+//         req.query.minPrice
+
+//         ? Number(req.query.minPrice)
+
+//         : undefined,
+
+
+
+//       maxPrice:
+
+//         req.query.maxPrice
+
+//         ? Number(req.query.maxPrice)
+
+//         : undefined,
+
+
+
+//       bedrooms:
+
+//         req.query.bedrooms
+
+//         ? Number(req.query.bedrooms)
+
+//         : undefined,
+
+
+
+//       page:
+
+//         req.query.page
+
+//         ? Number(req.query.page)
+
+//         : 1,
+
+
+
+//       limit:
+
+//         req.query.limit
+
+//         ? Number(req.query.limit)
+
+//         : 10,
+
+
+//     };
+
+
+
+
+
+
+
+//     const result =
+
+//       await getAllProperties(
+
+//         filters
+
+//       );
+
+
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       200,
+
+//       "Properties fetched successfully",
+
+//       result.data,
+
+//       result.meta
+
+//     );
+
+
+
+
+
+
+
+//   } catch(error) {
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       500,
+
+//       "Failed to fetch properties"
+
+//     );
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET SINGLE PROPERTY
+// // =======================
+
+// export const getSinglePropertyController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const property =
+
+//       await getSingleProperty(
+
+//         req.params.id as string
+
+//       );
+
+
+
+
+
+
+
+//     if(!property){
+
+
+//       return sendErrorResponse(
+
+//         res,
+
+//         404,
+
+//         "Property not found"
+
+//       );
+
+
+//     }
+
+
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       200,
+
+//       "Property fetched successfully",
+
+//       property
+
+//     );
+
+
+
+
+
+
+
+//   } catch(error) {
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       500,
+
+//       "Failed to fetch property"
+
+//     );
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GET MY PROPERTIES
+// // LANDLORD
+// // =======================
+
+// export const getMyPropertiesController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+
+
+
+//     if(!landlordId){
+
+
+//       return sendErrorResponse(
+
+//         res,
+
+//         401,
+
+//         "User not authenticated"
+
+//       );
+
+
+//     }
+
+
+
+
+
+
+
+
+//     const properties =
+
+//       await getAllProperties({
+
+
+//         landlordId,
+
+
+//       } as any);
+
+
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       200,
+
+//       "My properties fetched successfully",
+
+//       properties
+
+//     );
+
+
+
+
+
+
+
+//   } catch(error) {
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       500,
+
+//       error instanceof Error
+
+//       ? error.message
+
+//       : "Failed to fetch properties"
+
+//     );
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // UPDATE PROPERTY
+// // =======================
+
+// export const updatePropertyController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+
+
+
+//     if(!landlordId){
+
+
+//       return sendErrorResponse(
+
+//         res,
+
+//         401,
+
+//         "User not authenticated"
+
+//       );
+
+
+//     }
+
+
+
+
+
+
+
+//     const property =
+
+//       await updateProperty(
+
+//         req.params.id as string,
+
+//         landlordId,
+
+//         req.body
+
+//       );
+
+
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       200,
+
+//       "Property updated successfully",
+
+//       property
+
+//     );
+
+
+
+
+
+
+
+//   } catch(error) {
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       400,
+
+//       error instanceof Error
+
+//       ? error.message
+
+//       : "Update failed"
+
+//     );
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // DELETE PROPERTY
+// // =======================
+
+// export const deletePropertyController =
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const landlordId =
+
+//       req.user?.id;
+
+
+
+
+
+
+
+//     if(!landlordId){
+
+
+//       return sendErrorResponse(
+
+//         res,
+
+//         401,
+
+//         "User not authenticated"
+
+//       );
+
+
+//     }
+
+
+
+
+
+
+
+//     const property =
+
+//       await deleteProperty(
+
+//         req.params.id as string,
+
+//         landlordId
+
+//       );
+
+
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       200,
+
+//       "Property deleted successfully",
+
+//       property
+
+//     );
+
+
+
+
+
+
+
+//   } catch(error) {
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       400,
+
+//       error instanceof Error
+
+//       ? error.message
+
+//       : "Delete failed"
+
+//     );
+
+
+//   }
+
+
+// };
+
+
 import type {
   Request,
   Response,
@@ -2916,6 +3644,7 @@ async (
 
 
 
+
     const property =
 
       await createProperty(
@@ -2925,6 +3654,8 @@ async (
         landlordId
 
       );
+
+
 
 
 
@@ -2941,6 +3672,7 @@ async (
       property
 
     );
+
 
 
 
@@ -3062,6 +3794,8 @@ async (
 
 
 
+
+
     const result =
 
       await getAllProperties(
@@ -3069,6 +3803,8 @@ async (
         filters
 
       );
+
+
 
 
 
@@ -3096,6 +3832,7 @@ async (
 
 
 
+
   } catch(error) {
 
 
@@ -3105,7 +3842,11 @@ async (
 
       500,
 
-      "Failed to fetch properties"
+      error instanceof Error
+
+      ? error.message
+
+      : "Failed to fetch properties"
 
     );
 
@@ -3205,7 +3946,11 @@ async (
 
       500,
 
-      "Failed to fetch property"
+      error instanceof Error
+
+      ? error.message
+
+      : "Failed to fetch property"
 
     );
 
@@ -3253,6 +3998,7 @@ async (
 
 
 
+
     if(!landlordId){
 
 
@@ -3268,6 +4014,7 @@ async (
 
 
     }
+
 
 
 

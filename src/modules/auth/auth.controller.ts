@@ -433,10 +433,206 @@
 // };
 
 
+// import type {
+//   Request,
+//   Response,
+// } from "express";
+
+
+// import {
+
+//   registerUser,
+
+//   loginUser,
+
+// } from "./auth.service";
+
+
+// import {
+
+//   sendResponse,
+
+//   sendErrorResponse,
+
+// } from "../../utils/apiResponse";
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // REGISTER CONTROLLER
+// // =======================
+
+// export const registerController =
+
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+//   try {
+
+
+//     const user =
+
+//       await registerUser(
+
+//         req.body
+
+//       );
+
+
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       201,
+
+//       "User registered successfully",
+
+//       user
+
+//     );
+
+
+
+
+
+
+
+//   } catch (error) {
+
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       400,
+
+//       error instanceof Error
+
+//       ? error.message
+
+//       : "Something went wrong"
+
+//     );
+
+
+
+//   }
+
+
+// };
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // LOGIN CONTROLLER
+// // =======================
+
+// export const loginController =
+
+// async (
+
+//   req: Request,
+
+//   res: Response
+
+// ) => {
+
+
+
+//   try {
+
+
+
+//     const result =
+
+//       await loginUser(
+
+//         req.body
+
+//       );
+
+
+
+
+
+
+
+//     return sendResponse(
+
+//       res,
+
+//       200,
+
+//       "Login successful",
+
+//       result
+
+//     );
+
+
+
+
+
+
+
+//   } catch (error) {
+
+
+
+//     return sendErrorResponse(
+
+//       res,
+
+//       400,
+
+//       error instanceof Error
+
+//       ? error.message
+
+//       : "Login failed"
+
+//     );
+
+
+
+//   }
+
+
+// };
+
 import type {
   Request,
   Response,
 } from "express";
+
 
 
 import {
@@ -446,6 +642,7 @@ import {
   loginUser,
 
 } from "./auth.service";
+
 
 
 import {
@@ -482,6 +679,7 @@ async (
 
 
   try {
+
 
 
     const user =

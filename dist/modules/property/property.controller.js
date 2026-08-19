@@ -53,7 +53,9 @@ const getAllPropertiesController = async (req, res) => {
         return (0, apiResponse_1.sendResponse)(res, 200, "Properties fetched successfully", result.data, result.meta);
     }
     catch (error) {
-        return (0, apiResponse_1.sendErrorResponse)(res, 500, "Failed to fetch properties");
+        return (0, apiResponse_1.sendErrorResponse)(res, 500, error instanceof Error
+            ? error.message
+            : "Failed to fetch properties");
     }
 };
 exports.getAllPropertiesController = getAllPropertiesController;
@@ -69,7 +71,9 @@ const getSinglePropertyController = async (req, res) => {
         return (0, apiResponse_1.sendResponse)(res, 200, "Property fetched successfully", property);
     }
     catch (error) {
-        return (0, apiResponse_1.sendErrorResponse)(res, 500, "Failed to fetch property");
+        return (0, apiResponse_1.sendErrorResponse)(res, 500, error instanceof Error
+            ? error.message
+            : "Failed to fetch property");
     }
 };
 exports.getSinglePropertyController = getSinglePropertyController;
