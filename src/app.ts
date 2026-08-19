@@ -5504,6 +5504,692 @@
 // export default app;
 
 
+// import express from "express";
+
+
+// import helmet from "helmet";
+
+// import cors from "cors";
+
+// import rateLimit from "express-rate-limit";
+
+// import swaggerUi from "swagger-ui-express";
+
+
+// import prisma from "./lib/prisma";
+
+
+// import {
+//   swaggerSpec,
+// } from "./config/swagger";
+
+
+// import {
+//   env,
+// } from "./config/env.validation";
+
+
+
+// import apiV1Router from "./routes/v1";
+
+
+
+// import {
+//   authMiddleware,
+// } from "./middlewares/auth.middleware";
+
+
+// import {
+//   authorizeRole,
+// } from "./middlewares/role.middleware";
+
+
+// import {
+//   errorHandler,
+// } from "./middlewares/error.middleware";
+
+
+
+
+
+
+
+
+// const app = express();
+
+
+
+
+
+
+
+
+
+// // =======================
+// // SECURITY MIDDLEWARE
+// // =======================
+
+
+
+// // Trust proxy for production
+
+
+// app.set(
+
+//   "trust proxy",
+
+//   1
+
+// );
+
+
+
+
+
+
+
+
+
+// // Helmet Security Headers
+
+
+// app.use(
+
+//   helmet({
+
+//     contentSecurityPolicy:
+
+//       env.NODE_ENV === "production",
+
+
+//   })
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // CORS Configuration
+
+
+// app.use(
+
+//   cors({
+
+
+//     origin:
+
+//       env.FRONTEND_URL,
+
+
+//     methods:[
+
+//       "GET",
+
+//       "POST",
+
+//       "PATCH",
+
+//       "PUT",
+
+//       "DELETE",
+
+//     ],
+
+
+//     allowedHeaders:[
+
+//       "Content-Type",
+
+//       "Authorization",
+
+//     ],
+
+
+//   })
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // Rate Limiting
+
+
+// const limiter = rateLimit({
+
+
+//   windowMs:
+
+//     15 * 60 * 1000,
+
+
+
+//   max:
+
+//     env.RATE_LIMIT_MAX,
+
+
+
+//   message:{
+
+
+
+//     success:false,
+
+
+
+//     message:
+
+//       "Too many requests, please try again later",
+
+
+
+//   },
+
+
+// });
+
+
+
+
+
+
+// app.use(
+
+//   limiter
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // Body Parser
+
+
+// app.use(
+
+//   express.json({
+
+//     limit:
+
+//       "10kb",
+
+//   })
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // SWAGGER DOCUMENTATION
+// // =======================
+
+
+// app.use(
+
+//   "/api-docs",
+
+//   swaggerUi.serve,
+
+//   swaggerUi.setup(
+
+//     swaggerSpec
+
+//   )
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // API VERSION 1 ROUTES
+// // =======================
+
+
+// app.use(
+
+//   "/api/v1",
+
+//   apiV1Router
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // HOME ROUTE
+// // =======================
+
+
+// app.get(
+
+//   "/",
+
+//   (req,res)=>{
+
+
+//     res.send(
+
+//       "RentNest Backend Running 🚀"
+
+//     );
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // DATABASE HEALTH CHECK
+// // =======================
+
+
+// app.get(
+
+//   "/api/health",
+
+//   async(req,res)=>{
+
+
+//     try{
+
+
+//       const userCount =
+
+//         await prisma.user.count();
+
+
+
+//       const propertyCount =
+
+//         await prisma.property.count();
+
+
+
+//       const bookingCount =
+
+//         await prisma.booking.count();
+
+
+
+
+
+
+//       res.status(200).json({
+
+
+
+//         success:true,
+
+
+
+//         message:
+
+//           "RentNest API and database are healthy",
+
+
+
+
+//         data:{
+
+
+
+//           database:
+
+//             "connected",
+
+
+
+
+//           totalUsers:
+
+//             userCount,
+
+
+
+
+//           totalProperties:
+
+//             propertyCount,
+
+
+
+
+//           totalBookings:
+
+//             bookingCount,
+
+
+
+//         },
+
+
+
+//       });
+
+
+
+
+
+
+
+
+//     }catch(error){
+
+
+
+//       res.status(500).json({
+
+
+
+//         success:false,
+
+
+
+//         message:
+
+//           "Database connection failed",
+
+
+
+//       });
+
+
+
+//     }
+
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // PROFILE ROUTE
+// // =======================
+
+
+// app.get(
+
+//   "/api/profile",
+
+//   authMiddleware,
+
+
+
+//   (req,res)=>{
+
+
+
+//     res.status(200).json({
+
+
+
+//       success:true,
+
+
+
+//       message:
+
+//         "Protected route accessed",
+
+
+
+
+//       user:
+
+//         req.user,
+
+
+
+//     });
+
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // LANDLORD TEST
+// // =======================
+
+
+// app.get(
+
+//   "/api/landlord-test",
+
+//   authMiddleware,
+
+
+
+//   authorizeRole(
+
+//     "LANDLORD"
+
+//   ),
+
+
+
+//   (req,res)=>{
+
+
+
+//     res.status(200).json({
+
+
+
+//       success:true,
+
+
+
+//       message:
+
+//         "Welcome Landlord! Property management access granted",
+
+
+
+
+//       user:
+
+//         req.user,
+
+
+
+//     });
+
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // ADMIN TEST
+// // =======================
+
+
+// app.get(
+
+//   "/api/admin-test",
+
+//   authMiddleware,
+
+
+
+//   authorizeRole(
+
+//     "ADMIN"
+
+//   ),
+
+
+
+//   (req,res)=>{
+
+
+
+//     res.status(200).json({
+
+
+
+//       success:true,
+
+
+
+//       message:
+
+//         "Welcome Admin!",
+
+
+
+
+//       user:
+
+//         req.user,
+
+
+
+//     });
+
+
+
+//   }
+
+// );
+
+
+
+
+
+
+
+
+
+
+
+// // =======================
+// // GLOBAL ERROR HANDLER
+// // LAST
+// // =======================
+
+
+// app.use(
+
+//   errorHandler
+
+// );
+
+
+
+
+
+
+
+
+
+// export default app;
+
+
 import express from "express";
 
 
@@ -5549,6 +6235,12 @@ import {
 } from "./middlewares/error.middleware";
 
 
+import {
+  httpLogger,
+} from "./middlewares/logger.middleware";
+
+
+
 
 
 
@@ -5556,6 +6248,9 @@ import {
 
 
 const app = express();
+
+
+
 
 
 
@@ -5590,6 +6285,9 @@ app.set(
 
 
 
+
+
+
 // Helmet Security Headers
 
 
@@ -5605,6 +6303,28 @@ app.use(
   })
 
 );
+
+
+
+
+
+
+
+
+
+
+
+
+// HTTP REQUEST LOGGER
+
+
+app.use(
+
+  httpLogger
+
+);
+
+
 
 
 
@@ -5656,6 +6376,7 @@ app.use(
   })
 
 );
+
 
 
 
@@ -5754,6 +6475,7 @@ app.use(
 
 
 
+
 // =======================
 // SWAGGER DOCUMENTATION
 // =======================
@@ -5772,6 +6494,10 @@ app.use(
   )
 
 );
+
+
+
+
 
 
 
@@ -5809,6 +6535,9 @@ app.use(
 
 
 
+
+
+
 // =======================
 // HOME ROUTE
 // =======================
@@ -5831,6 +6560,10 @@ app.get(
   }
 
 );
+
+
+
+
 
 
 
@@ -5981,6 +6714,8 @@ app.get(
 
 
 
+
+
 // =======================
 // PROFILE ROUTE
 // =======================
@@ -6026,6 +6761,10 @@ app.get(
   }
 
 );
+
+
+
+
 
 
 
@@ -6103,6 +6842,10 @@ app.get(
 
 
 
+
+
+
+
 // =======================
 // ADMIN TEST
 // =======================
@@ -6167,6 +6910,11 @@ app.get(
 
 
 
+
+
+
+
+
 // =======================
 // GLOBAL ERROR HANDLER
 // LAST
@@ -6178,6 +6926,8 @@ app.use(
   errorHandler
 
 );
+
+
 
 
 

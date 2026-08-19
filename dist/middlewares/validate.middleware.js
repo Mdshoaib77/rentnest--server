@@ -1,39 +1,52 @@
 "use strict";
-// // // // // import type {
-// // // // //   Request,
-// // // // //   Response,
-// // // // //   NextFunction,
-// // // // // } from "express";
+// // // // // // import type {
+// // // // // //   Request,
+// // // // // //   Response,
+// // // // // //   NextFunction,
+// // // // // // } from "express";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validate = void 0;
+const zod_1 = require("zod");
+const apiResponse_1 = require("../utils/apiResponse");
 // =======================
-// ZOD VALIDATION MIDDLEWARE
+// VALIDATION MIDDLEWARE
 // =======================
 const validate = (schema) => {
     return (req, res, next) => {
-        const result = schema.safeParse({
-            body: req.body,
-            params: req.params,
-            query: req.query,
-        });
-        if (!result.success) {
-            return res.status(400).json({
-                success: false,
-                message: result.error.issues[0]?.message
-                    || "Validation failed",
-                errors: result.error.issues,
+        try {
+            const result = schema.safeParse({
+                body: req.body,
+                params: req.params,
+                query: req.query,
             });
+            if (!result.success) {
+                const errors = result.error.issues.map((error) => ({
+                    field: error.path.join("."),
+                    message: error.message,
+                }));
+                return (0, apiResponse_1.sendErrorResponse)(res, 400, "Validation failed", errors);
+            }
+            const validatedData = result.data;
+            if (validatedData.body) {
+                req.body =
+                    validatedData.body;
+            }
+            if (validatedData.params) {
+                req.params =
+                    validatedData.params;
+            }
+            if (validatedData.query) {
+                req.query =
+                    validatedData.query;
+            }
+            next();
         }
-        if (result.data.body) {
-            req.body = result.data.body;
+        catch (error) {
+            if (error instanceof zod_1.ZodError) {
+                return (0, apiResponse_1.sendErrorResponse)(res, 400, "Invalid request data", error.issues);
+            }
+            return (0, apiResponse_1.sendErrorResponse)(res, 500, "Validation middleware error");
         }
-        if (result.data.params) {
-            req.params = result.data.params;
-        }
-        if (result.data.query) {
-            req.query = result.data.query;
-        }
-        next();
     };
 };
 exports.validate = validate;

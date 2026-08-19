@@ -1,12 +1,84 @@
+// // // // // // import type {
+// // // // // //   Request,
+// // // // // //   Response,
+// // // // // //   NextFunction,
+// // // // // // } from "express";
+
+
+// // // // // // import type {
+// // // // // //   AnyZodObject,
+// // // // // // } from "zod";
+
+
+
+
+// // // // // // // =======================
+// // // // // // // ZOD VALIDATION MIDDLEWARE
+// // // // // // // =======================
+
+// // // // // // export const validate = (
+
+// // // // // //   schema: AnyZodObject
+
+// // // // // // ) => {
+
+
+// // // // // //   return (
+
+// // // // // //     req: Request,
+
+// // // // // //     res: Response,
+
+// // // // // //     next: NextFunction
+
+// // // // // //   ) => {
+
+
+// // // // // //     try {
+
+
+// // // // // //       schema.parse({
+
+// // // // // //         body: req.body,
+
+// // // // // //         params: req.params,
+
+// // // // // //         query: req.query,
+
+// // // // // //       });
+
+
+
+
+
+// // // // // //       next();
+
+
+
+
+
+// // // // // //     } catch (error) {
+
+
+// // // // // //       next(error);
+
+
+// // // // // //     }
+
+
+// // // // // //   };
+
+
+// // // // // // };
+
 // // // // // import type {
 // // // // //   Request,
 // // // // //   Response,
 // // // // //   NextFunction,
 // // // // // } from "express";
 
-
-// // // // // import type {
-// // // // //   AnyZodObject,
+// // // // // import {
+// // // // //   ZodSchema,
 // // // // // } from "zod";
 
 
@@ -18,7 +90,7 @@
 
 // // // // // export const validate = (
 
-// // // // //   schema: AnyZodObject
+// // // // //   schema: ZodSchema
 
 // // // // // ) => {
 
@@ -48,16 +120,10 @@
 // // // // //       });
 
 
-
-
-
 // // // // //       next();
 
 
-
-
-
-// // // // //     } catch (error) {
+// // // // //     } catch(error) {
 
 
 // // // // //       next(error);
@@ -71,14 +137,17 @@
 
 // // // // // };
 
+
+
 // // // // import type {
 // // // //   Request,
 // // // //   Response,
 // // // //   NextFunction,
 // // // // } from "express";
 
-// // // // import {
-// // // //   ZodSchema,
+
+// // // // import type {
+// // // //   ZodType,
 // // // // } from "zod";
 
 
@@ -90,7 +159,7 @@
 
 // // // // export const validate = (
 
-// // // //   schema: ZodSchema
+// // // //   schema: ZodType
 
 // // // // ) => {
 
@@ -109,6 +178,18 @@
 // // // //     try {
 
 
+// // // //       if (!schema) {
+
+// // // //         throw new Error(
+// // // //           "Validation schema is missing"
+// // // //         );
+
+// // // //       }
+
+
+
+
+
 // // // //       schema.parse({
 
 // // // //         body: req.body,
@@ -120,7 +201,12 @@
 // // // //       });
 
 
+
+
+
 // // // //       next();
+
+
 
 
 // // // //     } catch(error) {
@@ -138,7 +224,6 @@
 // // // // };
 
 
-
 // // // import type {
 // // //   Request,
 // // //   Response,
@@ -146,7 +231,7 @@
 // // // } from "express";
 
 
-// // // import type {
+// // // import {
 // // //   ZodType,
 // // // } from "zod";
 
@@ -180,9 +265,11 @@
 
 // // //       if (!schema) {
 
+
 // // //         throw new Error(
 // // //           "Validation schema is missing"
 // // //         );
+
 
 // // //       }
 
@@ -209,6 +296,7 @@
 
 
 
+
 // // //     } catch(error) {
 
 
@@ -223,13 +311,11 @@
 
 // // // };
 
-
 // // import type {
 // //   Request,
 // //   Response,
 // //   NextFunction,
 // // } from "express";
-
 
 // // import {
 // //   ZodType,
@@ -260,50 +346,57 @@
 // //   ) => {
 
 
-// //     try {
+// //     const result = schema.safeParse({
 
+// //       body: req.body,
 
-// //       if (!schema) {
+// //       params: req.params,
 
+// //       query: req.query,
 
-// //         throw new Error(
-// //           "Validation schema is missing"
-// //         );
-
-
-// //       }
+// //     });
 
 
 
 
 
-// //       schema.parse({
+// //     if (!result.success) {
 
-// //         body: req.body,
 
-// //         params: req.params,
+// //       return res.status(400).json({
 
-// //         query: req.query,
+
+// //         success: false,
+
+
+// //         message:
+
+// //           result.error.issues[0]?.message
+
+// //           || "Validation failed",
+
+
+// //         errors:
+
+// //           result.error.issues,
+
 
 // //       });
 
 
-
-
-
-// //       next();
-
-
-
-
-
-// //     } catch(error) {
-
-
-// //       next(error);
-
-
 // //     }
+
+
+
+
+
+// //     req.body = result.data.body;
+
+
+
+
+
+// //     next();
 
 
 // //   };
@@ -311,11 +404,13 @@
 
 // // };
 
+
 // import type {
 //   Request,
 //   Response,
 //   NextFunction,
 // } from "express";
+
 
 // import {
 //   ZodType,
@@ -330,7 +425,7 @@
 
 // export const validate = (
 
-//   schema: ZodType
+//   schema: ZodType<any>
 
 // ) => {
 
@@ -376,6 +471,7 @@
 //           || "Validation failed",
 
 
+
 //         errors:
 
 //           result.error.issues,
@@ -390,7 +486,37 @@
 
 
 
-//     req.body = result.data.body;
+//     if (result.data.body) {
+
+
+//       req.body = result.data.body;
+
+
+//     }
+
+
+
+
+
+//     if (result.data.params) {
+
+
+//       req.params = result.data.params;
+
+
+//     }
+
+
+
+
+
+//     if (result.data.query) {
+
+
+//       req.query = result.data.query;
+
+
+//     }
 
 
 
@@ -412,20 +538,35 @@ import type {
 } from "express";
 
 
-import {
-  ZodType,
+import type {
+  ZodSchema,
 } from "zod";
 
 
+import {
+  ZodError,
+} from "zod";
+
+
+import {
+  sendErrorResponse,
+} from "../utils/apiResponse";
+
+
+
+
+
+
 
 
 // =======================
-// ZOD VALIDATION MIDDLEWARE
+// VALIDATION MIDDLEWARE
 // =======================
+
 
 export const validate = (
 
-  schema: ZodType<any>
+  schema: ZodSchema<any>
 
 ) => {
 
@@ -441,88 +582,200 @@ export const validate = (
   ) => {
 
 
-    const result = schema.safeParse({
-
-      body: req.body,
-
-      params: req.params,
-
-      query: req.query,
-
-    });
+    try {
 
 
+      const result =
 
+        schema.safeParse({
 
+          body: req.body,
 
-    if (!result.success) {
+          params: req.params,
 
+          query: req.query,
 
-      return res.status(400).json({
-
-
-        success: false,
-
-
-        message:
-
-          result.error.issues[0]?.message
-
-          || "Validation failed",
+        });
 
 
 
-        errors:
-
-          result.error.issues,
 
 
-      });
+
+
+      if (!result.success) {
+
+
+
+        const errors =
+
+          result.error.issues.map(
+
+            (
+
+              error
+
+            ) => ({
+
+
+              field:
+
+                error.path.join("."),
+
+
+
+              message:
+
+                error.message,
+
+
+            })
+
+          );
+
+
+
+
+
+
+
+        return sendErrorResponse(
+
+          res,
+
+          400,
+
+          "Validation failed",
+
+          errors
+
+        );
+
+
+
+      }
+
+
+
+
+
+
+
+      const validatedData =
+
+        result.data as {
+
+          body?: unknown;
+
+          params?: unknown;
+
+          query?: unknown;
+
+        };
+
+
+
+
+
+
+
+
+      if(validatedData.body){
+
+
+        req.body =
+
+          validatedData.body;
+
+
+      }
+
+
+
+
+
+
+
+      if(validatedData.params){
+
+
+        req.params =
+
+          validatedData.params as typeof req.params;
+
+
+      }
+
+
+
+
+
+
+
+      if(validatedData.query){
+
+
+        req.query =
+
+          validatedData.query as typeof req.query;
+
+
+      }
+
+
+
+
+
+
+
+      next();
+
+
+
+
+
+    } catch(error) {
+
+
+
+      if(error instanceof ZodError){
+
+
+
+        return sendErrorResponse(
+
+          res,
+
+          400,
+
+          "Invalid request data",
+
+          error.issues
+
+        );
+
+
+      }
+
+
+
+
+
+
+
+      return sendErrorResponse(
+
+        res,
+
+        500,
+
+        "Validation middleware error"
+
+      );
+
 
 
     }
-
-
-
-
-
-    if (result.data.body) {
-
-
-      req.body = result.data.body;
-
-
-    }
-
-
-
-
-
-    if (result.data.params) {
-
-
-      req.params = result.data.params;
-
-
-    }
-
-
-
-
-
-    if (result.data.query) {
-
-
-      req.query = result.data.query;
-
-
-    }
-
-
-
-
-
-    next();
 
 
   };
