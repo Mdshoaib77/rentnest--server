@@ -1,8 +1,8 @@
 "use strict";
-// // // // import type {
-// // // //   Request,
-// // // //   Response,
-// // // // } from "express";
+// // // // // // import type {
+// // // // // //   Request,
+// // // // // //   Response,
+// // // // // // } from "express";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePropertyController = exports.updatePropertyController = exports.getMyPropertiesController = exports.getSinglePropertyController = exports.getAllPropertiesController = exports.createPropertyController = void 0;
 const property_service_1 = require("./property.service");
@@ -28,11 +28,29 @@ const createPropertyController = async (req, res) => {
 exports.createPropertyController = createPropertyController;
 // =======================
 // GET ALL PROPERTIES
+// SEARCH + FILTER
+// PAGINATION + SORTING
 // =======================
 const getAllPropertiesController = async (req, res) => {
     try {
+        const sortBy = req.query.sortBy === "price"
+            ? "price"
+            :
+                req.query.sortBy === "bedrooms"
+                    ? "bedrooms"
+                    :
+                        "createdAt";
+        const sortOrder = req.query.sortOrder === "asc"
+            ? "asc"
+            :
+                "desc";
         const filters = {
-            location: req.query.location,
+            search: req.query.search
+                ? String(req.query.search)
+                : undefined,
+            location: req.query.location
+                ? String(req.query.location)
+                : undefined,
             minPrice: req.query.minPrice
                 ? Number(req.query.minPrice)
                 : undefined,
@@ -42,12 +60,20 @@ const getAllPropertiesController = async (req, res) => {
             bedrooms: req.query.bedrooms
                 ? Number(req.query.bedrooms)
                 : undefined,
+            bathrooms: req.query.bathrooms
+                ? Number(req.query.bathrooms)
+                : undefined,
+            landlordId: req.query.landlordId
+                ? String(req.query.landlordId)
+                : undefined,
             page: req.query.page
                 ? Number(req.query.page)
                 : 1,
             limit: req.query.limit
                 ? Number(req.query.limit)
                 : 10,
+            sortBy,
+            sortOrder,
         };
         const result = await (0, property_service_1.getAllProperties)(filters);
         return (0, apiResponse_1.sendResponse)(res, 200, "Properties fetched successfully", result.data, result.meta);
@@ -87,10 +113,14 @@ const getMyPropertiesController = async (req, res) => {
         if (!landlordId) {
             return (0, apiResponse_1.sendErrorResponse)(res, 401, "User not authenticated");
         }
-        const properties = await (0, property_service_1.getAllProperties)({
+        const result = await (0, property_service_1.getAllProperties)({
             landlordId,
+            page: 1,
+            limit: 10,
+            sortBy: "createdAt",
+            sortOrder: "desc",
         });
-        return (0, apiResponse_1.sendResponse)(res, 200, "My properties fetched successfully", properties);
+        return (0, apiResponse_1.sendResponse)(res, 200, "My properties fetched successfully", result.data, result.meta);
     }
     catch (error) {
         return (0, apiResponse_1.sendErrorResponse)(res, 500, error instanceof Error

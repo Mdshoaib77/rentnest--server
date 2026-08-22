@@ -1,9 +1,205 @@
+// // // import prisma from "../../lib/prisma";
+
+
+// // // import type {
+// // //   CreateBookingInput,
+// // // } from "./booking.validation";
+
+
+
+
+// // // // =======================
+// // // // CREATE BOOKING
+// // // // =======================
+
+// // // export const createBooking = async (
+
+// // //   payload: CreateBookingInput,
+
+// // //   tenantId: string
+
+// // // ) => {
+
+
+
+// // //   // Check property exists
+
+// // //   const property =
+
+// // //     await prisma.property.findUnique({
+
+// // //       where: {
+
+// // //         id:
+// // //           payload.propertyId,
+
+// // //       },
+
+// // //     });
+
+
+
+
+
+// // //   if (!property) {
+
+
+// // //     throw new Error(
+
+// // //       "Property not found"
+
+// // //     );
+
+
+// // //   }
+
+
+
+
+
+
+// // //   // Prevent landlord booking own property
+
+// // //   if (
+
+// // //     property.landlordId === tenantId
+
+// // //   ) {
+
+
+// // //     throw new Error(
+
+// // //       "You cannot book your own property"
+
+// // //     );
+
+
+// // //   }
+
+
+
+
+
+
+// // //   // Create booking
+
+// // //   const booking =
+
+// // //     await prisma.booking.create({
+
+// // //       data: {
+
+
+// // //         tenantId,
+
+
+
+// // //         propertyId:
+// // //           payload.propertyId,
+
+
+
+// // //         startDate:
+
+// // //           new Date(
+
+// // //             payload.startDate
+
+// // //           ),
+
+
+
+// // //         endDate:
+
+// // //           new Date(
+
+// // //             payload.endDate
+
+// // //           ),
+
+
+
+// // //         status:
+
+// // //           "PENDING",
+
+
+// // //       },
+
+
+
+// // //       include: {
+
+
+// // //         property: {
+
+
+// // //           select: {
+
+
+// // //             id: true,
+
+
+// // //             title: true,
+
+
+// // //             location: true,
+
+
+// // //             price: true,
+
+
+// // //           },
+
+
+// // //         },
+
+
+
+// // //         tenant: {
+
+
+// // //           select: {
+
+
+// // //             id: true,
+
+
+// // //             name: true,
+
+
+// // //             email: true,
+
+
+// // //           },
+
+
+// // //         },
+
+
+// // //       },
+
+
+// // //     });
+
+
+
+
+
+
+// // //   return booking;
+
+
+// // // };
+
+
 // // import prisma from "../../lib/prisma";
 
 
 // // import type {
 // //   CreateBookingInput,
 // // } from "./booking.validation";
+
 
 
 
@@ -22,16 +218,13 @@
 
 
 
-// //   // Check property exists
-
 // //   const property =
 
 // //     await prisma.property.findUnique({
 
 // //       where: {
 
-// //         id:
-// //           payload.propertyId,
+// //         id: payload.propertyId,
 
 // //       },
 
@@ -43,22 +236,17 @@
 
 // //   if (!property) {
 
-
 // //     throw new Error(
 
 // //       "Property not found"
 
 // //     );
 
-
 // //   }
 
 
 
 
-
-
-// //   // Prevent landlord booking own property
 
 // //   if (
 
@@ -66,22 +254,17 @@
 
 // //   ) {
 
-
 // //     throw new Error(
 
 // //       "You cannot book your own property"
 
 // //     );
 
-
 // //   }
 
 
 
 
-
-
-// //   // Create booking
 
 // //   const booking =
 
@@ -93,10 +276,8 @@
 // //         tenantId,
 
 
-
 // //         propertyId:
 // //           payload.propertyId,
-
 
 
 // //         startDate:
@@ -108,7 +289,6 @@
 // //           ),
 
 
-
 // //         endDate:
 
 // //           new Date(
@@ -116,7 +296,6 @@
 // //             payload.endDate
 
 // //           ),
-
 
 
 // //         status:
@@ -186,8 +365,202 @@
 
 
 
-
 // //   return booking;
+
+
+// // };
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // GET TENANT BOOKINGS
+// // // =======================
+
+// // export const getMyBookings = async (
+
+// //   tenantId: string
+
+// // ) => {
+
+
+
+// //   const bookings =
+
+// //     await prisma.booking.findMany({
+
+// //       where: {
+
+
+// //         tenantId,
+
+
+// //       },
+
+
+// //       include: {
+
+
+// //         property: {
+
+
+// //           select: {
+
+
+// //             id: true,
+
+
+// //             title: true,
+
+
+// //             location: true,
+
+
+// //             price: true,
+
+
+// //           },
+
+
+// //         },
+
+
+// //       },
+
+
+// //       orderBy: {
+
+
+// //         createdAt: "desc",
+
+
+// //       },
+
+
+// //     });
+
+
+
+
+
+// //   return bookings;
+
+
+// // };
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // GET LANDLORD BOOKINGS
+// // // =======================
+
+// // export const getLandlordBookings = async (
+
+// //   landlordId: string
+
+// // ) => {
+
+
+
+// //   const bookings =
+
+// //     await prisma.booking.findMany({
+
+// //       where: {
+
+
+// //         property: {
+
+
+// //           landlordId,
+
+
+// //         },
+
+
+// //       },
+
+
+// //       include: {
+
+
+// //         property: {
+
+
+// //           select: {
+
+
+// //             id: true,
+
+
+// //             title: true,
+
+
+// //             location: true,
+
+
+// //             price: true,
+
+
+// //           },
+
+
+// //         },
+
+
+
+// //         tenant: {
+
+
+// //           select: {
+
+
+// //             id: true,
+
+
+// //             name: true,
+
+
+// //             email: true,
+
+
+// //           },
+
+
+// //         },
+
+
+// //       },
+
+
+
+// //       orderBy: {
+
+
+// //         createdAt: "desc",
+
+
+// //       },
+
+
+// //     });
+
+
+
+
+
+// //   return bookings;
 
 
 // // };
@@ -198,8 +571,8 @@
 
 // import type {
 //   CreateBookingInput,
+//   UpdateBookingStatusInput,
 // } from "./booking.validation";
-
 
 
 
@@ -217,7 +590,6 @@
 // ) => {
 
 
-
 //   const property =
 
 //     await prisma.property.findUnique({
@@ -233,17 +605,13 @@
 
 
 
-
 //   if (!property) {
 
 //     throw new Error(
-
 //       "Property not found"
-
 //     );
 
 //   }
-
 
 
 
@@ -255,13 +623,10 @@
 //   ) {
 
 //     throw new Error(
-
 //       "You cannot book your own property"
-
 //     );
 
 //   }
-
 
 
 
@@ -544,7 +909,6 @@
 //       },
 
 
-
 //       orderBy: {
 
 
@@ -566,6 +930,182 @@
 // };
 
 
+
+
+
+
+
+
+
+// // =======================
+// // UPDATE BOOKING STATUS
+// // LANDLORD ONLY
+// // =======================
+
+// export const updateBookingStatus = async (
+
+//   bookingId: string,
+
+//   landlordId: string,
+
+//   payload: UpdateBookingStatusInput
+
+// ) => {
+
+
+
+//   const booking =
+
+//     await prisma.booking.findUnique({
+
+//       where: {
+
+
+//         id: bookingId,
+
+
+//       },
+
+
+//       include: {
+
+
+//         property: true,
+
+
+//       },
+
+
+//     });
+
+
+
+
+
+//   if (!booking) {
+
+
+//     throw new Error(
+
+//       "Booking not found"
+
+//     );
+
+
+//   }
+
+
+
+
+
+//   if (
+
+//     booking.property.landlordId !== landlordId
+
+//   ) {
+
+
+//     throw new Error(
+
+//       "You are not allowed to update this booking"
+
+//     );
+
+
+//   }
+
+
+
+
+
+//   const updatedBooking =
+
+//     await prisma.booking.update({
+
+//       where: {
+
+
+//         id: bookingId,
+
+
+//       },
+
+
+//       data: {
+
+
+//         status:
+
+//           payload.status,
+
+
+//       },
+
+
+//       include: {
+
+
+//         property: {
+
+
+//           select: {
+
+
+//             id: true,
+
+
+//             title: true,
+
+
+//             location: true,
+
+
+//             price: true,
+
+
+//           },
+
+
+//         },
+
+
+
+//         tenant: {
+
+
+//           select: {
+
+
+//             id: true,
+
+
+//             name: true,
+
+
+//             email: true,
+
+
+//           },
+
+
+//         },
+
+
+//       },
+
+
+//     });
+
+
+
+
+
+//   return updatedBooking;
+
+
+// };
+
+
 import prisma from "../../lib/prisma";
 
 
@@ -577,8 +1117,14 @@ import type {
 
 
 
+
+
+
+
+
 // =======================
 // CREATE BOOKING
+// CONFLICT PREVENTION
 // =======================
 
 export const createBooking = async (
@@ -590,141 +1136,350 @@ export const createBooking = async (
 ) => {
 
 
+  const {
+
+    propertyId,
+
+    startDate,
+
+    endDate,
+
+
+  } = payload;
+
+
+
+
+
+
+  const start =
+
+    new Date(
+
+      startDate
+
+    );
+
+
+
+  const end =
+
+    new Date(
+
+      endDate
+
+    );
+
+
+
+
+
+
+
+  // =======================
+  // PREVENT PAST DATE
+  // =======================
+
+
+  const today =
+
+    new Date();
+
+
+
+  today.setHours(
+
+    0,
+
+    0,
+
+    0,
+
+    0
+
+  );
+
+
+
+
+  if(start < today){
+
+
+    throw new Error(
+
+      "Booking date cannot be in the past"
+
+    );
+
+
+  }
+
+
+
+
+
+
+
+
+  // =======================
+  // CHECK PROPERTY EXISTS
+  // =======================
+
+
   const property =
 
     await prisma.property.findUnique({
 
-      where: {
 
-        id: payload.propertyId,
+      where:{
+
+        id: propertyId,
 
       },
+
 
     });
 
 
 
 
-  if (!property) {
+
+
+  if(!property){
+
 
     throw new Error(
+
       "Property not found"
+
     );
+
 
   }
 
 
 
 
-  if (
 
-    property.landlordId === tenantId
 
-  ) {
+
+
+
+  // =======================
+  // CHECK BOOKING CONFLICT
+  // =======================
+
+
+  const existingBooking =
+
+    await prisma.booking.findFirst({
+
+
+
+      where:{
+
+
+
+        propertyId,
+
+
+
+        status:{
+
+
+          in:[
+
+
+            "PENDING",
+
+            "ACCEPTED",
+
+            "PAID",
+
+
+          ],
+
+
+
+        },
+
+
+
+        AND:[
+
+
+
+          {
+
+            startDate:{
+
+
+              lt:end,
+
+
+            },
+
+
+          },
+
+
+
+          {
+
+            endDate:{
+
+
+              gt:start,
+
+
+            },
+
+
+          },
+
+
+
+        ],
+
+
+
+      },
+
+
+
+    });
+
+
+
+
+
+
+
+  if(existingBooking){
+
 
     throw new Error(
-      "You cannot book your own property"
+
+      "Property is already booked for selected dates"
+
     );
+
 
   }
 
 
+
+
+
+
+
+
+
+  // =======================
+  // CREATE BOOKING
+  // TRANSACTION SAFE
+  // =======================
 
 
   const booking =
 
-    await prisma.booking.create({
-
-      data: {
-
-
-        tenantId,
-
-
-        propertyId:
-          payload.propertyId,
-
-
-        startDate:
-
-          new Date(
-
-            payload.startDate
-
-          ),
-
-
-        endDate:
-
-          new Date(
-
-            payload.endDate
-
-          ),
-
-
-        status:
-
-          "PENDING",
-
-
-      },
+    await prisma.$transaction(
 
 
 
-      include: {
-
-
-        property: {
-
-
-          select: {
-
-
-            id: true,
-
-
-            title: true,
-
-
-            location: true,
-
-
-            price: true,
-
-
-          },
-
-
-        },
+      async(tx)=>{
 
 
 
-        tenant: {
+        const createdBooking =
 
 
-          select: {
+          await tx.booking.create({
 
 
-            id: true,
+
+            data:{
 
 
-            name: true,
+
+              propertyId,
 
 
-            email: true,
+
+              tenantId,
 
 
-          },
+
+              startDate:start,
 
 
-        },
+
+              endDate:end,
 
 
-      },
+
+              status:"PENDING",
 
 
-    });
+
+            },
+
+
+
+            include:{
+
+
+
+              property:{
+
+
+
+                select:{
+
+
+
+                  id:true,
+
+
+
+                  title:true,
+
+
+
+                  location:true,
+
+
+
+                  price:true,
+
+
+
+                },
+
+
+              },
+
+
+
+            },
+
+
+          });
+
+
+
+
+
+        return createdBooking;
+
+
+
+      }
+
+
+
+    );
+
 
 
 
@@ -743,53 +1498,56 @@ export const createBooking = async (
 
 
 
+
+
+
 // =======================
 // GET TENANT BOOKINGS
 // =======================
 
 export const getMyBookings = async (
 
-  tenantId: string
 
-) => {
-
+  tenantId:string
 
 
-  const bookings =
-
-    await prisma.booking.findMany({
-
-      where: {
+)=>{
 
 
-        tenantId,
+
+  return prisma.booking.findMany({
 
 
-      },
+
+    where:{
 
 
-      include: {
+      tenantId,
 
 
-        property: {
+    },
 
 
-          select: {
+
+    include:{
 
 
-            id: true,
+
+      property:{
 
 
-            title: true,
+
+        select:{
 
 
-            location: true,
 
+          id:true,
 
-            price: true,
+          title:true,
 
+          location:true,
 
-          },
+          price:true,
 
 
         },
@@ -798,25 +1556,29 @@ export const getMyBookings = async (
       },
 
 
-      orderBy: {
 
-
-        createdAt: "desc",
-
-
-      },
-
-
-    });
+    },
 
 
 
+    orderBy:{
 
 
-  return bookings;
+
+      createdAt:"desc",
+
+
+    },
+
+
+  });
+
 
 
 };
+
+
+
 
 
 
@@ -832,23 +1594,55 @@ export const getMyBookings = async (
 
 export const getLandlordBookings = async (
 
-  landlordId: string
 
-) => {
-
+  landlordId:string
 
 
-  const bookings =
-
-    await prisma.booking.findMany({
-
-      where: {
+)=>{
 
 
-        property: {
+
+  return prisma.booking.findMany({
 
 
-          landlordId,
+
+    where:{
+
+
+
+      property:{
+
+
+
+        landlordId,
+
+
+
+      },
+
+
+
+    },
+
+
+
+    include:{
+
+
+
+      tenant:{
+
+
+
+        select:{
+
+
+
+          id:true,
+
+          name:true,
+
+          email:true,
 
 
         },
@@ -857,50 +1651,21 @@ export const getLandlordBookings = async (
       },
 
 
-      include: {
 
-
-        property: {
-
-
-          select: {
-
-
-            id: true,
-
-
-            title: true,
-
-
-            location: true,
-
-
-            price: true,
-
-
-          },
-
-
-        },
+      property:{
 
 
 
-        tenant: {
+        select:{
 
 
-          select: {
 
+          id:true,
 
-            id: true,
+          title:true,
 
+          location:true,
 
-            name: true,
-
-
-            email: true,
-
-
-          },
 
 
         },
@@ -909,22 +1674,24 @@ export const getLandlordBookings = async (
       },
 
 
-      orderBy: {
 
-
-        createdAt: "desc",
-
-
-      },
-
-
-    });
+    },
 
 
 
+    orderBy:{
 
 
-  return bookings;
+
+      createdAt:"desc",
+
+
+    },
+
+
+
+  });
+
 
 
 };
@@ -937,20 +1704,26 @@ export const getLandlordBookings = async (
 
 
 
+
+
+
 // =======================
 // UPDATE BOOKING STATUS
-// LANDLORD ONLY
 // =======================
 
 export const updateBookingStatus = async (
 
-  bookingId: string,
 
-  landlordId: string,
+  bookingId:string,
 
-  payload: UpdateBookingStatusInput
 
-) => {
+  landlordId:string,
+
+
+  payload:UpdateBookingStatusInput
+
+
+)=>{
 
 
 
@@ -958,19 +1731,24 @@ export const updateBookingStatus = async (
 
     await prisma.booking.findUnique({
 
-      where: {
 
 
-        id: bookingId,
+      where:{
+
+
+
+        id:bookingId,
 
 
       },
 
 
-      include: {
+
+      include:{
 
 
-        property: true,
+
+        property:true,
 
 
       },
@@ -982,7 +1760,10 @@ export const updateBookingStatus = async (
 
 
 
-  if (!booking) {
+
+
+
+  if(!booking){
 
 
     throw new Error(
@@ -998,11 +1779,14 @@ export const updateBookingStatus = async (
 
 
 
-  if (
+
+
+  if(
 
     booking.property.landlordId !== landlordId
 
-  ) {
+  ){
+
 
 
     throw new Error(
@@ -1012,7 +1796,11 @@ export const updateBookingStatus = async (
     );
 
 
+
   }
+
+
+
 
 
 
@@ -1022,76 +1810,28 @@ export const updateBookingStatus = async (
 
     await prisma.booking.update({
 
-      where: {
 
 
-        id: bookingId,
+      where:{
 
 
-      },
 
-
-      data: {
-
-
-        status:
-
-          payload.status,
+        id:bookingId,
 
 
       },
 
 
-      include: {
 
-
-        property: {
-
-
-          select: {
-
-
-            id: true,
-
-
-            title: true,
-
-
-            location: true,
-
-
-            price: true,
-
-
-          },
-
-
-        },
+      data:{
 
 
 
-        tenant: {
-
-
-          select: {
-
-
-            id: true,
-
-
-            name: true,
-
-
-            email: true,
-
-
-          },
-
-
-        },
+        status:payload.status,
 
 
       },
+
 
 
     });
@@ -1100,7 +1840,10 @@ export const updateBookingStatus = async (
 
 
 
+
+
   return updatedBooking;
+
 
 
 };

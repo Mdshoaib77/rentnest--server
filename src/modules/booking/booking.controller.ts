@@ -1,3 +1,144 @@
+// // // // // // import type {
+// // // // // //   Request,
+// // // // // //   Response,
+// // // // // // } from "express";
+
+
+// // // // // // import {
+// // // // // //   createBookingValidationSchema,
+// // // // // // } from "./booking.validation";
+
+
+// // // // // // import {
+// // // // // //   createBooking,
+// // // // // // } from "./booking.service";
+
+
+
+
+// // // // // // // =======================
+// // // // // // // CREATE BOOKING
+// // // // // // // =======================
+
+// // // // // // export const createBookingController =
+
+// // // // // // async (
+
+// // // // // //   req: Request,
+
+// // // // // //   res: Response
+
+// // // // // // ) => {
+
+
+// // // // // //   try {
+
+
+// // // // // //     // Validation
+
+// // // // // //     const validatedData =
+
+// // // // // //       createBookingValidationSchema.parse(
+
+// // // // // //         req.body
+
+// // // // // //       );
+
+
+
+
+
+// // // // // //     // Logged in user
+
+// // // // // //     const tenantId =
+
+// // // // // //       req.user?.id;
+
+
+
+
+
+// // // // // //     if (!tenantId) {
+
+
+// // // // // //       return res.status(401).json({
+
+// // // // // //         success:false,
+
+// // // // // //         message:
+// // // // // //           "User not authenticated",
+
+// // // // // //       });
+
+
+// // // // // //     }
+
+
+
+
+
+// // // // // //     // Create booking
+
+// // // // // //     const booking =
+
+// // // // // //       await createBooking(
+
+// // // // // //         validatedData,
+
+// // // // // //         tenantId
+
+// // // // // //       );
+
+
+
+
+
+
+// // // // // //     res.status(201).json({
+
+// // // // // //       success:true,
+
+// // // // // //       message:
+// // // // // //         "Booking created successfully",
+
+// // // // // //       data:
+// // // // // //         booking,
+
+// // // // // //     });
+
+
+
+
+
+
+// // // // // //   } catch(error) {
+
+
+
+// // // // // //     res.status(400).json({
+
+// // // // // //       success:false,
+
+// // // // // //       message:
+
+// // // // // //         error instanceof Error
+
+// // // // // //         ? error.message
+
+// // // // // //         : "Booking failed",
+
+// // // // // //     });
+
+
+
+// // // // // //   }
+
+
+// // // // // // };
+
+
+
+
 // // // // // import type {
 // // // // //   Request,
 // // // // //   Response,
@@ -11,6 +152,8 @@
 
 // // // // // import {
 // // // // //   createBooking,
+// // // // //   getMyBookings,
+// // // // //   getLandlordBookings,
 // // // // // } from "./booking.service";
 
 
@@ -34,8 +177,6 @@
 // // // // //   try {
 
 
-// // // // //     // Validation
-
 // // // // //     const validatedData =
 
 // // // // //       createBookingValidationSchema.parse(
@@ -47,8 +188,6 @@
 
 
 
-
-// // // // //     // Logged in user
 
 // // // // //     const tenantId =
 
@@ -66,6 +205,7 @@
 // // // // //         success:false,
 
 // // // // //         message:
+
 // // // // //           "User not authenticated",
 
 // // // // //       });
@@ -76,8 +216,6 @@
 
 
 
-
-// // // // //     // Create booking
 
 // // // // //     const booking =
 
@@ -93,19 +231,24 @@
 
 
 
-
 // // // // //     res.status(201).json({
+
 
 // // // // //       success:true,
 
+
 // // // // //       message:
+
 // // // // //         "Booking created successfully",
 
+
+
 // // // // //       data:
+
 // // // // //         booking,
 
-// // // // //     });
 
+// // // // //     });
 
 
 
@@ -114,10 +257,11 @@
 // // // // //   } catch(error) {
 
 
-
 // // // // //     res.status(400).json({
 
+
 // // // // //       success:false,
+
 
 // // // // //       message:
 
@@ -126,6 +270,7 @@
 // // // // //         ? error.message
 
 // // // // //         : "Booking failed",
+
 
 // // // // //     });
 
@@ -139,6 +284,247 @@
 
 
 
+
+
+
+
+
+// // // // // // =======================
+// // // // // // GET MY BOOKINGS (TENANT)
+// // // // // // =======================
+
+// // // // // export const getMyBookingsController =
+
+// // // // // async (
+
+// // // // //   req: Request,
+
+// // // // //   res: Response
+
+// // // // // ) => {
+
+
+// // // // //   try {
+
+
+
+// // // // //     const tenantId =
+
+// // // // //       req.user?.id;
+
+
+
+
+
+// // // // //     if (!tenantId) {
+
+
+// // // // //       return res.status(401).json({
+
+
+// // // // //         success:false,
+
+
+// // // // //         message:
+
+// // // // //           "User not authenticated",
+
+
+// // // // //       });
+
+
+// // // // //     }
+
+
+
+
+
+
+// // // // //     const bookings =
+
+// // // // //       await getMyBookings(
+
+// // // // //         tenantId
+
+// // // // //       );
+
+
+
+
+
+// // // // //     res.status(200).json({
+
+
+// // // // //       success:true,
+
+
+// // // // //       message:
+
+// // // // //         "Bookings fetched successfully",
+
+
+
+// // // // //       data:
+
+// // // // //         bookings,
+
+
+// // // // //     });
+
+
+
+
+
+
+// // // // //   } catch(error) {
+
+
+// // // // //     res.status(400).json({
+
+
+// // // // //       success:false,
+
+
+// // // // //       message:
+
+// // // // //         error instanceof Error
+
+// // // // //         ? error.message
+
+// // // // //         : "Failed to fetch bookings",
+
+
+// // // // //     });
+
+
+
+// // // // //   }
+
+
+// // // // // };
+
+
+
+
+
+
+
+
+
+// // // // // // =======================
+// // // // // // GET LANDLORD BOOKINGS
+// // // // // // =======================
+
+// // // // // export const getLandlordBookingsController =
+
+// // // // // async (
+
+// // // // //   req: Request,
+
+// // // // //   res: Response
+
+// // // // // ) => {
+
+
+// // // // //   try {
+
+
+
+// // // // //     const landlordId =
+
+// // // // //       req.user?.id;
+
+
+
+
+
+// // // // //     if (!landlordId) {
+
+
+// // // // //       return res.status(401).json({
+
+
+// // // // //         success:false,
+
+
+// // // // //         message:
+
+// // // // //           "User not authenticated",
+
+
+// // // // //       });
+
+
+// // // // //     }
+
+
+
+
+
+
+// // // // //     const bookings =
+
+// // // // //       await getLandlordBookings(
+
+// // // // //         landlordId
+
+// // // // //       );
+
+
+
+
+
+// // // // //     res.status(200).json({
+
+
+// // // // //       success:true,
+
+
+// // // // //       message:
+
+// // // // //         "Landlord bookings fetched successfully",
+
+
+
+// // // // //       data:
+
+// // // // //         bookings,
+
+
+// // // // //     });
+
+
+
+
+
+
+// // // // //   } catch(error) {
+
+
+// // // // //     res.status(400).json({
+
+
+// // // // //       success:false,
+
+
+// // // // //       message:
+
+// // // // //         error instanceof Error
+
+// // // // //         ? error.message
+
+// // // // //         : "Failed to fetch landlord bookings",
+
+
+// // // // //     });
+
+
+
+// // // // //   }
+
+
+// // // // // };
+
 // // // // import type {
 // // // //   Request,
 // // // //   Response,
@@ -147,6 +533,7 @@
 
 // // // // import {
 // // // //   createBookingValidationSchema,
+// // // //   updateBookingStatusValidationSchema,
 // // // // } from "./booking.validation";
 
 
@@ -154,6 +541,7 @@
 // // // //   createBooking,
 // // // //   getMyBookings,
 // // // //   getLandlordBookings,
+// // // //   updateBookingStatus,
 // // // // } from "./booking.service";
 
 
@@ -202,11 +590,14 @@
 
 // // // //       return res.status(401).json({
 
+
 // // // //         success:false,
+
 
 // // // //         message:
 
 // // // //           "User not authenticated",
+
 
 // // // //       });
 
@@ -290,7 +681,8 @@
 
 
 // // // // // =======================
-// // // // // GET MY BOOKINGS (TENANT)
+// // // // // GET MY BOOKINGS
+// // // // // TENANT ONLY
 // // // // // =======================
 
 // // // // export const getMyBookingsController =
@@ -413,6 +805,7 @@
 
 // // // // // =======================
 // // // // // GET LANDLORD BOOKINGS
+// // // // // LANDLORD ONLY
 // // // // // =======================
 
 // // // // export const getLandlordBookingsController =
@@ -525,6 +918,156 @@
 
 // // // // };
 
+
+
+
+
+
+
+
+
+// // // // // =======================
+// // // // // UPDATE BOOKING STATUS
+// // // // // LANDLORD ONLY
+// // // // // =======================
+
+// // // // export const updateBookingStatusController =
+
+// // // // async (
+
+// // // //   req: Request,
+
+// // // //   res: Response
+
+// // // // ) => {
+
+
+// // // //   try {
+
+
+
+// // // //     const landlordId =
+
+// // // //       req.user?.id;
+
+
+
+
+
+// // // //     if (!landlordId) {
+
+
+// // // //       return res.status(401).json({
+
+
+// // // //         success:false,
+
+
+// // // //         message:
+
+// // // //           "User not authenticated",
+
+
+// // // //       });
+
+
+// // // //     }
+
+
+
+
+
+
+// // // //     const bookingId =
+
+// // // //       req.params.id;
+
+
+
+
+
+
+// // // //     const validatedData =
+
+// // // //       updateBookingStatusValidationSchema.parse(
+
+// // // //         req.body
+
+// // // //       );
+
+
+
+
+
+
+// // // //     const updatedBooking =
+
+// // // //       await updateBookingStatus(
+
+// // // //         bookingId,
+
+// // // //         landlordId,
+
+// // // //         validatedData
+
+// // // //       );
+
+
+
+
+
+
+// // // //     res.status(200).json({
+
+
+// // // //       success:true,
+
+
+// // // //       message:
+
+// // // //         "Booking status updated successfully",
+
+
+
+// // // //       data:
+
+// // // //         updatedBooking,
+
+
+// // // //     });
+
+
+
+
+
+
+// // // //   } catch(error) {
+
+
+// // // //     res.status(400).json({
+
+
+// // // //       success:false,
+
+
+// // // //       message:
+
+// // // //         error instanceof Error
+
+// // // //         ? error.message
+
+// // // //         : "Failed to update booking status",
+
+
+// // // //     });
+
+
+
+// // // //   }
+
+
+// // // // };
+
 // // // import type {
 // // //   Request,
 // // //   Response,
@@ -532,27 +1075,31 @@
 
 
 // // // import {
-// // //   createBookingValidationSchema,
-// // //   updateBookingStatusValidationSchema,
-// // // } from "./booking.validation";
 
-
-// // // import {
 // // //   createBooking,
-// // //   getMyBookings,
+
+// // //   getTenantBookings,
+
 // // //   getLandlordBookings,
+
 // // //   updateBookingStatus,
+
 // // // } from "./booking.service";
+
+
+
+
+
 
 
 
 
 // // // // =======================
 // // // // CREATE BOOKING
+// // // // TENANT ONLY
 // // // // =======================
 
 // // // export const createBookingController =
-
 // // // async (
 
 // // //   req: Request,
@@ -565,18 +1112,6 @@
 // // //   try {
 
 
-// // //     const validatedData =
-
-// // //       createBookingValidationSchema.parse(
-
-// // //         req.body
-
-// // //       );
-
-
-
-
-
 // // //     const tenantId =
 
 // // //       req.user?.id;
@@ -585,7 +1120,7 @@
 
 
 
-// // //     if (!tenantId) {
+// // //     if(!tenantId){
 
 
 // // //       return res.status(401).json({
@@ -612,7 +1147,7 @@
 
 // // //       await createBooking(
 
-// // //         validatedData,
+// // //         req.body,
 
 // // //         tenantId
 
@@ -660,11 +1195,10 @@
 
 // // //         ? error.message
 
-// // //         : "Booking failed",
+// // //         : "Booking creation failed",
 
 
 // // //     });
-
 
 
 // // //   }
@@ -680,13 +1214,13 @@
 
 
 
+
+
 // // // // =======================
-// // // // GET MY BOOKINGS
-// // // // TENANT ONLY
+// // // // GET TENANT BOOKINGS
 // // // // =======================
 
-// // // export const getMyBookingsController =
-
+// // // export const getTenantBookingsController =
 // // // async (
 
 // // //   req: Request,
@@ -699,7 +1233,6 @@
 // // //   try {
 
 
-
 // // //     const tenantId =
 
 // // //       req.user?.id;
@@ -708,7 +1241,7 @@
 
 
 
-// // //     if (!tenantId) {
+// // //     if(!tenantId){
 
 
 // // //       return res.status(401).json({
@@ -731,10 +1264,9 @@
 
 
 
-
 // // //     const bookings =
 
-// // //       await getMyBookings(
+// // //       await getTenantBookings(
 
 // // //         tenantId
 
@@ -767,11 +1299,10 @@
 
 
 
-
 // // //   } catch(error) {
 
 
-// // //     res.status(400).json({
+// // //     res.status(500).json({
 
 
 // // //       success:false,
@@ -779,15 +1310,10 @@
 
 // // //       message:
 
-// // //         error instanceof Error
-
-// // //         ? error.message
-
-// // //         : "Failed to fetch bookings",
+// // //         "Failed to fetch bookings",
 
 
 // // //     });
-
 
 
 // // //   }
@@ -803,13 +1329,13 @@
 
 
 
+
+
 // // // // =======================
 // // // // GET LANDLORD BOOKINGS
-// // // // LANDLORD ONLY
 // // // // =======================
 
 // // // export const getLandlordBookingsController =
-
 // // // async (
 
 // // //   req: Request,
@@ -822,7 +1348,6 @@
 // // //   try {
 
 
-
 // // //     const landlordId =
 
 // // //       req.user?.id;
@@ -831,7 +1356,7 @@
 
 
 
-// // //     if (!landlordId) {
+// // //     if(!landlordId){
 
 
 // // //       return res.status(401).json({
@@ -849,7 +1374,6 @@
 
 
 // // //     }
-
 
 
 
@@ -890,11 +1414,10 @@
 
 
 
-
 // // //   } catch(error) {
 
 
-// // //     res.status(400).json({
+// // //     res.status(500).json({
 
 
 // // //       success:false,
@@ -902,15 +1425,10 @@
 
 // // //       message:
 
-// // //         error instanceof Error
-
-// // //         ? error.message
-
-// // //         : "Failed to fetch landlord bookings",
+// // //         "Failed to fetch landlord bookings",
 
 
 // // //     });
-
 
 
 // // //   }
@@ -926,13 +1444,14 @@
 
 
 
+
+
 // // // // =======================
 // // // // UPDATE BOOKING STATUS
-// // // // LANDLORD ONLY
+// // // // LANDLORD + ADMIN
 // // // // =======================
 
 // // // export const updateBookingStatusController =
-
 // // // async (
 
 // // //   req: Request,
@@ -945,73 +1464,15 @@
 // // //   try {
 
 
-
-// // //     const landlordId =
-
-// // //       req.user?.id;
-
-
-
-
-
-// // //     if (!landlordId) {
-
-
-// // //       return res.status(401).json({
-
-
-// // //         success:false,
-
-
-// // //         message:
-
-// // //           "User not authenticated",
-
-
-// // //       });
-
-
-// // //     }
-
-
-
-
-
-
-// // //     const bookingId =
-
-// // //       req.params.id;
-
-
-
-
-
-
-// // //     const validatedData =
-
-// // //       updateBookingStatusValidationSchema.parse(
-
-// // //         req.body
-
-// // //       );
-
-
-
-
-
-
-// // //     const updatedBooking =
+// // //     const booking =
 
 // // //       await updateBookingStatus(
 
-// // //         bookingId,
+// // //         req.params.id,
 
-// // //         landlordId,
-
-// // //         validatedData
+// // //         req.body.status
 
 // // //       );
-
 
 
 
@@ -1031,11 +1492,10 @@
 
 // // //       data:
 
-// // //         updatedBooking,
+// // //         booking,
 
 
 // // //     });
-
 
 
 
@@ -1056,17 +1516,17 @@
 
 // // //         ? error.message
 
-// // //         : "Failed to update booking status",
+// // //         : "Status update failed",
 
 
 // // //     });
-
 
 
 // // //   }
 
 
 // // // };
+
 
 // // import type {
 // //   Request,
@@ -1078,7 +1538,7 @@
 
 // //   createBooking,
 
-// //   getTenantBookings,
+// //   getMyBookings,
 
 // //   getLandlordBookings,
 
@@ -1266,7 +1726,7 @@
 
 // //     const bookings =
 
-// //       await getTenantBookings(
+// //       await getMyBookings(
 
 // //         tenantId
 
@@ -1448,7 +1908,7 @@
 
 // // // =======================
 // // // UPDATE BOOKING STATUS
-// // // LANDLORD + ADMIN
+// // // LANDLORD ONLY
 // // // =======================
 
 // // export const updateBookingStatusController =
@@ -1464,13 +1924,46 @@
 // //   try {
 
 
+// //     const landlordId =
+
+// //       req.user?.id;
+
+
+
+
+
+// //     if(!landlordId){
+
+
+// //       return res.status(401).json({
+
+
+// //         success:false,
+
+
+// //         message:
+
+// //           "User not authenticated",
+
+
+// //       });
+
+
+// //     }
+
+
+
+
+
 // //     const booking =
 
 // //       await updateBookingStatus(
 
 // //         req.params.id,
 
-// //         req.body.status
+// //         landlordId,
+
+// //         req.body
 
 // //       );
 
@@ -1528,10 +2021,1022 @@
 // // };
 
 
+
+// // import type {
+// //   Request,
+// //   Response,
+// // } from "express";
+
+
+// // import {
+
+// //   createBooking,
+
+// //   getMyBookings,
+
+// //   getLandlordBookings,
+
+// //   updateBookingStatus,
+
+// // } from "./booking.service";
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // CREATE BOOKING
+// // // TENANT ONLY
+// // // =======================
+
+// // export const createBookingController =
+// // async (
+
+// //   req: Request,
+
+// //   res: Response
+
+// // ) => {
+
+
+// //   try {
+
+
+// //     const tenantId =
+
+// //       req.user?.id;
+
+
+
+
+
+// //     if (!tenantId) {
+
+
+// //       return res.status(401).json({
+
+
+// //         success: false,
+
+
+// //         message:
+
+// //           "User not authenticated",
+
+
+// //       });
+
+
+// //     }
+
+
+
+
+
+// //     const booking =
+
+// //       await createBooking(
+
+// //         req.body,
+
+// //         tenantId
+
+// //       );
+
+
+
+
+
+// //     res.status(201).json({
+
+
+// //       success: true,
+
+
+// //       message:
+
+// //         "Booking created successfully",
+
+
+
+// //       data:
+
+// //         booking,
+
+
+// //     });
+
+
+
+
+
+// //   } catch (error) {
+
+
+// //     res.status(400).json({
+
+
+// //       success: false,
+
+
+// //       message:
+
+// //         error instanceof Error
+
+// //         ? error.message
+
+// //         : "Booking creation failed",
+
+
+// //     });
+
+
+// //   }
+
+
+// // };
+
+
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // GET TENANT BOOKINGS
+// // // TENANT ONLY
+// // // =======================
+
+// // export const getTenantBookingsController =
+// // async (
+
+// //   req: Request,
+
+// //   res: Response
+
+// // ) => {
+
+
+// //   try {
+
+
+// //     const tenantId =
+
+// //       req.user?.id;
+
+
+
+
+
+// //     if (!tenantId) {
+
+
+// //       return res.status(401).json({
+
+
+// //         success: false,
+
+
+// //         message:
+
+// //           "User not authenticated",
+
+
+// //       });
+
+
+// //     }
+
+
+
+
+
+// //     const bookings =
+
+// //       await getMyBookings(
+
+// //         tenantId
+
+// //       );
+
+
+
+
+
+// //     res.status(200).json({
+
+
+// //       success: true,
+
+
+// //       message:
+
+// //         "Bookings fetched successfully",
+
+
+
+// //       data:
+
+// //         bookings,
+
+
+// //     });
+
+
+
+
+
+// //   } catch (error) {
+
+
+// //     res.status(500).json({
+
+
+// //       success: false,
+
+
+// //       message:
+
+// //         error instanceof Error
+
+// //         ? error.message
+
+// //         : "Failed to fetch bookings",
+
+
+// //     });
+
+
+// //   }
+
+
+// // };
+
+
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // GET LANDLORD BOOKINGS
+// // // LANDLORD ONLY
+// // // =======================
+
+// // export const getLandlordBookingsController =
+// // async (
+
+// //   req: Request,
+
+// //   res: Response
+
+// // ) => {
+
+
+// //   try {
+
+
+// //     const landlordId =
+
+// //       req.user?.id;
+
+
+
+
+
+// //     if (!landlordId) {
+
+
+// //       return res.status(401).json({
+
+
+// //         success: false,
+
+
+// //         message:
+
+// //           "User not authenticated",
+
+
+// //       });
+
+
+// //     }
+
+
+
+
+
+// //     const bookings =
+
+// //       await getLandlordBookings(
+
+// //         landlordId
+
+// //       );
+
+
+
+
+
+// //     res.status(200).json({
+
+
+// //       success: true,
+
+
+// //       message:
+
+// //         "Landlord bookings fetched successfully",
+
+
+
+// //       data:
+
+// //         bookings,
+
+
+// //     });
+
+
+
+
+
+// //   } catch (error) {
+
+
+// //     res.status(500).json({
+
+
+// //       success: false,
+
+
+// //       message:
+
+// //         error instanceof Error
+
+// //         ? error.message
+
+// //         : "Failed to fetch landlord bookings",
+
+
+// //     });
+
+
+// //   }
+
+
+// // };
+
+
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // UPDATE BOOKING STATUS
+// // // LANDLORD ONLY
+// // // =======================
+
+// // export const updateBookingStatusController =
+// // async (
+
+// //   req: Request,
+
+// //   res: Response
+
+// // ) => {
+
+
+// //   try {
+
+
+// //     const landlordId =
+
+// //       req.user?.id;
+
+
+
+
+
+// //     if (!landlordId) {
+
+
+// //       return res.status(401).json({
+
+
+// //         success: false,
+
+
+// //         message:
+
+// //           "User not authenticated",
+
+
+// //       });
+
+
+// //     }
+
+
+
+
+
+// //     const bookingId =
+
+// //       String(req.params.id);
+
+
+
+
+
+// //     const booking =
+
+// //       await updateBookingStatus(
+
+// //         bookingId,
+
+// //         landlordId,
+
+// //         req.body
+
+// //       );
+
+
+
+
+
+// //     res.status(200).json({
+
+
+// //       success: true,
+
+
+// //       message:
+
+// //         "Booking status updated successfully",
+
+
+
+// //       data:
+
+// //         booking,
+
+
+// //     });
+
+
+
+
+
+// //   } catch (error) {
+
+
+// //     res.status(400).json({
+
+
+// //       success: false,
+
+
+// //       message:
+
+// //         error instanceof Error
+
+// //         ? error.message
+
+// //         : "Status update failed",
+
+
+// //     });
+
+
+// //   }
+
+
+// // };
+
+
+// // import type {
+// //   Request,
+// //   Response,
+// // } from "express";
+
+
+// // import {
+
+// //   createBooking,
+
+// //   getMyBookings,
+
+// //   getLandlordBookings,
+
+// //   updateBookingStatus,
+
+// // } from "./booking.service";
+
+
+// // import {
+
+// //   sendResponse,
+
+// //   sendErrorResponse,
+
+// // } from "../../utils/apiResponse";
+
+
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // CREATE BOOKING
+// // // TENANT ONLY
+// // // =======================
+
+// // export const createBookingController =
+// // async (
+
+// //   req: Request,
+
+// //   res: Response
+
+// // ) => {
+
+
+// //   try {
+
+
+// //     const tenantId =
+
+// //       req.user?.id;
+
+
+
+
+
+// //     if (!tenantId) {
+
+
+// //       return sendErrorResponse(
+
+// //         res,
+
+// //         401,
+
+// //         "User not authenticated"
+
+// //       );
+
+
+// //     }
+
+
+
+
+
+
+
+// //     const booking =
+
+// //       await createBooking(
+
+// //         req.body,
+
+// //         tenantId
+
+// //       );
+
+
+
+
+
+
+
+// //     return sendResponse(
+
+// //       res,
+
+// //       201,
+
+// //       "Booking created successfully",
+
+// //       booking
+
+// //     );
+
+
+
+
+
+
+// //   } catch (error) {
+
+
+// //     return sendErrorResponse(
+
+// //       res,
+
+// //       400,
+
+// //       error instanceof Error
+
+// //       ? error.message
+
+// //       : "Booking creation failed"
+
+// //     );
+
+
+// //   }
+
+
+// // };
+
+
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // GET TENANT BOOKINGS
+// // // TENANT ONLY
+// // // =======================
+
+// // export const getTenantBookingsController =
+// // async (
+
+// //   req: Request,
+
+// //   res: Response
+
+// // ) => {
+
+
+// //   try {
+
+
+// //     const tenantId =
+
+// //       req.user?.id;
+
+
+
+
+
+
+
+// //     if (!tenantId) {
+
+
+// //       return sendErrorResponse(
+
+// //         res,
+
+// //         401,
+
+// //         "User not authenticated"
+
+// //       );
+
+
+// //     }
+
+
+
+
+
+
+
+// //     const bookings =
+
+// //       await getMyBookings(
+
+// //         tenantId
+
+// //       );
+
+
+
+
+
+
+
+// //     return sendResponse(
+
+// //       res,
+
+// //       200,
+
+// //       "Bookings fetched successfully",
+
+// //       bookings
+
+// //     );
+
+
+
+
+
+
+// //   } catch (error) {
+
+
+// //     return sendErrorResponse(
+
+// //       res,
+
+// //       500,
+
+// //       error instanceof Error
+
+// //       ? error.message
+
+// //       : "Failed to fetch bookings"
+
+// //     );
+
+
+// //   }
+
+
+// // };
+
+
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // GET LANDLORD BOOKINGS
+// // // LANDLORD ONLY
+// // // =======================
+
+// // export const getLandlordBookingsController =
+// // async (
+
+// //   req: Request,
+
+// //   res: Response
+
+// // ) => {
+
+
+// //   try {
+
+
+// //     const landlordId =
+
+// //       req.user?.id;
+
+
+
+
+
+
+
+// //     if (!landlordId) {
+
+
+// //       return sendErrorResponse(
+
+// //         res,
+
+// //         401,
+
+// //         "User not authenticated"
+
+// //       );
+
+
+// //     }
+
+
+
+
+
+
+
+// //     const bookings =
+
+// //       await getLandlordBookings(
+
+// //         landlordId
+
+// //       );
+
+
+
+
+
+
+
+// //     return sendResponse(
+
+// //       res,
+
+// //       200,
+
+// //       "Landlord bookings fetched successfully",
+
+// //       bookings
+
+// //     );
+
+
+
+
+
+
+// //   } catch (error) {
+
+
+// //     return sendErrorResponse(
+
+// //       res,
+
+// //       500,
+
+// //       error instanceof Error
+
+// //       ? error.message
+
+// //       : "Failed to fetch landlord bookings"
+
+// //     );
+
+
+// //   }
+
+
+// // };
+
+
+
+
+
+
+
+
+
+
+
+// // // =======================
+// // // UPDATE BOOKING STATUS
+// // // LANDLORD ONLY
+// // // =======================
+
+// // export const updateBookingStatusController =
+// // async (
+
+// //   req: Request,
+
+// //   res: Response
+
+// // ) => {
+
+
+// //   try {
+
+
+// //     const landlordId =
+
+// //       req.user?.id;
+
+
+
+
+
+
+
+// //     if (!landlordId) {
+
+
+// //       return sendErrorResponse(
+
+// //         res,
+
+// //         401,
+
+// //         "User not authenticated"
+
+// //       );
+
+
+// //     }
+
+
+
+
+
+
+
+// //     const bookingId =
+
+// //       String(req.params.id);
+
+
+
+
+
+
+
+// //     const booking =
+
+// //       await updateBookingStatus(
+
+// //         bookingId,
+
+// //         landlordId,
+
+// //         req.body
+
+// //       );
+
+
+
+
+
+
+
+// //     return sendResponse(
+
+// //       res,
+
+// //       200,
+
+// //       "Booking status updated successfully",
+
+// //       booking
+
+// //     );
+
+
+
+
+
+
+// //   } catch (error) {
+
+
+// //     return sendErrorResponse(
+
+// //       res,
+
+// //       400,
+
+// //       error instanceof Error
+
+// //       ? error.message
+
+// //       : "Status update failed"
+
+// //     );
+
+
+// //   }
+
+
+// // };
+
+
+
 // import type {
 //   Request,
 //   Response,
 // } from "express";
+
 
 
 // import {
@@ -1546,1010 +3051,6 @@
 
 // } from "./booking.service";
 
-
-
-
-
-
-
-
-
-// // =======================
-// // CREATE BOOKING
-// // TENANT ONLY
-// // =======================
-
-// export const createBookingController =
-// async (
-
-//   req: Request,
-
-//   res: Response
-
-// ) => {
-
-
-//   try {
-
-
-//     const tenantId =
-
-//       req.user?.id;
-
-
-
-
-
-//     if(!tenantId){
-
-
-//       return res.status(401).json({
-
-
-//         success:false,
-
-
-//         message:
-
-//           "User not authenticated",
-
-
-//       });
-
-
-//     }
-
-
-
-
-
-//     const booking =
-
-//       await createBooking(
-
-//         req.body,
-
-//         tenantId
-
-//       );
-
-
-
-
-
-//     res.status(201).json({
-
-
-//       success:true,
-
-
-//       message:
-
-//         "Booking created successfully",
-
-
-
-//       data:
-
-//         booking,
-
-
-//     });
-
-
-
-
-
-//   } catch(error) {
-
-
-//     res.status(400).json({
-
-
-//       success:false,
-
-
-//       message:
-
-//         error instanceof Error
-
-//         ? error.message
-
-//         : "Booking creation failed",
-
-
-//     });
-
-
-//   }
-
-
-// };
-
-
-
-
-
-
-
-
-
-
-
-// // =======================
-// // GET TENANT BOOKINGS
-// // =======================
-
-// export const getTenantBookingsController =
-// async (
-
-//   req: Request,
-
-//   res: Response
-
-// ) => {
-
-
-//   try {
-
-
-//     const tenantId =
-
-//       req.user?.id;
-
-
-
-
-
-//     if(!tenantId){
-
-
-//       return res.status(401).json({
-
-
-//         success:false,
-
-
-//         message:
-
-//           "User not authenticated",
-
-
-//       });
-
-
-//     }
-
-
-
-
-
-//     const bookings =
-
-//       await getMyBookings(
-
-//         tenantId
-
-//       );
-
-
-
-
-
-//     res.status(200).json({
-
-
-//       success:true,
-
-
-//       message:
-
-//         "Bookings fetched successfully",
-
-
-
-//       data:
-
-//         bookings,
-
-
-//     });
-
-
-
-
-
-//   } catch(error) {
-
-
-//     res.status(500).json({
-
-
-//       success:false,
-
-
-//       message:
-
-//         "Failed to fetch bookings",
-
-
-//     });
-
-
-//   }
-
-
-// };
-
-
-
-
-
-
-
-
-
-
-
-// // =======================
-// // GET LANDLORD BOOKINGS
-// // =======================
-
-// export const getLandlordBookingsController =
-// async (
-
-//   req: Request,
-
-//   res: Response
-
-// ) => {
-
-
-//   try {
-
-
-//     const landlordId =
-
-//       req.user?.id;
-
-
-
-
-
-//     if(!landlordId){
-
-
-//       return res.status(401).json({
-
-
-//         success:false,
-
-
-//         message:
-
-//           "User not authenticated",
-
-
-//       });
-
-
-//     }
-
-
-
-
-
-//     const bookings =
-
-//       await getLandlordBookings(
-
-//         landlordId
-
-//       );
-
-
-
-
-
-//     res.status(200).json({
-
-
-//       success:true,
-
-
-//       message:
-
-//         "Landlord bookings fetched successfully",
-
-
-
-//       data:
-
-//         bookings,
-
-
-//     });
-
-
-
-
-
-//   } catch(error) {
-
-
-//     res.status(500).json({
-
-
-//       success:false,
-
-
-//       message:
-
-//         "Failed to fetch landlord bookings",
-
-
-//     });
-
-
-//   }
-
-
-// };
-
-
-
-
-
-
-
-
-
-
-
-// // =======================
-// // UPDATE BOOKING STATUS
-// // LANDLORD ONLY
-// // =======================
-
-// export const updateBookingStatusController =
-// async (
-
-//   req: Request,
-
-//   res: Response
-
-// ) => {
-
-
-//   try {
-
-
-//     const landlordId =
-
-//       req.user?.id;
-
-
-
-
-
-//     if(!landlordId){
-
-
-//       return res.status(401).json({
-
-
-//         success:false,
-
-
-//         message:
-
-//           "User not authenticated",
-
-
-//       });
-
-
-//     }
-
-
-
-
-
-//     const booking =
-
-//       await updateBookingStatus(
-
-//         req.params.id,
-
-//         landlordId,
-
-//         req.body
-
-//       );
-
-
-
-
-
-//     res.status(200).json({
-
-
-//       success:true,
-
-
-//       message:
-
-//         "Booking status updated successfully",
-
-
-
-//       data:
-
-//         booking,
-
-
-//     });
-
-
-
-
-
-//   } catch(error) {
-
-
-//     res.status(400).json({
-
-
-//       success:false,
-
-
-//       message:
-
-//         error instanceof Error
-
-//         ? error.message
-
-//         : "Status update failed",
-
-
-//     });
-
-
-//   }
-
-
-// };
-
-
-
-// import type {
-//   Request,
-//   Response,
-// } from "express";
-
-
-// import {
-
-//   createBooking,
-
-//   getMyBookings,
-
-//   getLandlordBookings,
-
-//   updateBookingStatus,
-
-// } from "./booking.service";
-
-
-
-
-
-
-
-
-
-// // =======================
-// // CREATE BOOKING
-// // TENANT ONLY
-// // =======================
-
-// export const createBookingController =
-// async (
-
-//   req: Request,
-
-//   res: Response
-
-// ) => {
-
-
-//   try {
-
-
-//     const tenantId =
-
-//       req.user?.id;
-
-
-
-
-
-//     if (!tenantId) {
-
-
-//       return res.status(401).json({
-
-
-//         success: false,
-
-
-//         message:
-
-//           "User not authenticated",
-
-
-//       });
-
-
-//     }
-
-
-
-
-
-//     const booking =
-
-//       await createBooking(
-
-//         req.body,
-
-//         tenantId
-
-//       );
-
-
-
-
-
-//     res.status(201).json({
-
-
-//       success: true,
-
-
-//       message:
-
-//         "Booking created successfully",
-
-
-
-//       data:
-
-//         booking,
-
-
-//     });
-
-
-
-
-
-//   } catch (error) {
-
-
-//     res.status(400).json({
-
-
-//       success: false,
-
-
-//       message:
-
-//         error instanceof Error
-
-//         ? error.message
-
-//         : "Booking creation failed",
-
-
-//     });
-
-
-//   }
-
-
-// };
-
-
-
-
-
-
-
-
-
-
-
-// // =======================
-// // GET TENANT BOOKINGS
-// // TENANT ONLY
-// // =======================
-
-// export const getTenantBookingsController =
-// async (
-
-//   req: Request,
-
-//   res: Response
-
-// ) => {
-
-
-//   try {
-
-
-//     const tenantId =
-
-//       req.user?.id;
-
-
-
-
-
-//     if (!tenantId) {
-
-
-//       return res.status(401).json({
-
-
-//         success: false,
-
-
-//         message:
-
-//           "User not authenticated",
-
-
-//       });
-
-
-//     }
-
-
-
-
-
-//     const bookings =
-
-//       await getMyBookings(
-
-//         tenantId
-
-//       );
-
-
-
-
-
-//     res.status(200).json({
-
-
-//       success: true,
-
-
-//       message:
-
-//         "Bookings fetched successfully",
-
-
-
-//       data:
-
-//         bookings,
-
-
-//     });
-
-
-
-
-
-//   } catch (error) {
-
-
-//     res.status(500).json({
-
-
-//       success: false,
-
-
-//       message:
-
-//         error instanceof Error
-
-//         ? error.message
-
-//         : "Failed to fetch bookings",
-
-
-//     });
-
-
-//   }
-
-
-// };
-
-
-
-
-
-
-
-
-
-
-
-// // =======================
-// // GET LANDLORD BOOKINGS
-// // LANDLORD ONLY
-// // =======================
-
-// export const getLandlordBookingsController =
-// async (
-
-//   req: Request,
-
-//   res: Response
-
-// ) => {
-
-
-//   try {
-
-
-//     const landlordId =
-
-//       req.user?.id;
-
-
-
-
-
-//     if (!landlordId) {
-
-
-//       return res.status(401).json({
-
-
-//         success: false,
-
-
-//         message:
-
-//           "User not authenticated",
-
-
-//       });
-
-
-//     }
-
-
-
-
-
-//     const bookings =
-
-//       await getLandlordBookings(
-
-//         landlordId
-
-//       );
-
-
-
-
-
-//     res.status(200).json({
-
-
-//       success: true,
-
-
-//       message:
-
-//         "Landlord bookings fetched successfully",
-
-
-
-//       data:
-
-//         bookings,
-
-
-//     });
-
-
-
-
-
-//   } catch (error) {
-
-
-//     res.status(500).json({
-
-
-//       success: false,
-
-
-//       message:
-
-//         error instanceof Error
-
-//         ? error.message
-
-//         : "Failed to fetch landlord bookings",
-
-
-//     });
-
-
-//   }
-
-
-// };
-
-
-
-
-
-
-
-
-
-
-
-// // =======================
-// // UPDATE BOOKING STATUS
-// // LANDLORD ONLY
-// // =======================
-
-// export const updateBookingStatusController =
-// async (
-
-//   req: Request,
-
-//   res: Response
-
-// ) => {
-
-
-//   try {
-
-
-//     const landlordId =
-
-//       req.user?.id;
-
-
-
-
-
-//     if (!landlordId) {
-
-
-//       return res.status(401).json({
-
-
-//         success: false,
-
-
-//         message:
-
-//           "User not authenticated",
-
-
-//       });
-
-
-//     }
-
-
-
-
-
-//     const bookingId =
-
-//       String(req.params.id);
-
-
-
-
-
-//     const booking =
-
-//       await updateBookingStatus(
-
-//         bookingId,
-
-//         landlordId,
-
-//         req.body
-
-//       );
-
-
-
-
-
-//     res.status(200).json({
-
-
-//       success: true,
-
-
-//       message:
-
-//         "Booking status updated successfully",
-
-
-
-//       data:
-
-//         booking,
-
-
-//     });
-
-
-
-
-
-//   } catch (error) {
-
-
-//     res.status(400).json({
-
-
-//       success: false,
-
-
-//       message:
-
-//         error instanceof Error
-
-//         ? error.message
-
-//         : "Status update failed",
-
-
-//     });
-
-
-//   }
-
-
-// };
-
-
-// import type {
-//   Request,
-//   Response,
-// } from "express";
-
-
-// import {
-
-//   createBooking,
-
-//   getMyBookings,
-
-//   getLandlordBookings,
-
-//   updateBookingStatus,
-
-// } from "./booking.service";
 
 
 // import {
@@ -2596,6 +3097,7 @@
 
 
 
+
 //     if (!tenantId) {
 
 
@@ -2611,6 +3113,7 @@
 
 
 //     }
+
 
 
 
@@ -2645,6 +3148,7 @@
 //       booking
 
 //     );
+
 
 
 
@@ -2712,6 +3216,7 @@
 
 
 
+
 //     if (!tenantId) {
 
 
@@ -2727,6 +3232,7 @@
 
 
 //     }
+
 
 
 
@@ -2759,6 +3265,7 @@
 //       bookings
 
 //     );
+
 
 
 
@@ -2826,6 +3333,7 @@
 
 
 
+
 //     if (!landlordId) {
 
 
@@ -2841,6 +3349,7 @@
 
 
 //     }
+
 
 
 
@@ -2873,6 +3382,7 @@
 //       bookings
 
 //     );
+
 
 
 
@@ -2940,6 +3450,7 @@
 
 
 
+
 //     if (!landlordId) {
 
 
@@ -2962,9 +3473,11 @@
 
 
 
+
 //     const bookingId =
 
 //       String(req.params.id);
+
 
 
 
@@ -3007,6 +3520,7 @@
 
 
 
+
 //   } catch (error) {
 
 
@@ -3030,13 +3544,10 @@
 
 // };
 
-
-
 import type {
   Request,
   Response,
 } from "express";
-
 
 
 import {
@@ -3076,7 +3587,9 @@ import {
 // TENANT ONLY
 // =======================
 
+
 export const createBookingController =
+
 async (
 
   req: Request,
@@ -3097,8 +3610,7 @@ async (
 
 
 
-
-    if (!tenantId) {
+    if(!tenantId){
 
 
       return sendErrorResponse(
@@ -3120,7 +3632,6 @@ async (
 
 
 
-
     const booking =
 
       await createBooking(
@@ -3130,6 +3641,7 @@ async (
         tenantId
 
       );
+
 
 
 
@@ -3154,8 +3666,8 @@ async (
 
 
 
+  } catch(error){
 
-  } catch (error) {
 
 
     return sendErrorResponse(
@@ -3189,11 +3701,13 @@ async (
 
 
 // =======================
-// GET TENANT BOOKINGS
+// GET MY BOOKINGS
 // TENANT ONLY
 // =======================
 
+
 export const getTenantBookingsController =
+
 async (
 
   req: Request,
@@ -3214,10 +3728,7 @@ async (
 
 
 
-
-
-
-    if (!tenantId) {
+    if(!tenantId){
 
 
       return sendErrorResponse(
@@ -3238,8 +3749,6 @@ async (
 
 
 
-
-
     const bookings =
 
       await getMyBookings(
@@ -3247,7 +3756,6 @@ async (
         tenantId
 
       );
-
 
 
 
@@ -3272,7 +3780,7 @@ async (
 
 
 
-  } catch (error) {
+  } catch(error){
 
 
     return sendErrorResponse(
@@ -3310,7 +3818,9 @@ async (
 // LANDLORD ONLY
 // =======================
 
+
 export const getLandlordBookingsController =
+
 async (
 
   req: Request,
@@ -3331,10 +3841,7 @@ async (
 
 
 
-
-
-
-    if (!landlordId) {
+    if(!landlordId){
 
 
       return sendErrorResponse(
@@ -3370,7 +3877,6 @@ async (
 
 
 
-
     return sendResponse(
 
       res,
@@ -3389,7 +3895,7 @@ async (
 
 
 
-  } catch (error) {
+  } catch(error){
 
 
     return sendErrorResponse(
@@ -3427,7 +3933,9 @@ async (
 // LANDLORD ONLY
 // =======================
 
+
 export const updateBookingStatusController =
+
 async (
 
   req: Request,
@@ -3448,10 +3956,7 @@ async (
 
 
 
-
-
-
-    if (!landlordId) {
+    if(!landlordId){
 
 
       return sendErrorResponse(
@@ -3476,7 +3981,7 @@ async (
 
     const bookingId =
 
-      String(req.params.id);
+      req.params.id as string;
 
 
 
@@ -3520,8 +4025,8 @@ async (
 
 
 
+  } catch(error){
 
-  } catch (error) {
 
 
     return sendErrorResponse(
@@ -3534,7 +4039,7 @@ async (
 
       ? error.message
 
-      : "Status update failed"
+      : "Booking status update failed"
 
     );
 

@@ -1,13 +1,44 @@
 "use strict";
-// // // // // import prisma from "../../lib/prisma";
+// // // // // // import prisma from "../../lib/prisma";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = exports.getAllProperties = exports.createProperty = void 0;
+// // // // // // import type {
+// // // // // //   CreatePropertyInput,
+// // // // // // } from "./property.validation";
+// // // // // // export const createProperty = async (
+// // // // // //   payload: CreatePropertyInput,
+// // // // // //   landlordId: string
+// // // // // // ) => {
+// // // // // //   const property =
+// // // // // //     await prisma.property.create({
+// // // // // //       data: {
+// // // // // //         title:
+// // // // // //           payload.title,
+// // // // // //         description:
+// // // // // //           payload.description,
+// // // // // //         location:
+// // // // // //           payload.location,
+// // // // // //         price:
+// // // // // //           payload.price,
+// // // // // //         bedrooms:
+// // // // // //           payload.bedrooms,
+// // // // // //         bathrooms:
+// // // // // //           payload.bathrooms,
+// // // // // //         landlordId,
+// // // // // //       },
+// // // // // //     });
+// // // // // //   return property;
+// // // // // // };
+// // // // // import prisma from "../../lib/prisma";
 // // // // // import type {
 // // // // //   CreatePropertyInput,
 // // // // // } from "./property.validation";
+// // // // // // =======================
+// // // // // // CREATE PROPERTY
+// // // // // // =======================
 // // // // // export const createProperty = async (
 // // // // //   payload: CreatePropertyInput,
 // // // // //   landlordId: string
@@ -32,9 +63,51 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 // // // // //     });
 // // // // //   return property;
 // // // // // };
+// // // // // // =======================
+// // // // // // GET ALL PROPERTIES
+// // // // // // =======================
+// // // // // export const getAllProperties = async () => {
+// // // // //   const properties =
+// // // // //     await prisma.property.findMany({
+// // // // //       include: {
+// // // // //         landlord: {
+// // // // //           select: {
+// // // // //             id: true,
+// // // // //             name: true,
+// // // // //             email: true,
+// // // // //           },
+// // // // //         },
+// // // // //       },
+// // // // //     });
+// // // // //   return properties;
+// // // // // };
+// // // // // // =======================
+// // // // // // GET SINGLE PROPERTY
+// // // // // // =======================
+// // // // // export const getSingleProperty = async (
+// // // // //   propertyId: string
+// // // // // ) => {
+// // // // //   const property =
+// // // // //     await prisma.property.findUnique({
+// // // // //       where: {
+// // // // //         id: propertyId,
+// // // // //       },
+// // // // //       include: {
+// // // // //         landlord: {
+// // // // //           select: {
+// // // // //             id: true,
+// // // // //             name: true,
+// // // // //             email: true,
+// // // // //           },
+// // // // //         },
+// // // // //       },
+// // // // //     });
+// // // // //   return property;
+// // // // // };
 // // // // import prisma from "../../lib/prisma";
 // // // // import type {
 // // // //   CreatePropertyInput,
+// // // //   UpdatePropertyInput,
 // // // // } from "./property.validation";
 // // // // // =======================
 // // // // // CREATE PROPERTY
@@ -104,44 +177,112 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 // // // //     });
 // // // //   return property;
 // // // // };
-// // // import prisma from "../../lib/prisma";
-// // // import type {
-// // //   CreatePropertyInput,
-// // //   UpdatePropertyInput,
-// // // } from "./property.validation";
-// // // // =======================
-// // // // CREATE PROPERTY
-// // // // =======================
-// // // export const createProperty = async (
-// // //   payload: CreatePropertyInput,
-// // //   landlordId: string
+// // // // // =======================
+// // // // // UPDATE PROPERTY
+// // // // // =======================
+// // // // export const updateProperty = async (
+// // // //   propertyId: string,
+// // // //   landlordId: string,
+// // // //   payload: UpdatePropertyInput
+// // // // ) => {
+// // // //   const property =
+// // // //     await prisma.property.findUnique({
+// // // //       where: {
+// // // //         id: propertyId,
+// // // //       },
+// // // //     });
+// // // //   if (!property) {
+// // // //     throw new Error(
+// // // //       "Property not found"
+// // // //     );
+// // // //   }
+// // // //   if (
+// // // //     property.landlordId !== landlordId
+// // // //   ) {
+// // // //     throw new Error(
+// // // //       "You are not allowed to update this property"
+// // // //     );
+// // // //   }
+// // // //   const updatedProperty =
+// // // //     await prisma.property.update({
+// // // //       where: {
+// // // //         id: propertyId,
+// // // //       },
+// // // //       data: payload,
+// // // //     });
+// // // //   return updatedProperty;
+// // // // };
+// // // // // =======================
+// // // // // DELETE PROPERTY
+// // // // // =======================
+// // // // export const deleteProperty = async (
+// // // //   propertyId: string,
+// // // //   landlordId: string
+// // // // ) => {
+// // // //   const property =
+// // // //     await prisma.property.findUnique({
+// // // //       where: {
+// // // //         id: propertyId,
+// // // //       },
+// // // //     });
+// // // //   if (!property) {
+// // // //     throw new Error(
+// // // //       "Property not found"
+// // // //     );
+// // // //   }
+// // // //   if (
+// // // //     property.landlordId !== landlordId
+// // // //   ) {
+// // // //     throw new Error(
+// // // //       "You are not allowed to delete this property"
+// // // //     );
+// // // //   }
+// // // //   await prisma.property.delete({
+// // // //     where: {
+// // // //       id: propertyId,
+// // // //     },
+// // // //   });
+// // // //   return null;
+// // // // };
+// // // export const getAllProperties = async (
+// // //   filters: {
+// // //     location?: string;
+// // //     minPrice?: number;
+// // //     maxPrice?: number;
+// // //     bedrooms?: number;
+// // //     page?: number;
+// // //     limit?: number;
+// // //   }
 // // // ) => {
-// // //   const property =
-// // //     await prisma.property.create({
-// // //       data: {
-// // //         title:
-// // //           payload.title,
-// // //         description:
-// // //           payload.description,
-// // //         location:
-// // //           payload.location,
-// // //         price:
-// // //           payload.price,
-// // //         bedrooms:
-// // //           payload.bedrooms,
-// // //         bathrooms:
-// // //           payload.bathrooms,
-// // //         landlordId,
-// // //       },
-// // //     });
-// // //   return property;
-// // // };
-// // // // =======================
-// // // // GET ALL PROPERTIES
-// // // // =======================
-// // // export const getAllProperties = async () => {
+// // //   const {
+// // //     location,
+// // //     minPrice,
+// // //     maxPrice,
+// // //     bedrooms,
+// // //     page = 1,
+// // //     limit = 10,
+// // //   } = filters;
+// // //   const skip =
+// // //     (page - 1) * limit;
 // // //   const properties =
 // // //     await prisma.property.findMany({
+// // //       where: {
+// // //         location: location
+// // //           ? {
+// // //               contains: location,
+// // //               mode: "insensitive",
+// // //             }
+// // //           : undefined,
+// // //         price: {
+// // //           gte:
+// // //             minPrice,
+// // //           lte:
+// // //             maxPrice,
+// // //         },
+// // //         bedrooms,
+// // //       },
+// // //       skip,
+// // //       take: limit,
 // // //       include: {
 // // //         landlord: {
 // // //           select: {
@@ -152,98 +293,74 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 // // //         },
 // // //       },
 // // //     });
-// // //   return properties;
-// // // };
-// // // // =======================
-// // // // GET SINGLE PROPERTY
-// // // // =======================
-// // // export const getSingleProperty = async (
-// // //   propertyId: string
-// // // ) => {
-// // //   const property =
-// // //     await prisma.property.findUnique({
+// // //   const total =
+// // //     await prisma.property.count({
 // // //       where: {
-// // //         id: propertyId,
-// // //       },
-// // //       include: {
-// // //         landlord: {
-// // //           select: {
-// // //             id: true,
-// // //             name: true,
-// // //             email: true,
-// // //           },
+// // //         location: location
+// // //           ? {
+// // //               contains: location,
+// // //               mode: "insensitive",
+// // //             }
+// // //           : undefined,
+// // //         price: {
+// // //           gte:
+// // //             minPrice,
+// // //           lte:
+// // //             maxPrice,
 // // //         },
+// // //         bedrooms,
 // // //       },
 // // //     });
-// // //   return property;
-// // // };
-// // // // =======================
-// // // // UPDATE PROPERTY
-// // // // =======================
-// // // export const updateProperty = async (
-// // //   propertyId: string,
-// // //   landlordId: string,
-// // //   payload: UpdatePropertyInput
-// // // ) => {
-// // //   const property =
-// // //     await prisma.property.findUnique({
-// // //       where: {
-// // //         id: propertyId,
-// // //       },
-// // //     });
-// // //   if (!property) {
-// // //     throw new Error(
-// // //       "Property not found"
-// // //     );
-// // //   }
-// // //   if (
-// // //     property.landlordId !== landlordId
-// // //   ) {
-// // //     throw new Error(
-// // //       "You are not allowed to update this property"
-// // //     );
-// // //   }
-// // //   const updatedProperty =
-// // //     await prisma.property.update({
-// // //       where: {
-// // //         id: propertyId,
-// // //       },
-// // //       data: payload,
-// // //     });
-// // //   return updatedProperty;
-// // // };
-// // // // =======================
-// // // // DELETE PROPERTY
-// // // // =======================
-// // // export const deleteProperty = async (
-// // //   propertyId: string,
-// // //   landlordId: string
-// // // ) => {
-// // //   const property =
-// // //     await prisma.property.findUnique({
-// // //       where: {
-// // //         id: propertyId,
-// // //       },
-// // //     });
-// // //   if (!property) {
-// // //     throw new Error(
-// // //       "Property not found"
-// // //     );
-// // //   }
-// // //   if (
-// // //     property.landlordId !== landlordId
-// // //   ) {
-// // //     throw new Error(
-// // //       "You are not allowed to delete this property"
-// // //     );
-// // //   }
-// // //   await prisma.property.delete({
-// // //     where: {
-// // //       id: propertyId,
+// // //   return {
+// // //     meta: {
+// // //       page,
+// // //       limit,
+// // //       total,
+// // //       totalPages:
+// // //         Math.ceil(
+// // //           total / limit
+// // //         ),
 // // //     },
-// // //   });
-// // //   return null;
+// // //     data:
+// // //       properties,
+// // //   };
 // // // };
+// // import prisma from "../../lib/prisma";
+// // import type {
+// //   CreatePropertyInput,
+// //   UpdatePropertyInput,
+// // } from "./property.validation";
+// // // =======================
+// // // CREATE PROPERTY
+// // // =======================
+// // export const createProperty = async (
+// //   payload: CreatePropertyInput,
+// //   landlordId: string
+// // ) => {
+// //   const property =
+// //     await prisma.property.create({
+// //       data: {
+// //         title:
+// //           payload.title,
+// //         description:
+// //           payload.description,
+// //         location:
+// //           payload.location,
+// //         price:
+// //           payload.price,
+// //         bedrooms:
+// //           payload.bedrooms,
+// //         bathrooms:
+// //           payload.bathrooms,
+// //         landlordId,
+// //       },
+// //     });
+// //   return property;
+// // };
+// // // =======================
+// // // GET ALL PROPERTIES
+// // // SEARCH + FILTER + PAGINATION
+// // // =======================
 // // export const getAllProperties = async (
 // //   filters: {
 // //     location?: string;
@@ -264,25 +381,28 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 // //   } = filters;
 // //   const skip =
 // //     (page - 1) * limit;
+// //   const whereCondition = {
+// //     location: location
+// //       ? {
+// //           contains: location,
+// //           mode: "insensitive" as const,
+// //         }
+// //       : undefined,
+// //     price: {
+// //       gte:
+// //         minPrice,
+// //       lte:
+// //         maxPrice,
+// //     },
+// //     bedrooms,
+// //   };
 // //   const properties =
 // //     await prisma.property.findMany({
-// //       where: {
-// //         location: location
-// //           ? {
-// //               contains: location,
-// //               mode: "insensitive",
-// //             }
-// //           : undefined,
-// //         price: {
-// //           gte:
-// //             minPrice,
-// //           lte:
-// //             maxPrice,
-// //         },
-// //         bedrooms,
-// //       },
+// //       where:
+// //         whereCondition,
 // //       skip,
-// //       take: limit,
+// //       take:
+// //         limit,
 // //       include: {
 // //         landlord: {
 // //           select: {
@@ -292,24 +412,15 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 // //           },
 // //         },
 // //       },
+// //       orderBy: {
+// //         createdAt:
+// //           "desc",
+// //       },
 // //     });
 // //   const total =
 // //     await prisma.property.count({
-// //       where: {
-// //         location: location
-// //           ? {
-// //               contains: location,
-// //               mode: "insensitive",
-// //             }
-// //           : undefined,
-// //         price: {
-// //           gte:
-// //             minPrice,
-// //           lte:
-// //             maxPrice,
-// //         },
-// //         bedrooms,
-// //       },
+// //       where:
+// //         whereCondition,
 // //     });
 // //   return {
 // //     meta: {
@@ -324,6 +435,311 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 // //     data:
 // //       properties,
 // //   };
+// // };
+// // // =======================
+// // // GET SINGLE PROPERTY
+// // // =======================
+// // export const getSingleProperty = async (
+// //   propertyId: string
+// // ) => {
+// //   const property =
+// //     await prisma.property.findUnique({
+// //       where: {
+// //         id:
+// //           propertyId,
+// //       },
+// //       include: {
+// //         landlord: {
+// //           select: {
+// //             id: true,
+// //             name: true,
+// //             email: true,
+// //           },
+// //         },
+// //       },
+// //     });
+// //   return property;
+// // };
+// // // =======================
+// // // UPDATE PROPERTY
+// // // =======================
+// // export const updateProperty = async (
+// //   propertyId: string,
+// //   landlordId: string,
+// //   payload: UpdatePropertyInput
+// // ) => {
+// //   const property =
+// //     await prisma.property.findUnique({
+// //       where: {
+// //         id:
+// //           propertyId,
+// //       },
+// //     });
+// //   if (!property) {
+// //     throw new Error(
+// //       "Property not found"
+// //     );
+// //   }
+// //   if (
+// //     property.landlordId !== landlordId
+// //   ) {
+// //     throw new Error(
+// //       "You are not allowed to update this property"
+// //     );
+// //   }
+// //   const updatedProperty =
+// //     await prisma.property.update({
+// //       where: {
+// //         id:
+// //           propertyId,
+// //       },
+// //       data:
+// //         payload,
+// //     });
+// //   return updatedProperty;
+// // };
+// // // =======================
+// // // DELETE PROPERTY
+// // // =======================
+// // export const deleteProperty = async (
+// //   propertyId: string,
+// //   landlordId: string
+// // ) => {
+// //   const property =
+// //     await prisma.property.findUnique({
+// //       where: {
+// //         id:
+// //           propertyId,
+// //       },
+// //     });
+// //   if (!property) {
+// //     throw new Error(
+// //       "Property not found"
+// //     );
+// //   }
+// //   if (
+// //     property.landlordId !== landlordId
+// //   ) {
+// //     throw new Error(
+// //       "You are not allowed to delete this property"
+// //     );
+// //   }
+// //   await prisma.property.delete({
+// //     where: {
+// //       id:
+// //         propertyId,
+// //     },
+// //   });
+// // // };
+// // import prisma from "../../lib/prisma";
+// // import type {
+// //   CreatePropertyInput,
+// //   UpdatePropertyInput,
+// // } from "./property.validation";
+// // // =======================
+// // // CREATE PROPERTY
+// // // =======================
+// // export const createProperty = async (
+// //   payload: CreatePropertyInput,
+// //   landlordId: string
+// // ) => {
+// //   const property =
+// //     await prisma.property.create({
+// //       data: {
+// //         title:
+// //           payload.title,
+// //         description:
+// //           payload.description,
+// //         location:
+// //           payload.location,
+// //         price:
+// //           payload.price,
+// //         bedrooms:
+// //           payload.bedrooms,
+// //         bathrooms:
+// //           payload.bathrooms,
+// //         landlordId,
+// //       },
+// //     });
+// //   return property;
+// // };
+// // // =======================
+// // // GET ALL PROPERTIES
+// // // SEARCH + FILTER + PAGINATION
+// // // =======================
+// // export const getAllProperties = async (
+// //   filters: {
+// //     location?: string;
+// //     minPrice?: number;
+// //     maxPrice?: number;
+// //     bedrooms?: number;
+// //     landlordId?: string;
+// //     page?: number;
+// //     limit?: number;
+// //   }
+// // ) => {
+// //   const {
+// //     location,
+// //     minPrice,
+// //     maxPrice,
+// //     bedrooms,
+// //     landlordId,
+// //     page = 1,
+// //     limit = 10,
+// //   } = filters;
+// //   const skip =
+// //     (page - 1) * limit;
+// //   const whereCondition = {
+// //     location:
+// //       location
+// //       ? {
+// //           contains: location,
+// //           mode: "insensitive" as const,
+// //         }
+// //       : undefined,
+// //     landlordId,
+// //     price: {
+// //       gte:
+// //         minPrice,
+// //       lte:
+// //         maxPrice,
+// //     },
+// //     bedrooms,
+// //   };
+// //   const properties =
+// //     await prisma.property.findMany({
+// //       where:
+// //         whereCondition,
+// //       skip,
+// //       take:
+// //         limit,
+// //       include: {
+// //         landlord: {
+// //           select: {
+// //             id: true,
+// //             name: true,
+// //             email: true,
+// //           },
+// //         },
+// //       },
+// //       orderBy: {
+// //         createdAt:
+// //           "desc",
+// //       },
+// //     });
+// //   const total =
+// //     await prisma.property.count({
+// //       where:
+// //         whereCondition,
+// //     });
+// //   return {
+// //     meta: {
+// //       page,
+// //       limit,
+// //       total,
+// //       totalPages:
+// //         Math.ceil(
+// //           total / limit
+// //         ),
+// //     },
+// //     data:
+// //       properties,
+// //   };
+// // };
+// // // =======================
+// // // GET SINGLE PROPERTY
+// // // =======================
+// // export const getSingleProperty = async (
+// //   propertyId: string
+// // ) => {
+// //   const property =
+// //     await prisma.property.findUnique({
+// //       where: {
+// //         id:
+// //           propertyId,
+// //       },
+// //       include: {
+// //         landlord: {
+// //           select: {
+// //             id: true,
+// //             name: true,
+// //             email: true,
+// //           },
+// //         },
+// //       },
+// //     });
+// //   return property;
+// // };
+// // // =======================
+// // // UPDATE PROPERTY
+// // // =======================
+// // export const updateProperty = async (
+// //   propertyId: string,
+// //   landlordId: string,
+// //   payload: UpdatePropertyInput
+// // ) => {
+// //   const property =
+// //     await prisma.property.findUnique({
+// //       where: {
+// //         id:
+// //           propertyId,
+// //       },
+// //     });
+// //   if (!property) {
+// //     throw new Error(
+// //       "Property not found"
+// //     );
+// //   }
+// //   if (
+// //     property.landlordId !== landlordId
+// //   ) {
+// //     throw new Error(
+// //       "You are not allowed to update this property"
+// //     );
+// //   }
+// //   const updatedProperty =
+// //     await prisma.property.update({
+// //       where: {
+// //         id:
+// //           propertyId,
+// //       },
+// //       data:
+// //         payload,
+// //     });
+// //   return updatedProperty;
+// // };
+// // // =======================
+// // // DELETE PROPERTY
+// // // =======================
+// // export const deleteProperty = async (
+// //   propertyId: string,
+// //   landlordId: string
+// // ) => {
+// //   const property =
+// //     await prisma.property.findUnique({
+// //       where: {
+// //         id:
+// //           propertyId,
+// //       },
+// //     });
+// //   if (!property) {
+// //     throw new Error(
+// //       "Property not found"
+// //     );
+// //   }
+// //   if (
+// //     property.landlordId !== landlordId
+// //   ) {
+// //     throw new Error(
+// //       "You are not allowed to delete this property"
+// //     );
+// //   }
+// //   await prisma.property.delete({
+// //     where: {
+// //       id:
+// //         propertyId,
+// //     },
+// //   });
 // // };
 // import prisma from "../../lib/prisma";
 // import type {
@@ -359,42 +775,109 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 // };
 // // =======================
 // // GET ALL PROPERTIES
-// // SEARCH + FILTER + PAGINATION
+// // ADVANCED SEARCH + FILTER + SORT + PAGINATION
 // // =======================
 // export const getAllProperties = async (
 //   filters: {
+//     search?: string;
 //     location?: string;
 //     minPrice?: number;
 //     maxPrice?: number;
 //     bedrooms?: number;
+//     bathrooms?: number;
+//     landlordId?: string;
 //     page?: number;
 //     limit?: number;
+//     sortBy?:
+//       | "price"
+//       | "createdAt"
+//       | "bedrooms";
+//     sortOrder?:
+//       | "asc"
+//       | "desc";
 //   }
 // ) => {
 //   const {
+//     search,
 //     location,
 //     minPrice,
 //     maxPrice,
 //     bedrooms,
+//     bathrooms,
+//     landlordId,
 //     page = 1,
 //     limit = 10,
+//     sortBy = "createdAt",
+//     sortOrder = "desc",
 //   } = filters;
 //   const skip =
 //     (page - 1) * limit;
 //   const whereCondition = {
-//     location: location
+//     AND:[
+//       search
 //       ? {
-//           contains: location,
-//           mode: "insensitive" as const,
+//           OR:[
+//             {
+//               title:{
+//                 contains:
+//                   search,
+//                 mode:
+//                   "insensitive",
+//               },
+//             },
+//             {
+//               description:{
+//                 contains:
+//                   search,
+//                 mode:
+//                   "insensitive",
+//               },
+//             },
+//             {
+//               location:{
+//                 contains:
+//                   search,
+//                 mode:
+//                   "insensitive",
+//               },
+//             },
+//           ],
 //         }
-//       : undefined,
-//     price: {
-//       gte:
-//         minPrice,
-//       lte:
-//         maxPrice,
-//     },
-//     bedrooms,
+//       : {},
+//       location
+//       ? {
+//           location:{
+//             contains:
+//               location,
+//             mode:
+//               "insensitive",
+//           },
+//         }
+//       : {},
+//       landlordId
+//       ? {
+//           landlordId,
+//         }
+//       : {},
+//       bedrooms
+//       ? {
+//           bedrooms,
+//         }
+//       : {},
+//       bathrooms
+//       ? {
+//           bathrooms,
+//         }
+//       : {},
+//       {
+//         price:{
+//           gte:
+//             minPrice,
+//           lte:
+//             maxPrice,
+//         },
+//       },
+//     ],
 //   };
 //   const properties =
 //     await prisma.property.findMany({
@@ -403,18 +886,18 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 //       skip,
 //       take:
 //         limit,
-//       include: {
-//         landlord: {
-//           select: {
-//             id: true,
-//             name: true,
-//             email: true,
+//       include:{
+//         landlord:{
+//           select:{
+//             id:true,
+//             name:true,
+//             email:true,
 //           },
 //         },
 //       },
-//       orderBy: {
-//         createdAt:
-//           "desc",
+//       orderBy:{
+//         [sortBy]:
+//           sortOrder,
 //       },
 //     });
 //   const total =
@@ -423,7 +906,7 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 //         whereCondition,
 //     });
 //   return {
-//     meta: {
+//     meta:{
 //       page,
 //       limit,
 //       total,
@@ -431,6 +914,13 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 //         Math.ceil(
 //           total / limit
 //         ),
+//       hasNextPage:
+//         page <
+//         Math.ceil(
+//           total / limit
+//         ),
+//       hasPreviousPage:
+//         page > 1,
 //     },
 //     data:
 //       properties,
@@ -444,16 +934,16 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 // ) => {
 //   const property =
 //     await prisma.property.findUnique({
-//       where: {
+//       where:{
 //         id:
 //           propertyId,
 //       },
-//       include: {
-//         landlord: {
-//           select: {
-//             id: true,
-//             name: true,
-//             email: true,
+//       include:{
+//         landlord:{
+//           select:{
+//             id:true,
+//             name:true,
+//             email:true,
 //           },
 //         },
 //       },
@@ -470,26 +960,26 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 // ) => {
 //   const property =
 //     await prisma.property.findUnique({
-//       where: {
+//       where:{
 //         id:
 //           propertyId,
 //       },
 //     });
-//   if (!property) {
+//   if(!property){
 //     throw new Error(
 //       "Property not found"
 //     );
 //   }
-//   if (
+//   if(
 //     property.landlordId !== landlordId
-//   ) {
+//   ){
 //     throw new Error(
 //       "You are not allowed to update this property"
 //     );
 //   }
 //   const updatedProperty =
 //     await prisma.property.update({
-//       where: {
+//       where:{
 //         id:
 //           propertyId,
 //       },
@@ -502,30 +992,30 @@ exports.deleteProperty = exports.updateProperty = exports.getSingleProperty = ex
 // // DELETE PROPERTY
 // // =======================
 // export const deleteProperty = async (
-//   propertyId: string,
-//   landlordId: string
+//   propertyId:string,
+//   landlordId:string
 // ) => {
 //   const property =
 //     await prisma.property.findUnique({
-//       where: {
+//       where:{
 //         id:
 //           propertyId,
 //       },
 //     });
-//   if (!property) {
+//   if(!property){
 //     throw new Error(
 //       "Property not found"
 //     );
 //   }
-//   if (
+//   if(
 //     property.landlordId !== landlordId
-//   ) {
+//   ){
 //     throw new Error(
 //       "You are not allowed to delete this property"
 //     );
 //   }
 //   await prisma.property.delete({
-//     where: {
+//     where:{
 //       id:
 //         propertyId,
 //     },
@@ -552,24 +1042,67 @@ const createProperty = async (payload, landlordId) => {
 exports.createProperty = createProperty;
 // =======================
 // GET ALL PROPERTIES
-// SEARCH + FILTER + PAGINATION
+// ADVANCED SEARCH + FILTER + SORT + PAGINATION
 // =======================
 const getAllProperties = async (filters) => {
-    const { location, minPrice, maxPrice, bedrooms, landlordId, page = 1, limit = 10, } = filters;
+    const { search, location, minPrice, maxPrice, bedrooms, bathrooms, landlordId, page = 1, limit = 10, sortBy = "createdAt", sortOrder = "desc", } = filters;
     const skip = (page - 1) * limit;
     const whereCondition = {
-        location: location
-            ? {
-                contains: location,
-                mode: "insensitive",
-            }
-            : undefined,
-        landlordId,
-        price: {
-            gte: minPrice,
-            lte: maxPrice,
-        },
-        bedrooms,
+        AND: [
+            search
+                ? {
+                    OR: [
+                        {
+                            title: {
+                                contains: search,
+                                mode: "insensitive",
+                            },
+                        },
+                        {
+                            description: {
+                                contains: search,
+                                mode: "insensitive",
+                            },
+                        },
+                        {
+                            location: {
+                                contains: search,
+                                mode: "insensitive",
+                            },
+                        },
+                    ],
+                }
+                : {},
+            location
+                ? {
+                    location: {
+                        contains: location,
+                        mode: "insensitive",
+                    },
+                }
+                : {},
+            landlordId
+                ? {
+                    landlordId,
+                }
+                : {},
+            bedrooms !== undefined
+                ? {
+                    bedrooms,
+                }
+                : {},
+            bathrooms !== undefined
+                ? {
+                    bathrooms,
+                }
+                : {},
+            {
+                price: {
+                    gte: minPrice,
+                    lte: maxPrice,
+                },
+            },
+        ],
     };
     const properties = await prisma_1.default.property.findMany({
         where: whereCondition,
@@ -585,7 +1118,7 @@ const getAllProperties = async (filters) => {
             },
         },
         orderBy: {
-            createdAt: "desc",
+            [sortBy]: sortOrder,
         },
     });
     const total = await prisma_1.default.property.count({
@@ -597,6 +1130,9 @@ const getAllProperties = async (filters) => {
             limit,
             total,
             totalPages: Math.ceil(total / limit),
+            hasNextPage: page <
+                Math.ceil(total / limit),
+            hasPreviousPage: page > 1,
         },
         data: properties,
     };
@@ -606,7 +1142,7 @@ exports.getAllProperties = getAllProperties;
 // GET SINGLE PROPERTY
 // =======================
 const getSingleProperty = async (propertyId) => {
-    const property = await prisma_1.default.property.findUnique({
+    return prisma_1.default.property.findUnique({
         where: {
             id: propertyId,
         },
@@ -620,7 +1156,6 @@ const getSingleProperty = async (propertyId) => {
             },
         },
     });
-    return property;
 };
 exports.getSingleProperty = getSingleProperty;
 // =======================
@@ -638,13 +1173,12 @@ const updateProperty = async (propertyId, landlordId, payload) => {
     if (property.landlordId !== landlordId) {
         throw new Error("You are not allowed to update this property");
     }
-    const updatedProperty = await prisma_1.default.property.update({
+    return prisma_1.default.property.update({
         where: {
             id: propertyId,
         },
         data: payload,
     });
-    return updatedProperty;
 };
 exports.updateProperty = updateProperty;
 // =======================

@@ -1,8 +1,8 @@
 "use strict";
-// // // // // import type {
-// // // // //   Request,
-// // // // //   Response,
-// // // // // } from "express";
+// // // // // // import type {
+// // // // // //   Request,
+// // // // // //   Response,
+// // // // // // } from "express";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateBookingStatusController = exports.getLandlordBookingsController = exports.getTenantBookingsController = exports.createBookingController = void 0;
 const booking_service_1 = require("./booking.service");
@@ -28,7 +28,7 @@ const createBookingController = async (req, res) => {
 };
 exports.createBookingController = createBookingController;
 // =======================
-// GET TENANT BOOKINGS
+// GET MY BOOKINGS
 // TENANT ONLY
 // =======================
 const getTenantBookingsController = async (req, res) => {
@@ -77,14 +77,14 @@ const updateBookingStatusController = async (req, res) => {
         if (!landlordId) {
             return (0, apiResponse_1.sendErrorResponse)(res, 401, "User not authenticated");
         }
-        const bookingId = String(req.params.id);
+        const bookingId = req.params.id;
         const booking = await (0, booking_service_1.updateBookingStatus)(bookingId, landlordId, req.body);
         return (0, apiResponse_1.sendResponse)(res, 200, "Booking status updated successfully", booking);
     }
     catch (error) {
         return (0, apiResponse_1.sendErrorResponse)(res, 400, error instanceof Error
             ? error.message
-            : "Status update failed");
+            : "Booking status update failed");
     }
 };
 exports.updateBookingStatusController = updateBookingStatusController;
